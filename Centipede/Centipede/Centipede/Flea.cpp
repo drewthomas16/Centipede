@@ -7,8 +7,7 @@
 Flea::Flea()
 {
 }
-//Test
-//Please work
+
 
 Flea::Flea(int x, int y) : GameObject(x, y)
 {

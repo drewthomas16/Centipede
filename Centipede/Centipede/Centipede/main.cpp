@@ -7,6 +7,7 @@
 
 #include "stdafx.h"
 #include <ctime>
+#include <cmath>
 #include "CentipedeGame.h"
 using namespace std;
 
