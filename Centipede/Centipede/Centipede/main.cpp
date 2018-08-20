@@ -18,6 +18,7 @@ int main()
 	std::time_t seed = time(NULL);
 	srand(seed);
 
+
 	const sf::Vector2u winDim(480, 504);
 
 	sf::RenderWindow window(sf::VideoMode(winDim.x, winDim.y), "Centipede");

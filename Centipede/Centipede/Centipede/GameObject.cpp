@@ -6,11 +6,11 @@
 sf::Vector2u GameObject::oWD = sf::Vector2u(0, 0);
 sf::Vector2i GameObject::interval = sf::Vector2i(0, 0);
 
-
 GameObject::GameObject()
 {
 
 }
+
 
 
 GameObject::GameObject(int x, int y)

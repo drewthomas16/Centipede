@@ -3,23 +3,29 @@
 #include "GameObject.h"
 #include "Bullet.h"
 
-
+//Scorpion is a GameObject
 Scorpion::Scorpion(int x, int y) : GameObject(x, y)
 {
 	pointValue = 1000;
 	health = 1;
 	scuttle = 0;
+	//Is a larger Object.
 	object.setScale(sf::Vector2f(1.5, 1.5));
-	velocity = sf::Vector2i(x < 15 ? 1 : -1, 0);
+	velocity = sf::Vector2i(
+		x < 15 ? 1 : -1 
+		/* if x < 15 then the x value for velocity is 1 otherwise it will be -1*/
+		,0);
 }
 
 
 static unsigned int frame = 0;
 void Scorpion::update(CentipedeGame *gameHandle)
 {
+	//Sets the sprite and position.
 	setPixels();
 	if (frame++ == frameMax)
 	{
+		//Guessing this was for testing?
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))//you see nothing
 		{
 			currentPosition.y--;
