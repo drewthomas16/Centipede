@@ -2,9 +2,16 @@
 #include "Spider.h"
 #include "CentipedeGame.h"
 
-static sf::Vector2i velocities[6] = { sf::Vector2i(0, -1), sf::Vector2i(1, -1), sf::Vector2i(1, 1), sf::Vector2i(0, 1), sf::Vector2i(-1, 1), sf::Vector2i(-1, -1) };
+static sf::Vector2i velocities[6] = { sf::Vector2i(0, -1), 
+									  sf::Vector2i(1, -1), 
+									  sf::Vector2i(1, 1), 
+									  sf::Vector2i(0, 1), 
+									  sf::Vector2i(-1, 1), 
+									  sf::Vector2i(-1, -1) };
 
 
+//Constructor to set the velocity of a random velocity of a spider
+//and to play the music of a spider.
 Spider::Spider(int x, int y) : GameObject(x, y)
 {
 	currentPosition.x = x;
@@ -13,7 +20,9 @@ Spider::Spider(int x, int y) : GameObject(x, y)
 	setTexture("../Sprites/Spider/spider0.png");
 
 	//decides which direction to move first
-	dir = x < 15 ? true : false; //true = right, false = left
+	//true = right, false = left
+	dir = x < 15 ? true : false;
+	
 	if (dir)
 		setVelocity(velocities[2]);
 	else
@@ -24,6 +33,8 @@ Spider::Spider(int x, int y) : GameObject(x, y)
 	soundPlayer.setLoop(true);
 	soundPlayer.setVolume(20);
 }
+
+
 
 void Spider::setTarget(std::shared_ptr<Player> _player)
 {
@@ -57,12 +68,20 @@ void Spider::update(CentipedeGame *gameHandle)
 //finds the distance between spider and player for pointValue
 void Spider::setPointValue()
 {
-	if (((player->getPosition().x <= currentPosition.x + 1) && (player->getPosition().x >= currentPosition.x - 1)) &&
-		((player->getPosition().y <= currentPosition.y + 1) && (player->getPosition().y >= currentPosition.y - 1)))
+	if (((player->getPosition().x <= currentPosition.x + 1)
+		&& (player->getPosition().x >= currentPosition.x - 1))
+		&& ((player->getPosition().y <= currentPosition.y + 1)
+		&& (player->getPosition().y >= currentPosition.y - 1)))
+	{
 		pointValue = 900;
-	else if (((player->getPosition().x <= currentPosition.x + 4) && (player->getPosition().x >= currentPosition.x - 4)) &&
-		((player->getPosition().y <= currentPosition.y + 4) && (player->getPosition().y >= currentPosition.y - 4)))
+	}
+	else if (((player->getPosition().x <= currentPosition.x + 4)
+		&& (player->getPosition().x >= currentPosition.x - 4))
+		&& ((player->getPosition().y <= currentPosition.y + 4)
+		&& (player->getPosition().y >= currentPosition.y - 4)))
+	{
 		pointValue = 600;
+	}
 	else
 		pointValue = 300;
 }
@@ -82,7 +101,8 @@ void Spider::collideWith(GameObject* other)
 static int count = 0;
 void Spider::move()
 {
-	if (getVelocity() == velocities[2])//player is moving down right
+	//player is moving down right
+	if (getVelocity() == velocities[2])
 	{
 		//move straight up 1/6 chance
 		if (rand() % 6 == 1)
@@ -91,7 +111,8 @@ void Spider::move()
 		else if (rand() % 6 == 1 || count % 6 == 0 || currentPosition.y == 29)
 			setVelocity(velocities[1]);
 	}
-	else if (getVelocity() == velocities[1])//player is moving up right
+	//player is moving up right
+	else if (getVelocity() == velocities[1])
 	{
 		//move down 1/6 chance
 		if (rand() % 6 == 1)
@@ -100,7 +121,8 @@ void Spider::move()
 		else if (rand() % 6 == 1 || count % 6 == 0 || currentPosition.y == 18)
 			setVelocity(velocities[2]);
 	}
-	else if (getVelocity() == velocities[4])//player is moving down left
+	//player is moving down left
+	else if (getVelocity() == velocities[4])
 	{
 		//move up 1/6 chance
 		if (rand() % 6 == 1)
@@ -109,7 +131,8 @@ void Spider::move()
 		else if (rand() % 6 == 1 || count % 6 == 0 || currentPosition.y == 29)
 			setVelocity(velocities[5]);
 	}
-	else if (getVelocity() == velocities[5])//player is moving up left
+	//player is moving up left
+	else if (getVelocity() == velocities[5])
 	{
 		//move down 1/6 chance
 		if (rand() % 6 == 1)
@@ -118,7 +141,8 @@ void Spider::move()
 		else if (rand() % 6 == 1 || count % 6 == 0 || currentPosition.y == 18)
 			setVelocity(velocities[4]);
 	}
-	else if (getVelocity() == velocities[0])//player is moving up
+	//player is moving up
+	else if (getVelocity() == velocities[0])
 	{
 		//move down 1/6 chance
 		if (rand() % 6 == 1)
@@ -128,7 +152,8 @@ void Spider::move()
 		else if (rand() % 6 == 1 || count % 6 == 0 || currentPosition.y == 18)
 			setVelocity(velocities[dir ? 2 : 4]);//determine if left or right movement
 	}
-	else if (getVelocity() == velocities[3])//player is moving down
+	//player is moving down
+	else if (getVelocity() == velocities[3])
 	{
 		//move up 1/6 chance
 		if (rand() % 6 == 1)
@@ -143,16 +168,19 @@ void Spider::move()
 	currentPosition.x += velocity.x;
 	currentPosition.y += velocity.y;
 
-	count++;//used for additional delay to give ooportunity for random change
+	//used for additional delay to give ooportunity for random change
+	count++;
 }
 
 
 //sets score to 0 when die off screen else return score
 unsigned int Spider::die(bool &readyToDie, CentipedeGame *gameHandle) {
 	readyToDie = true;
-	setPointValue();//determine current point value
+	//determine current point value
+	setPointValue();
 
-	if (currentPosition.x == -1 || currentPosition.x == 30)//if offscreen return no points
+	//if offscreen return no points
+	if (currentPosition.x == -1 || currentPosition.x == 30)
 		return 0;
 	return getPointValue();
 }
