@@ -15,6 +15,8 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 }
 
 
+//Method to update the mushroom to make sure it is
+//representing how many times it has been shot.
 void Mushroom::update(CentipedeGame *gameHandle)
 {
 	switch (health)//changes texture based on health
@@ -41,13 +43,11 @@ void Mushroom::update(CentipedeGame *gameHandle)
 }
 
 
-bool Mushroom::getPoisoned()//for centipede 
-{
-	return poisoned;
-}
 
 
-bool Mushroom::resetHeath()//for end of level
+
+//Make sure that the Mushroom is ready for the next level.
+bool Mushroom::resetHealth()
 {
 	static sf::Sound mushroomRebuildSound;
 	static sf::SoundBuffer rebuildSound;
@@ -86,8 +86,9 @@ bool Mushroom::resetHeath()//for end of level
 }
 
 
-void Mushroom::collideWith(GameObject* other) //dynamic_cast returns null pointer if class
-{                                               //is not what it is asked to change it to
+//Change what happens to the mushroom based off of what collided with the mushroom.
+void Mushroom::collideWith(GameObject* other)
+{
 	if (dynamic_cast<Spider*>(other) != nullptr)
 	{
 		pointValue = 0;
@@ -100,6 +101,12 @@ void Mushroom::collideWith(GameObject* other) //dynamic_cast returns null pointe
 
 }
 
+
+//for centipede 
+bool Mushroom::getPoisoned()
+{
+	return poisoned;
+}
 
 
 Mushroom::~Mushroom()

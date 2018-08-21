@@ -9,9 +9,9 @@ public:
 	Mushroom(int, int);
 	~Mushroom();
 	void update(CentipedeGame *gameHandle);
-	bool getPoisoned();
-	bool resetHeath();
+	bool resetHealth();
 	void collideWith(GameObject*);
+	bool getPoisoned();
 	char* getType() { return "Mushroom"; }
 private:
 	bool poisoned;

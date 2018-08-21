@@ -8,13 +8,16 @@ ScoreBoi::ScoreBoi()
 }
 
 
+//Method that gets a specific score in place from "scores.txt".
 std::string ScoreBoi::getScoreX(int place)
 {
 	score_in_file.open("scores.txt");
 	if (score_in_file.is_open())
 	{
 		int count = 0;
-		while (getline(score_in_file, inStuff))//gets lines untill it gets the line asked for
+		
+		//gets lines untill it gets the line asked for
+		while (getline(score_in_file, inStuff))
 		{
 			if (count != place)
 				inStuff.clear();
@@ -33,6 +36,9 @@ std::string ScoreBoi::getScoreX(int place)
 }
 
 
+/*Method that checks to see if a score can be added to "scores.txt"/highscores.
+If the score can be placed put it in the right order so the file 
+is from least to greatest.*/
 void ScoreBoi::addScore(std::string score)
 {
 	int newScoreInt, oldScoreInt;
@@ -40,8 +46,9 @@ void ScoreBoi::addScore(std::string score)
 	std::string scores[8];
 	bool shifting = false;
 	std::string temp1, temp2;
-
-	for (int i = 0; i < 8; i++)//finds where the to place new score
+	
+	//finds where the to place new score
+	for (int i = 0; i < 8; i++)
 	{
 		if (!shifting)
 		{
@@ -66,7 +73,10 @@ void ScoreBoi::addScore(std::string score)
 			temp1 = temp2;
 		}
 	}
-	score_out_file.open("scores.txt", std::ofstream::out | std::ofstream::trunc);//replaces file with new order
+	
+	//replaces file with new order
+	score_out_file.open("scores.txt", std::ofstream::out | std::ofstream::trunc);
+
 	if (score_out_file.is_open())
 	{
 		for (int i = 0; i < 8; i++)
@@ -81,6 +91,10 @@ void ScoreBoi::addScore(std::string score)
 }
 
 
+/*Method that checks to see if a score can be added to "scores.txt"/highscores.
+If the score can be placed put it in the right order so the file 
+is from least to greatest. Add the name of the person who got the high score
+if provided*/
 void ScoreBoi::addScore(int score, std::string name)
 {
 	int oldScoreInt;
@@ -90,7 +104,8 @@ void ScoreBoi::addScore(int score, std::string name)
 
 	std::string scoreTotal = std::to_string(score) + " " + name;
 
-	for (int i = 0; i < 8; i++)//finds where the to place new score
+	//finds where the to place new score
+	for (int i = 0; i < 8; i++)
 	{
 		if (!shifting)
 		{
@@ -115,7 +130,9 @@ void ScoreBoi::addScore(int score, std::string name)
 			temp1 = temp2;
 		}
 	}
-	score_out_file.open("scores.txt", std::ofstream::out | std::ofstream::trunc);//replaces file with new order
+	
+	//replaces file with new order
+	score_out_file.open("scores.txt", std::ofstream::out | std::ofstream::trunc);
 	if (score_out_file.is_open())
 	{
 		for (int i = 0; i < 8; i++)
@@ -129,8 +146,8 @@ void ScoreBoi::addScore(int score, std::string name)
 	return;
 }
 
-
-int ScoreBoi::cutScore(std::string score)//helper function
+//Method to get just the score, don't want to check the name if provided.
+int ScoreBoi::cutScore(std::string score)
 {
 	int scoreInt = std::stoi(score.substr(0, 6));
 	return scoreInt;

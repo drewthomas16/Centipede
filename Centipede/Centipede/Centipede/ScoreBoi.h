@@ -9,7 +9,8 @@ class ScoreBoi
 {
 public:
 	ScoreBoi();
-	std::string getScoreX(int);// recieves an int that is the place for a score and returns that score
+	// recieves an int that is the place for a score and returns that score
+	std::string getScoreX(int);
 	void addScore(std::string);
 	void addScore(int, std::string);
 	~ScoreBoi();
