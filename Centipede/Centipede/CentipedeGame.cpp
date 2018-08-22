@@ -16,7 +16,9 @@ int CentipedeGame::playerLives = -1;
 static int lastPlayerLives;
 
 
-CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow, const sf::Vector2u oWD) : originalWindowDimensions(oWD)
+//Create centipede game loop.
+CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow, 
+	const sf::Vector2u oWD) : originalWindowDimensions(oWD)
 {
 	GameObject::oWD = oWD;
 	window = renderWindow;
@@ -56,6 +58,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow, const sf::Vector2u
 }
 
 
+//Clear the game so there is no memory problems.
 CentipedeGame::~CentipedeGame()
 {
 	for (int y = 0; y < 30; ++y)
@@ -67,6 +70,7 @@ CentipedeGame::~CentipedeGame()
 
 
 static bool liveFlea = false;
+//Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
 	//update objects
@@ -81,7 +85,9 @@ bool CentipedeGame::update()
 	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][!frame].size(); ++i)
-				placeObject(map[y][x][!frame].at(i)->getPosition().x, map[y][x][!frame].at(i)->getPosition().y, map[y][x][!frame].at(i));
+				placeObject(map[y][x][!frame].at(i)->getPosition().x, 
+					map[y][x][!frame].at(i)->getPosition().y, 
+					map[y][x][!frame].at(i));
 
 	//clear the old map from other frame
 	for (int y = 0; y < 30; y++)
@@ -132,7 +138,8 @@ bool CentipedeGame::update()
 	//check if live spider
 	if (findFirstInstanceOf<Spider>() && rand() % 1000 < 5)//no spider check if able to respawn
 	{
-		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() % 30 < 15 ? 0 : 29, rand() % 5 + 18);
+		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
+			% 30 < 15 ? 0 : 29, rand() % 5 + 18);
 		spider->setTarget(findFirstInstanceOf<Player>());
 	}
 
@@ -145,10 +152,12 @@ bool CentipedeGame::update()
 			for (int y = 0; y < 30; ++y)
 				for (int i = 0; i < map[y][x][frame].size(); ++i)
 					if (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame].at(i)))
-						while (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame].at(i))->getHealth() < 4)
+						while (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame]
+							.at(i))->getHealth() < 4)
 						{
 							draw();
-							std::dynamic_pointer_cast<Mushroom> (map[y][x][frame].at(i))->resetHeath();
+							std::dynamic_pointer_cast<Mushroom> (map[y][x][frame]
+								.at(i))->resetHeath();
 						}
 
 		//killCentipedes();
@@ -167,6 +176,7 @@ bool CentipedeGame::update()
 
 
 static bool grid = false;
+//Draw the board.
 void CentipedeGame::draw()
 {
 	//this is temp
@@ -180,7 +190,8 @@ void CentipedeGame::draw()
 	//update score and draw to render texture
 	scoreDisplay.setFillColor(sf::Color::Red);
 	scoreDisplay.setString("Score " + std::to_string(score));
-	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, scoreDisplay.getLocalBounds().height / 2);
+	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, scoreDisplay
+		.getLocalBounds().height / 2);
 	scoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x / 2, 0);
 
 	scoreArea.draw(scoreDisplay);
@@ -207,10 +218,12 @@ void CentipedeGame::draw()
 }
 
 
+//Check to see if there is a mushroom in a certain x and y location.
 bool CentipedeGame::isMushroomCell(unsigned int x, unsigned int y)
 {
 	if (x < 30 && y < 30)
-		for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame].size(); i++)
+		for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
+			.size(); i++)
 			if (std::dynamic_pointer_cast<Mushroom>(CentipedeGame::map[y][x][CentipedeGame::frame].at(i)))
 				return true;
 	return false;
@@ -224,20 +237,23 @@ void CentipedeGame::reset()
 }
 
 
+//if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
-	//if any index in map has more than 1 object in vector, resolve collisions
 	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			if (map[y][x][frame].size() > 1)//at coord
 				for (int i = 0; i < map[y][x][frame].size(); ++i)
 					for (int j = 0; j < map[y][x][frame].size(); ++j)
 						if (i != j)
-							map[y][x][frame].at(i)->collideWith(map[y][x][frame].at(j).get());
+							map[y][x][frame].at(i)->collideWith(map[y][x][frame]
+								.at(j).get());
 }
 
 
-void CentipedeGame::placeObject(unsigned int x, unsigned int y, std::shared_ptr<GameObject> object)
+//Put an object on the new frame.
+void CentipedeGame::placeObject(unsigned int x, unsigned int y, 
+	std::shared_ptr<GameObject> object)
 {
 	if (x < 30 && y < 30)//keep object in bounds of array
 		map[y][x][frame].push_back(object);
@@ -245,6 +261,8 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y, std::shared_ptr<
 		kill(object);
 }
 
+
+//Kill an object that needs to and output useful information.
 void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
 	bool readyToDie;
 	std::cout << "i exist " << thing.use_count() << " times\n";
@@ -256,6 +274,8 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
 	std::cout << "score is now " << score << std::endl;
 }
 
+
+//Make a grid that the rest of the game can use.
 void CentipedeGame::generateGrid() {
 	int scalar = originalWindowDimensions.x / 30;
 	sf::Color col(20, 20, 20);
@@ -271,17 +291,23 @@ void CentipedeGame::generateGrid() {
 	}
 }
 
+
+//Count how many things you have. You must specify which thing you want to count.
 unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) {
 	unsigned int count = 0;
 	for (int y = startY; y < endY; ++y)//check mushrooms in player position
 		for (int x = startX; x < endX; ++x)
-			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame].size(); i++)
-				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame].at(i)->getType(), type))
+			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
+				.size(); i++)
+				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame]
+					.at(i)->getType(), type))
 					++count;
 	return count;
 }
 
 
+// If the getCounOf("CentipedeSegment", 0, 0, 30, 30) returns a number less than
+//0 then you know that there is no longer a centipede on the board.
 void CentipedeGame::manageCentipedePopulation() {
 	if (activeCentipede) {
 		//check if centipede has died
@@ -294,6 +320,7 @@ void CentipedeGame::manageCentipedePopulation() {
 }
 
 
+//Ouput how many lives a player has.
 void CentipedeGame::drawLives()
 {
 	for (int i = 0; i < playerLives; i++)
@@ -301,6 +328,7 @@ void CentipedeGame::drawLives()
 }
 
 
+//Get the position of the mouse.
 sf::Vector2i CentipedeGame::getRelMousePos() {
 	sf::Vector2f mousePos(sf::Mouse::getPosition(*window));
 	float scalar = static_cast<float>(GameObject::oWD.x) / window->getSize().x;
