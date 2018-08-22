@@ -25,13 +25,13 @@ int main()
 
 	CentipedeGame game(&window, winDim);
 
+	//Display a startup screen before gameplay.
 	sf::Texture startingScreen;
 	startingScreen.loadFromFile("../Sprites/startscreen.png");
-
 	sf::Sprite sprite;
 	sprite.setTexture(startingScreen);
 	sprite.setScale(1.95f, 2.05f);
-
+		
 	window.draw(sprite);
 	window.display();
 
@@ -45,6 +45,7 @@ int main()
 
 	while (window.isOpen())
 	{
+		//If the player clicks start, start the game.
 		if (sf::Mouse::getPosition(window).x > 185 &&
 			sf::Mouse::getPosition(window).x < 305 &&
 			sf::Mouse::getPosition(window).y > 335 &&
@@ -54,13 +55,14 @@ int main()
 			gameStart = true;
 			window.setMouseCursorVisible(false);
 		}
-
+		//If framebyframeMode is on lets cycle through frames using enter.
 		if (frameByFrameMode && gameStart) {
 			if (enterPressed) {
 				game.update();
 				enterPressed = false;
 			}
 		}
+		//Else start the game regularly.
 		else if (gameStart)
 			game.update();
 

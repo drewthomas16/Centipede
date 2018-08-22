@@ -14,10 +14,11 @@ Player::Player(int x, int y) : GameObject(x, y)
 
 void Player::update(CentipedeGame *gameHandle)
 {
-	/*
+	//Sets velocity based on how far away the mouse is??? why
 	setVelocity(
 		sf::Vector2i(getNearestCellPos(gameHandle->getRelMousePos()).x - currentPosition.x,
 		getNearestCellPos(gameHandle->getRelMousePos()).y-currentPosition.y));
+
 
 	currentPosition = getNearestCellPos(gameHandle->getRelMousePos());
 	currentPosition /= static_cast<int>(interval.x);
@@ -26,6 +27,8 @@ void Player::update(CentipedeGame *gameHandle)
 	//else
 
 	// go untill hit mushroom
+
+	//makes the player not leave the screen.
 	if ((30 - currentPosition.y) > 12)
 	currentPosition.y = 30-12;
 	if (currentPosition.y > 29)
@@ -39,11 +42,12 @@ void Player::update(CentipedeGame *gameHandle)
 		//gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 	}
 	object.setPosition(static_cast<sf::Vector2f>(currentPosition*static_cast<int>(interval.x)));
-	*/
+	
 }
 
 void Player::collideWith(GameObject * other)
 {
+	//If player hits things that hurt him, subtract health.
 	if (dynamic_cast<CentipedeSegment *>(other) != nullptr)
 		health--;
 	else if (dynamic_cast<Flea *>(other) != nullptr)
@@ -53,5 +57,10 @@ void Player::collideWith(GameObject * other)
 	else if (dynamic_cast<Spider *>(other) != nullptr)
 		health--;
 
-	//play a death anim here
+	if (health <= 0)
+	{
+		//die
+		//play a death anim here
+	}
+	
 }
