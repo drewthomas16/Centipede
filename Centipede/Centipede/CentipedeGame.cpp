@@ -10,6 +10,7 @@
 #include "CentipedeManager.h"
 
 bool CentipedeGame::frame = false;
+//Vector of all of the entities shown on the map.
 std::vector<std::shared_ptr<GameObject>> CentipedeGame::map[30][30][2] = {};
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
 int CentipedeGame::playerLives = -1;
