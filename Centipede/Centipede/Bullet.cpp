@@ -8,6 +8,7 @@ bool Bullet::liveBullet = false;
 
 Bullet::Bullet(int x, int y) : GameObject(x, y)
 {
+
 	health = 1;
 	setVelocity(sf::Vector2i(0, -1));
 	setTexture("../Sprites/bullet.png");
@@ -28,17 +29,18 @@ Bullet::~Bullet()
 
 void Bullet::update()
 {
+	//update bullet pos every tick based on velocity.
 	if (CentipedeGame::clock % delay == 0)
 		currentPosition.y += velocity.y;
 }
 
-
+//Called in CentipedeGame.
 void Bullet::collideWith(GameObject * other)
 {
 	health = 0;
 }
 
-
+//Overrides GameObject's die and adds instance variables affected.
 unsigned int Bullet::die(bool &readyToDie, CentipedeGame *gameHandle) {
 	liveBullet = false;
 	return GameObject::die(readyToDie, gameHandle);

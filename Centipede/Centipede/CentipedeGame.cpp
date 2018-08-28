@@ -10,6 +10,7 @@
 #include "CentipedeManager.h"
 
 bool CentipedeGame::frame = false;
+//Vector of all of the entities shown on the map.
 std::vector<std::shared_ptr<GameObject>> CentipedeGame::map[30][30][2] = {};
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
 int CentipedeGame::playerLives = -1;
@@ -136,7 +137,7 @@ bool CentipedeGame::update()
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
 	//check if live spider
-	if (findFirstInstanceOf<Spider>() && rand() % 1000 < 5)//no spider check if able to respawn
+	if (findFirstInstanceOf<Spider>() && (rand() % 1000) < 5)//no spider check if able to respawn
 	{
 		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
 			% 30 < 15 ? 0 : 29, rand() % 5 + 18);

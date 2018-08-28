@@ -12,17 +12,19 @@ Scorpion::Scorpion(int x, int y) : GameObject(x, y)
 	//Is a larger Object.
 	object.setScale(sf::Vector2f(1.5, 1.5));
 	velocity = sf::Vector2i(
-		x < 15 ? 1 : -1 
 		/* if x < 15 then the x value for velocity is 1 otherwise it will be -1*/
+		x < 15 ? 1 : -1 
 		,0);
 }
 
 
 static unsigned int frame = 0;
+//Updates a Scorpion entidy's status every tick? (makes the most sense)
 void Scorpion::update(CentipedeGame *gameHandle)
 {
 	//Sets the sprite and position.
 	setPixels();
+	//Handles each frame of animation for the scorpion.
 	if (frame++ == frameMax)
 	{
 		//Guessing this was for testing?
@@ -69,9 +71,10 @@ void Scorpion::update(CentipedeGame *gameHandle)
 	}
 }
 
-
+//Is called in CentipedeGame if it detects multiple objects in the same pos.
 void Scorpion::collideWith(GameObject* other)
 {
+	//Kill scorpion if what it collides with is not a nullptr.
 	if (dynamic_cast<Bullet*>(other) != nullptr)
 		health = 0;
 }

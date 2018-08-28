@@ -38,7 +38,8 @@ void GameObject::addHealth(int health)
 
 
 //Method to move an object to another block.
-sf::Vector2i GameObject::getNearestCellPos(sf::Vector2i position)
+sf::Vector2i GameObject::
+getNearestCellPos(sf::Vector2i position)
 {
 	position.x -= (position.x % interval.x);
 	position.y -= (position.y % interval.y);
