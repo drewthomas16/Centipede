@@ -36,12 +36,12 @@ void Player::update(CentipedeGame *gameHandle)
 	
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
-	if (CentipedeGame::clock % 8 == 0 && gameHandle->isInBounds(currentPosition.x + velocity.x,
-	currentPosition.y))
-		currentPosition.x += velocity.x;
-	if (CentipedeGame::clock % 8 == 0 && gameHandle->isInBounds(currentPosition.x,
-		currentPosition.y + velocity.y))
-		currentPosition.y += velocity.y;
+	if (CentipedeGame::clock % 8 == 0
+		&& gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
+			currentPosition.x += velocity.x;
+	if (CentipedeGame::clock % 8 == 0 
+		&& gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
+			currentPosition.y += velocity.y;
 }
 
 void Player::collideWith(GameObject * other)
