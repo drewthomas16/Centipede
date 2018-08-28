@@ -21,6 +21,7 @@ public:
 	void reset();
 	void placeObject(unsigned int, unsigned int, std::shared_ptr<GameObject>);
 	sf::Vector2i getRelMousePos();
+	static bool isInBounds(unsigned int x, unsigned int y) { return x < 30 && y < 30; }
 
 	template <typename type> std::shared_ptr<type> spawnObject(unsigned int x, unsigned int y) {
 		std::shared_ptr<type> thing(nullptr);
@@ -40,7 +41,7 @@ private:
 	void generateGrid();
 
 	void manageCentipedePopulation();
-	static bool isInBounds(unsigned int x, unsigned int y) { return x < 30 && y < 30; }
+	
 
 	void kill(std::shared_ptr<GameObject>&);
 	sf::VertexArray linePoints;
