@@ -3,7 +3,7 @@
 #include <SFML\Audio.hpp>
 #include <memory>
 
-class CentipedeGame;
+class CentipedeGame; //Forward declaration like a prototype
 
 class GameObject
 {
