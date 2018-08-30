@@ -8,10 +8,10 @@ class Bullet : public GameObject
 public:
 	Bullet(int, int);
 	~Bullet();
-	void update();
+	void update(CentipedeGame*);
 	void collideWith(GameObject*);
-	bool isAlive();
-	void shootFrom(sf::Vector2i);
+	//bool isAlive();
+	//void shootFrom(sf::Vector2i);
 	unsigned int die(bool&, CentipedeGame*);
 	char* getType() { return "Bullet"; }
 	static bool liveBullet;

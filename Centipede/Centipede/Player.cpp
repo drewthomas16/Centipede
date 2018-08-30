@@ -30,9 +30,9 @@ void Player::update(CentipedeGame *gameHandle)
 		velocity.x = 1;
 
 	//If space is pressed make a bullet in the Player's location.
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
-		//&& CentipedeGame::clock % 8 == 0)
-		//gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
+		&& CentipedeGame::clock % 8 == 0)
+		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 	
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.

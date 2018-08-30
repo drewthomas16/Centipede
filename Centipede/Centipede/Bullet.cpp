@@ -27,7 +27,7 @@ Bullet::~Bullet()
 }
 
 
-void Bullet::update()
+void Bullet::update(CentipedeGame*)
 {
 	//update bullet pos every tick based on velocity.
 	if (CentipedeGame::clock % delay == 0)

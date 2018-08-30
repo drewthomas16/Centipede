@@ -11,13 +11,13 @@ public:
 	GameObject();
 	GameObject(int, int);
 	~GameObject();
-	virtual int getPointValue();
+	int getPointValue();
 	unsigned int getHealth() const;
 	sf::Vector2i getVelocity() const;
 	sf::Vector2i getPosition() const;
 	void setTexture(const char *);
 	virtual void update(CentipedeGame*) = 0;
-	virtual void render(sf::RenderTexture &);
+	void render(sf::RenderTexture &);
 	virtual void collideWith(GameObject *);
 	//virtual void collideWith(std::vector<GameObject *> *);
 	sf::Vector2i getNearestCellPos(sf::Vector2i);
@@ -27,7 +27,7 @@ public:
 
 	virtual unsigned int die(bool&, CentipedeGame*);
 
-	virtual char* getType();
+	char* getType();
 
 protected:
 	void setPointValue(unsigned int);
