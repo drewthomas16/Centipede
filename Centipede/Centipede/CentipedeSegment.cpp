@@ -19,7 +19,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 
 	setTexture("../Sprites/CentipedeSegment/default.png");
 
-	velocity = sf::Vector2i(1, 0);
+	velocity = sf::Vector2f(1, 0);
 
 	movingDown = movingRight = true;
 }

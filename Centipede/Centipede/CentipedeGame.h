@@ -23,7 +23,7 @@ public:
 	sf::Vector2i getRelMousePos();
 	static bool isInBounds(unsigned int x, unsigned int y) { return x < 30 && y < 30; }
 
-	template <typename type> std::shared_ptr<type> spawnObject(unsigned int x, unsigned int y) {
+	template <typename type> std::shared_ptr<type> spawnObject(double x, double y) {
 		std::shared_ptr<type> thing(nullptr);
 		if (isInBounds(x, y)) {
 			thing = std::make_shared<type>(x, y);

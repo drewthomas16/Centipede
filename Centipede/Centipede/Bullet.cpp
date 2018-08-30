@@ -10,7 +10,7 @@ Bullet::Bullet(int x, int y) : GameObject(x, y)
 {
 
 	health = 1;
-	setVelocity(sf::Vector2i(0, -1));
+	setVelocity(sf::Vector2f(0, -1));
 	setTexture("../Sprites/bullet.png");
 	object.setOrigin(-4, -4);
 	liveBullet = true;
