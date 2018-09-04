@@ -34,11 +34,13 @@ void Bullet::update(CentipedeGame*)
 		currentPosition.y += velocity.y;
 }
 
+
 //Called in CentipedeGame.
 void Bullet::collideWith(GameObject * other)
 {
 	health = 0;
 }
+
 
 //Overrides GameObject's die and adds instance variables affected.
 unsigned int Bullet::die(bool &readyToDie, CentipedeGame *gameHandle) {

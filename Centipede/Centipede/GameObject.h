@@ -28,7 +28,7 @@ public:
 	virtual unsigned int die(bool&, CentipedeGame*);
 
 	char* getType();
-
+sf::Vector2f currentPosition;
 protected:
 	void setPointValue(unsigned int);
 	void setVelocity(sf::Vector2f);
@@ -39,7 +39,7 @@ protected:
 	unsigned int health = 1;
 	unsigned int pointValue = 0;
 	sf::Vector2f velocity;
-	sf::Vector2f currentPosition;
+	
 	sf::Texture textureTemp;
 
 	sf::Sound soundPlayer;

@@ -31,7 +31,7 @@ void Player::update(CentipedeGame *gameHandle)
 			velocity.y = movementSpeed / sqrt(2);
 		else
 			velocity.y = movementSpeed;
-	
+
 	//Left and right movement.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
@@ -47,9 +47,10 @@ void Player::update(CentipedeGame *gameHandle)
 			velocity.x = movementSpeed;
 
 	//If space is pressed make a bullet in the Player's location.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
-		&& CentipedeGame::clock % 8 == 0)
-		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+	//std::cout << currentPosition.x<< '\n';
+	//gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+	}	
 	
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.

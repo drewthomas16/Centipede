@@ -61,7 +61,7 @@ void GameObject::setPixels()
 unsigned int GameObject::die(bool &readyToDie, CentipedeGame *gameHandle) 
 {
 	readyToDie = true;
-	std::cout << getType() << " died\n";
+	//std::cout << getType() << " died\n";
 	
 	return getPointValue();
 }
