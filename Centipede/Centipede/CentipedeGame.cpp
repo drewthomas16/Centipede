@@ -104,7 +104,7 @@ bool CentipedeGame::update()
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
 				if (map[y][x][frame].at(i)->getHealth() == 0)
 				{
-					kill(map[y][x][frame].at(i));
+             					kill(map[y][x][frame].at(i));
 					map[y][x][frame].erase(map[y][x][frame].begin() + i);
 				}
 	#pragma endregion
@@ -133,15 +133,15 @@ bool CentipedeGame::update()
 	}
 	#pragma endregion
 
-	if (/*findFirstInstanceOf<Scorpion>() && */ rand() % 10000 < 5)
+	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
 	//check if live spider
 	if (!findFirstInstanceOf<Spider>() &&  (rand() % 2000) < 5)//no spider check if able to respawn
 	{
-		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
-			% 30 < 15 ? 0 : 29, rand() % 5 + 18);
-		spider->setTarget(findFirstInstanceOf<Player>());
+		//std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
+		//	% 30 < 15 ? 0 : 29, rand() % 5 + 18);
+		//spider->setTarget(findFirstInstanceOf<Player>());
 	}
 
 	//this should be happening when player dies
@@ -270,7 +270,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
 	score += thing->die(readyToDie, this);
 
 	if (readyToDie)
-		thing.reset();
+		//thing.reset();
 
 	std::cout << "score is now " << score << std::endl;
 }

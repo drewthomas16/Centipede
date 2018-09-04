@@ -30,6 +30,7 @@ void GameObject::collideWith(GameObject *)
 }
 
 
+
 //Method to give more health to the object.
 void GameObject::addHealth(int health)
 {

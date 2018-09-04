@@ -69,8 +69,9 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 //Kill this segement of the centipede if it collides with a Bullet.
 void CentipedeSegment::collideWith(GameObject * other)
 {
-	if (dynamic_cast<Bullet *>(other) != nullptr)
-		health = 0;
+	if (dynamic_cast<Bullet *>(other) != nullptr
+		|| dynamic_cast<Player *>(other) != nullptr)
+		--health;
 }
 
 

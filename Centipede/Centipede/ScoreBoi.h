@@ -1,4 +1,4 @@
-#pragma once
+//#pragma once more like pragma twice haHA
 #pragma once
 #include <iostream>
 #include <fstream>
