@@ -37,15 +37,6 @@ void CentipedeSegment::attach(CentipedeSegment *segment)
 }
 
 
-//Make sure that a centipede can move somewhere by checking to make sure there
-//is no mushroom there and it is not off the screen.
-bool CentipedeSegment::canMoveTo(int x, int y) 
-{
-	return !CentipedeGame::isMushroomCell(x, y) && x >= 0 && x <= 29 && y >= 0 
-		&& y <= 29;
-}
-
-
 //Change the position of the centipede by  calculating the velocity.
 //Make sure that you do not check this everytime to give it a pause.
 void CentipedeSegment::update(CentipedeGame *gameHandle)

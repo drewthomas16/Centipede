@@ -29,6 +29,13 @@ void GameObject::collideWith(GameObject *)
 	return;
 }
 
+//Make sure that a centipede can move somewhere by checking to make sure there
+//is no mushroom there and it is not off the screen.
+bool GameObject::canMoveTo(int x, int y)
+{
+	return !CentipedeGame::isMushroomCell(x, y) && x >= 0 && x <= 29 && y >= 0
+		&& y <= 29;
+}
 
 
 //Method to give more health to the object.

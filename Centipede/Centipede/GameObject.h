@@ -19,6 +19,7 @@ public:
 	virtual void update(CentipedeGame*) = 0;
 	void render(sf::RenderTexture &);
 	virtual void collideWith(GameObject *);
+	bool canMoveTo(int x, int y);
 	//virtual void collideWith(std::vector<GameObject *> *);
 	sf::Vector2i getNearestCellPos(sf::Vector2i);
 
