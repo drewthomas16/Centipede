@@ -13,7 +13,6 @@ public:
 
 	void update(CentipedeGame *gameHandle);
 	void collideWith(GameObject *);
-	bool canMoveTo(int, int);
 
 	void setAsHead();
 

@@ -56,6 +56,12 @@ void Player::update(CentipedeGame *gameHandle)
 	else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		shotBullet = false;
 	
+	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
+	{
+		velocity.x = 0;
+		velocity.y = 0;
+	}
+
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
 	if (gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
@@ -77,8 +83,6 @@ void Player::collideWith(GameObject * other)
 
 	//play a death anim here
 }
-
-
 
 
 /*Old player method.
