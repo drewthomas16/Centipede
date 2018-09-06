@@ -49,7 +49,7 @@ void Player::update(CentipedeGame *gameHandle)
 	//If space is pressed make a bullet in the Player's location.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
 	//std::cout << currentPosition.x<< '\n';
-	//gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 	}	
 	
 	//Move the player based off the velocity.
