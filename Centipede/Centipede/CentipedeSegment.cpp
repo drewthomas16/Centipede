@@ -19,7 +19,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 
 	setTexture("../Sprites/CentipedeSegment/default.png");
 
-	velocity = sf::Vector2i(1, 0);
+	velocity = sf::Vector2f(1, 0);
 
 	movingDown = movingRight = true;
 }
@@ -63,6 +63,8 @@ void CentipedeSegment::collideWith(GameObject * other)
 	if (dynamic_cast<Bullet *>(other) != nullptr
 		|| dynamic_cast<Player *>(other) != nullptr)
 		--health;
+	//if (dynamic_cast<Bullet *>(other) != nullptr)
+		//health = 0;
 }
 
 

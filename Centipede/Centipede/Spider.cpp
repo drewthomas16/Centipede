@@ -2,12 +2,12 @@
 #include "Spider.h"
 #include "CentipedeGame.h"
 
-static sf::Vector2i velocities[6] = { sf::Vector2i(0, -1), 
-									  sf::Vector2i(1, -1), 
-									  sf::Vector2i(1, 1), 
-									  sf::Vector2i(0, 1), 
-									  sf::Vector2i(-1, 1), 
-									  sf::Vector2i(-1, -1) };
+static sf::Vector2f velocities[6] = { sf::Vector2f(0, -1), 
+									  sf::Vector2f(1, -1), 
+									  sf::Vector2f(1, 1), 
+									  sf::Vector2f(0, 1), 
+									  sf::Vector2f(-1, 1), 
+									  sf::Vector2f(-1, -1) };
 
 
 //Constructor to set the velocity of a random velocity of a spider

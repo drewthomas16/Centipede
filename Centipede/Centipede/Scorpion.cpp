@@ -11,7 +11,7 @@ Scorpion::Scorpion(int x, int y) : GameObject(x, y)
 	scuttle = 0;
 	//Is a larger Object.
 	object.setScale(sf::Vector2f(1.5, 1.5));
-	velocity = sf::Vector2i(
+	velocity = sf::Vector2f(
 		/* if x < 15 then the x value for velocity is 1 otherwise it will be -1*/
 		x < 15 ? 1 : -1 
 		,0);

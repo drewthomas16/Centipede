@@ -11,4 +11,5 @@ public:
 	void collideWith(GameObject *);
 protected:
 	std::shared_ptr<Bullet> bullet;
+	double movementSpeed = 0.25;
 };

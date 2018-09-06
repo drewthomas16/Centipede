@@ -15,7 +15,7 @@ Flea::Flea(int x, int y) : GameObject(x, y)
 	object.setScale(sf::Vector2f(.5, .5));
 	object.setOrigin(-6, -10);
 	object.setPosition(sf::Vector2f(0, 0));
-	velocity = sf::Vector2i(0, 1);
+	velocity = sf::Vector2f(0, 1);
 	pointValue = 200;
 }
 

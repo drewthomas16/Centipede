@@ -4,6 +4,7 @@
 #include "CentipedeSegment.h"
 #include "Scorpion.h"
 #include "Spider.h"
+#include <math.h>
 
 Player::Player(int x, int y) : GameObject(x, y)
 {
@@ -19,20 +20,35 @@ void Player::update(CentipedeGame *gameHandle)
 
 	//Up and down movement.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		velocity.y = -1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			velocity.y = movementSpeed / sqrt(2) * -1;
+		else
+			velocity.y = movementSpeed * -1;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		velocity.y = 1;
-	
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			velocity.y = movementSpeed / sqrt(2);
+		else
+			velocity.y = movementSpeed;
+
 	//Left and right movement.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		velocity.x = -1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			velocity.x = movementSpeed / sqrt(2) * -1;
+		else
+			velocity.x = movementSpeed * -1;
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		velocity.x = 1;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			velocity.x = movementSpeed / sqrt(2);
+		else
+			velocity.x = movementSpeed;
 
 	//If space is pressed make a bullet in the Player's location.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
-		&& CentipedeGame::clock % 8 == 0)
-		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);	
 	
 	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
 	{
@@ -42,11 +58,9 @@ void Player::update(CentipedeGame *gameHandle)
 
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
-	if (CentipedeGame::clock % 8 == 0
-		&& gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
+	if (gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
 			currentPosition.x += velocity.x;
-	if (CentipedeGame::clock % 8 == 0 
-		&& gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
+	if (gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
 			currentPosition.y += velocity.y;
 }
 

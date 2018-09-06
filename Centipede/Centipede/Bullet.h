@@ -6,7 +6,7 @@
 class Bullet : public GameObject
 {
 public:
-	Bullet(int, int);
+	Bullet(double, double);
 	~Bullet();
 	void update(CentipedeGame*);
 	void collideWith(GameObject*);
@@ -17,4 +17,5 @@ public:
 	static bool liveBullet;
 private:
 	int delay = 1;
+	double xStart;
 };
