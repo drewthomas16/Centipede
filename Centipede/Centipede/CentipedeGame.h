@@ -27,7 +27,6 @@ public:
 		std::shared_ptr<type> thing(nullptr);
 		if (isInBounds(x, y)) {
 			thing = std::make_shared<type>(x, y);
-			std::cout << x << '\t' << y << '\n';
 			map[static_cast<int>(y)][static_cast<int>(x)][frame].push_back(thing);
 		}
 		return thing;
