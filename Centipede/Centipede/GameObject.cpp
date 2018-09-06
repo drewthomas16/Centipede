@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameObject.h"
 #include "CentipedeGame.h"
+#include <math.h>
 #include <iostream>
 
 sf::Vector2u GameObject::oWD = sf::Vector2u(0, 0);
@@ -10,7 +11,7 @@ sf::Vector2i GameObject::interval = sf::Vector2i(1, 1);
 //Constructor to set x and y positions and play sound.
 GameObject::GameObject(int x, int y)
 {
-	currentPosition = sf::Vector2i(x, y);
+	currentPosition = sf::Vector2f(x, y);
 	soundPlayer.setBuffer(soundClip);
 }
 
@@ -39,11 +40,10 @@ void GameObject::addHealth(int health)
 
 
 //Method to move an object to another block.
-sf::Vector2i GameObject::
-getNearestCellPos(sf::Vector2i position)
+sf::Vector2f GameObject::getNearestCellPos(sf::Vector2f position)
 {
-	position.x -= (position.x % interval.x);
-	position.y -= (position.y % interval.y);
+	position.x -= fmod(position.x, interval.x);
+	position.y -= fmod(position.y, interval.y);
 	 
 	return position;
 }
@@ -62,7 +62,7 @@ void GameObject::setPixels()
 unsigned int GameObject::die(bool &readyToDie, CentipedeGame *gameHandle) 
 {
 	readyToDie = true;
-	std::cout << getType() << " died\n";
+	//std::cout << getType() << " died\n";
 	
 	return getPointValue();
 }
@@ -85,11 +85,11 @@ unsigned int GameObject::getHealth() const
 {
 	return health;
 }
-sf::Vector2i GameObject::getVelocity() const
+sf::Vector2f GameObject::getVelocity() const
 {
 	return velocity;
 }
-sf::Vector2i GameObject::getPosition() const
+sf::Vector2f GameObject::getPosition() const
 {
 	return currentPosition;
 }
@@ -106,7 +106,7 @@ void GameObject::setPointValue(unsigned int newPointValue)
 {
 	pointValue = newPointValue;
 }
-void GameObject::setVelocity(sf::Vector2i newVel)
+void GameObject::setVelocity(sf::Vector2f newVel)
 {
 	velocity = newVel;
 }
