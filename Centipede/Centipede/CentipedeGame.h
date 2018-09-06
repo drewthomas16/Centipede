@@ -29,7 +29,6 @@ public:
 			thing = std::make_shared<type>(x, y);
 			std::cout << x << '\t' << y << '\n';
 			map[static_cast<int>(y)][static_cast<int>(x)][frame].push_back(thing);
-			std::cout << static_cast<int>(x) << ", " << static_cast<int>(y) << std::endl;
 		}
 		return thing;
 	};
