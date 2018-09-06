@@ -10,6 +10,7 @@ Player::Player(int x, int y) : GameObject(x, y)
 {
 	setTexture("../Sprites/player.png");
 	health = 3;
+	shotBullet = false;
 }
 
 
@@ -47,8 +48,13 @@ void Player::update(CentipedeGame *gameHandle)
 			velocity.x = movementSpeed;
 
 	//If space is pressed make a bullet in the Player's location.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);	
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !shotBullet)
+	{
+		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
+		shotBullet = true;
+	}
+	else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		shotBullet = false;
 	
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
