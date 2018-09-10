@@ -2,6 +2,7 @@
 #include "CentipedeSegment.h"
 #include "CentipedeGame.h"
 #include "Mushroom.h"
+#include "Player.h"
 #include <math.h>
 
 CentipedeSegment::CentipedeSegment()
@@ -60,20 +61,25 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 //Kill this segement of the centipede if it collides with a Bullet.
 void CentipedeSegment::collideWith(GameObject * other)
 {
-	if (dynamic_cast<Bullet *>(other) != nullptr
-		|| dynamic_cast<Player *>(other) != nullptr)
+	deathCollisionDanger = false;
+	if (dynamic_cast<Player *>(other) != nullptr)
+	{
 		--health;
-	//if (dynamic_cast<Bullet *>(other) != nullptr)
-		//health = 0;
+		deathCollisionDanger = true;
+	}	
+	else if (dynamic_cast<Bullet *>(other) != nullptr)
+		--health;
 }
 
 
 //Kill the centipede segment and spawn a mushroom in its place.
 unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle) 
 {
-	readyToDie = true;
+	
+	if(!deathCollisionDanger)
+		gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
 
-	gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
+	readyToDie = true;
 
 	if (previous != nullptr)
 		previous->setAsHead();
@@ -86,7 +92,6 @@ unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle)
 void CentipedeSegment::setAsHead() {
 	setTexture("../Sprites/CentipedeSegment/head.png");
 }
-
 
 //Calculate the velocity of the sentipede to use in update.
 void CentipedeSegment::calculateVelocity() 

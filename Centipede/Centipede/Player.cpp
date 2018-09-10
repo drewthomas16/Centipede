@@ -52,6 +52,10 @@ void Player::update(CentipedeGame *gameHandle)
 	{
 		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 		shotBullet = true;
+
+		//SoundClip has to be here.
+		soundClip.loadFromFile("../Audio/bulletFire.ogg");
+		soundPlayer.play();
 	}
 	else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		shotBullet = false;
