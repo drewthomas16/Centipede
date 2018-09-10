@@ -336,3 +336,10 @@ sf::Vector2i CentipedeGame::getRelMousePos() {
 	mousePos *= scalar;
 	return sf::Vector2i(mousePos);
 }
+
+
+//Get object in the map
+std::shared_ptr<GameObject> CentipedeGame::getObject(int x, int y)
+{
+	return map.at(x).at(y).at(frame);
+}

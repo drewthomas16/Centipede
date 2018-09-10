@@ -19,8 +19,7 @@ public:
 	virtual void update(CentipedeGame*) = 0;
 	void render(sf::RenderTexture &);
 	virtual void collideWith(GameObject *);
-	bool canMoveTo(int x, int y);
-	//virtual void collideWith(std::vector<GameObject *> *);
+	bool canMoveTo(double x, double y);
 	sf::Vector2f getNearestCellPos(sf::Vector2f);
 
 	static sf::Vector2u oWD;
@@ -29,7 +28,7 @@ public:
 	virtual unsigned int die(bool&, CentipedeGame*);
 
 	char* getType();
-sf::Vector2f currentPosition;
+	sf::Vector2f currentPosition;
 protected:
 	void setPointValue(unsigned int);
 	void setVelocity(sf::Vector2f);

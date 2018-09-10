@@ -35,6 +35,7 @@ public:
 	static unsigned int clock;
 
 	unsigned int getCountOf(char*, unsigned int, unsigned int, unsigned int, unsigned int);
+	std::shared_ptr<GameObject> getObject(int x, int y);
 
 private:
 	void resolveCollisions();
