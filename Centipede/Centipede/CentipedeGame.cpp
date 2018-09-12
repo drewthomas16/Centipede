@@ -338,7 +338,7 @@ sf::Vector2i CentipedeGame::getRelMousePos() {
 }
 
 
-//Get object in the map
+//Get specific object in the map
 std::shared_ptr<GameObject> CentipedeGame::getObject(int x, int y)
 {
 	return map.at(x).at(y).at(frame);
