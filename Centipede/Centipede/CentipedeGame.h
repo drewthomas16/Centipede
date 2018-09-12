@@ -13,6 +13,17 @@ class CentipedeManager;
 class CentipedeGame
 {
 public:
+	enum GameObjectType
+	{
+		Centipede,
+		Mushroom,
+		Player,
+		Flea,
+		Scorpion,
+		Spider
+
+	};
+
 	CentipedeGame(sf::RenderWindow *, const sf::Vector2u);
 	~CentipedeGame();
 	bool update();
@@ -25,13 +36,15 @@ public:
 
 	template <typename type> std::shared_ptr<type> spawnObject(double x, double y) {
 		std::shared_ptr<type> thing(nullptr);
-		if (isInBounds(x, y)) {
+		if (isInBounds(x, y)) 
+		{
 			thing = std::make_shared<type>(x, y);
-			map[static_cast<int>(y)][static_cast<int>(x)][frame].push_back(thing);
+			GameObjectType where = type;
+			objects[where].push_back(thing);
 		}
 		return thing;
 	};
-	
+
 	static unsigned int clock;
 
 	unsigned int getCountOf(char*, unsigned int, unsigned int, unsigned int, unsigned int);
@@ -41,13 +54,17 @@ private:
 	void generateGrid();
 
 	void manageCentipedePopulation();
-	
+
 
 	void kill(std::shared_ptr<GameObject>&);
 	sf::VertexArray linePoints;
 
 	static bool frame;
-	static std::vector<std::shared_ptr<GameObject>> map[30][30][2];
+	//static std::vector<std::shared_ptr<GameObject>> map[30][30][2];
+	//refer to the enum GameObjectType to see where each object type is located.
+	std::vector<std::shared_ptr<GameObject>> objects[6];
+
+
 	sf::RenderWindow * window = nullptr;
 	const sf::Vector2u originalWindowDimensions;
 	static unsigned int score;
