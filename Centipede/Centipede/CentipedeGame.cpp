@@ -249,6 +249,24 @@ void CentipedeGame::resolveCollisions()
 						if (i != j)
 							map[y][x][frame].at(i)->collideWith(map[y][x][frame]
 								.at(j).get());
+
+	/*
+		std::vector<std::shared_ptr<GameObject>> entitylist;
+	//add everything to vector.
+	for (int y = 0; y < 30; ++y)
+		for (int x = 0; x < 30; ++x)
+			if (map[y][x][frame].size() > 1)//at coord
+				for (int i = 0; i < map[y][x][frame].size(); ++i)
+					for (int j = 0; j < map[y][x][frame].size(); ++j)
+						entitylist.push_back(map[y][x][frame].at(i));
+
+	for (int i = 0; i < entitylist.size(); ++i)
+		for (int j = 0; j < entitylist.size(); ++j)
+			if (entitylist.at(i)->getGlobalBounds()->intersects(*entitylist.at(j)->getGlobalBounds())
+				&& i != j)
+				entitylist.at(i)->collideWith(entitylist.at(j).get());
+
+	*/
 }
 
 

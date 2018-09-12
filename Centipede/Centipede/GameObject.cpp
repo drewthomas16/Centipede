@@ -12,6 +12,7 @@ sf::Vector2i GameObject::interval = sf::Vector2i(1, 1);
 GameObject::GameObject(int x, int y)
 {
 	currentPosition = sf::Vector2f(x, y);
+	//object.setOrigin(currentPosition);
 	soundPlayer.setBuffer(soundClip);
 }
 
@@ -64,6 +65,12 @@ void GameObject::setPixels()
 		* interval.y);
 }
 
+
+sf::FloatRect* GameObject::getGlobalBounds()
+{
+	sf::FloatRect* boundsPtr = &object.getGlobalBounds();
+	return boundsPtr;
+}
 
 //Method to kill the object.
 unsigned int GameObject::die(bool &readyToDie, CentipedeGame *gameHandle) 

@@ -26,6 +26,7 @@ public:
 	static sf::Vector2u oWD;
 	static sf::Vector2i interval;
 
+	virtual sf::FloatRect* getGlobalBounds();
 	virtual unsigned int die(bool&, CentipedeGame*);
 
 	char* getType();
@@ -40,7 +41,6 @@ protected:
 	unsigned int health = 1;
 	unsigned int pointValue = 0;
 	sf::Vector2f velocity;
-	
 	sf::Texture textureTemp;
 
 	sf::Sound soundPlayer;
