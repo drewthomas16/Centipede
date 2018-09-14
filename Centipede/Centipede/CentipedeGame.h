@@ -42,6 +42,8 @@ private:
 
 	void manageCentipedePopulation();
 	
+	//Holds all entities
+	std::vector<std::shared_ptr<GameObject>> entitylist;
 
 	void kill(std::shared_ptr<GameObject>&);
 	sf::VertexArray linePoints;

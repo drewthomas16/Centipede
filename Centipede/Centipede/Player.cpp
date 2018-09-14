@@ -68,6 +68,15 @@ void Player::update(CentipedeGame *gameHandle)
 
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
+
+	std::vector<sf::FloatRect> allOfTheBounds;
+
+	for (int i = 0; i < thingPtr->size(); ++i)
+		allOfTheBounds.push_back(*thingPtr->at(i)->getGlobalBounds());
+	
+	//Create a new instance of sprite adjusted for velocity and get bounding boxes.
+	//if the new bounding box collides with any of allOfTheBound's floatrects dont go forward.
+
 	if (gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
 			currentPosition.x += velocity.x;
 	if (gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
@@ -86,6 +95,11 @@ void Player::collideWith(GameObject * other)
 		health--;
 
 	//play a death anim here
+}
+
+void Player::setThingPtr(std::vector<std::shared_ptr<GameObject>>* gameList)
+{
+	thingPtr = gameList;
 }
 
 

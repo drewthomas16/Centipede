@@ -89,6 +89,7 @@ bool Mushroom::resetHeath()
 //Change what happens to the mushroom based off of what collided with the mushroom.
 void Mushroom::collideWith(GameObject* other)
 {
+	
 	if (dynamic_cast<Spider*>(other) != nullptr)
 	{
 		pointValue = 0;
@@ -99,6 +100,7 @@ void Mushroom::collideWith(GameObject* other)
 	if (dynamic_cast<Bullet*>(other) != nullptr)
 		--health;
 
+	std::cout << health << std::endl;
 }
 
 

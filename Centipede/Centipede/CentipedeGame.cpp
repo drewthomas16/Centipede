@@ -26,6 +26,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 
 	//create player
 	std::shared_ptr<Player> player = spawnObject<Player>(15, 29);
+	player->setThingPtr(&entitylist);
 
 	//randomly place mushrooms on map on startup
 	for (int y = 0; y < 29; ++y)
@@ -104,7 +105,7 @@ bool CentipedeGame::update()
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
 				if (map[y][x][frame].at(i)->getHealth() == 0)
 				{
-             					kill(map[y][x][frame].at(i));
+             		kill(map[y][x][frame].at(i));
 					map[y][x][frame].erase(map[y][x][frame].begin() + i);
 				}
 	#pragma endregion
@@ -241,6 +242,7 @@ void CentipedeGame::reset()
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
+	/*
 	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			if (map[y][x][frame].size() > 1)//at coord
@@ -250,23 +252,24 @@ void CentipedeGame::resolveCollisions()
 							map[y][x][frame].at(i)->collideWith(map[y][x][frame]
 								.at(j).get());
 
-	/*
-		std::vector<std::shared_ptr<GameObject>> entitylist;
+	*/
 	//add everything to vector.
 	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			if (map[y][x][frame].size() > 1)//at coord
-				for (int i = 0; i < map[y][x][frame].size(); ++i)
-					for (int j = 0; j < map[y][x][frame].size(); ++j)
-						entitylist.push_back(map[y][x][frame].at(i));
+				for(int i = 0; i < map[y][x][frame].size(); i++)
+					entitylist.push_back(map[y][x][frame].at(i));
 
 	for (int i = 0; i < entitylist.size(); ++i)
 		for (int j = 0; j < entitylist.size(); ++j)
-			if (entitylist.at(i)->getGlobalBounds()->intersects(*entitylist.at(j)->getGlobalBounds())
+			if ((entitylist.at(i)->getGlobalBounds())->intersects(*entitylist.at(j)->getGlobalBounds())
 				&& i != j)
+			{
 				entitylist.at(i)->collideWith(entitylist.at(j).get());
+				entitylist.at(j)->collideWith(entitylist.at(i).get());
+			}
+		
 
-	*/
 }
 
 
