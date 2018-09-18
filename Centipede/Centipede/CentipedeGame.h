@@ -13,23 +13,34 @@ class CentipedeManager;
 class CentipedeGame
 {
 public:
+	enum GameObjectType
+	{
+		Centipede,
+		Mushroom,
+		Player,
+		Flea,
+		Scorpion,
+		Spider
+
+	};
 
 	CentipedeGame(sf::RenderWindow *, const sf::Vector2u);
 	~CentipedeGame();
 	bool update();
 	void draw();
-	static bool isMushroomCell(double x, double y);
+	static bool isMushroomCell(unsigned int, unsigned int);
 	void reset();
 	void placeObject(unsigned int, unsigned int, std::shared_ptr<GameObject>);
 	sf::Vector2i getRelMousePos();
-	static bool isInBounds(double x, double y) { return x < 30 && x >= 0 && y < 30 && y >= 0; }
+	static bool isInBounds(unsigned int x, unsigned int y) { return x < 30 && y < 30; }
 
 	template <typename type> std::shared_ptr<type> spawnObject(double x, double y) {
 		std::shared_ptr<type> thing(nullptr);
 		if (isInBounds(x, y)) 
 		{
 			thing = std::make_shared<type>(x, y);
-			objects.push_back(thing);
+			GameObjectType where = type;
+			objects[where].push_back(thing);
 		}
 		return thing;
 	};
@@ -51,7 +62,7 @@ private:
 	static bool frame;
 	//static std::vector<std::shared_ptr<GameObject>> map[30][30][2];
 	//refer to the enum GameObjectType to see where each object type is located.
-	static std::vector<std::shared_ptr<GameObject>> objects;
+	std::vector<std::shared_ptr<GameObject>> objects[6];
 
 
 	sf::RenderWindow * window = nullptr;
@@ -81,16 +92,11 @@ private:
 
 	template <class type> std::shared_ptr<type> findFirstInstanceOf() {
 		std::shared_ptr<type> instance = nullptr;
-		/*for (int y = 0; y < 30; ++y)
+		for (int y = 0; y < 30; ++y)
 			for (int x = 0; x < 30; ++x)
 				for (int i = 0; i < map[y][x][frame].size(); ++i)
 					if (std::dynamic_pointer_cast<type>(map[y][x][frame].at(i)))
-						instance = std::dynamic_pointer_cast<type>(map[y][x][frame].at(i));*/
-
-		for (int i = 0; i < objects.size() && instance == nullptr; i++)
-			if (std::dynamic_pointer_cast<type> (objects.at(i)))
-				instance = std::dynamic_pointer_cast<type> (objects.at(i));
-
+						instance = std::dynamic_pointer_cast<type>(map[y][x][frame].at(i));
 		return instance;
 	}
 };

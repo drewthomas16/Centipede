@@ -8,12 +8,10 @@
 #include "CentipedeSegment.h"
 #include "Spider.h"
 #include "CentipedeManager.h"
-#include "Player.h"
-#include "Mushroom.h"
 
 bool CentipedeGame::frame = false;
 //Vector of all of the entities shown on the map.
-//std::vector<std::shared_ptr<GameObject>> CentipedeGame::map[30][30][2] = {};
+std::vector<std::shared_ptr<GameObject>> CentipedeGame::map[30][30][2] = {};
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
 int CentipedeGame::playerLives = -1;
 static int lastPlayerLives;
@@ -27,7 +25,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	window = renderWindow;
 
 	//create player
-	std::shared_ptr<Player> player = spawnObject<Player>(15.0, 29.0);
+	std::shared_ptr<Player> player = spawnObject<Player>(15, 29);
 
 	//randomly place mushrooms on map on startup
 	for (int y = 0; y < 29; ++y)
@@ -64,7 +62,9 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 //Clear the game so there is no memory problems.
 CentipedeGame::~CentipedeGame()
 {
-	objects.clear();
+	for (int y = 0; y < 30; ++y)
+		for (int x = 0; x < 30; ++x)
+			map[y][x][frame].clear();
 
 	delete centMan;
 }
@@ -75,18 +75,15 @@ static bool liveFlea = false;
 bool CentipedeGame::update()
 {
 	//update objects
-	/*for (int y = 0; y < 30; ++y)
+	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				map[y][x][frame].at(i)->update(this);*/
-
-	for (int j = 0; j < objects.size(); j++)
-		objects.at(j)->update(this);
+				map[y][x][frame].at(i)->update(this);
 
 	frame = !frame;
 
 	//migrates map from frame a to frame b
-	/*for (int y = 0; y < 30; ++y)
+	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][!frame].size(); ++i)
 				placeObject(map[y][x][!frame].at(i)->getPosition().x, 
@@ -96,30 +93,24 @@ bool CentipedeGame::update()
 	//clear the old map from other frame
 	for (int y = 0; y < 30; y++)
 		for (int x = 0; x < 30; x++)
-			map[y][x][!frame].clear();*/
+			map[y][x][!frame].clear();
 
 	resolveCollisions();
 
 	//remove items with 0 health
 	#pragma region mapCleanup
-	/*for (int y = 0; y < 30; ++y)
+	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
 				if (map[y][x][frame].at(i)->getHealth() == 0)
 				{
              					kill(map[y][x][frame].at(i));
 					map[y][x][frame].erase(map[y][x][frame].begin() + i);
-				}*/
-	for(int j = 0; j < objects.size(); j++)
-		if (objects.at(j)->getHealth() == 0)
-		{
-			kill(objects.at(j));
-			objects.erase(objects.begin() + 1);
-		}
+				}
 	#pragma endregion
 
 	//update player health display
-	/*lastPlayerLives = playerLives;
+	lastPlayerLives = playerLives;
 	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
@@ -140,7 +131,7 @@ bool CentipedeGame::update()
 		spawnObject<Flea>(xpos, 0);
 		liveFlea = true;
 	}
-	#pragma endregion*/
+	#pragma endregion
 
 	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
@@ -158,7 +149,7 @@ bool CentipedeGame::update()
 	if (lastPlayerLives > playerLives)//player dies
 	{
 		//rebuild mushroom
-		/*for (int x = 0; x < 30; ++x)
+		for (int x = 0; x < 30; ++x)
 			for (int y = 0; y < 30; ++y)
 				for (int i = 0; i < map[y][x][frame].size(); ++i)
 					if (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame].at(i)))
@@ -168,15 +159,7 @@ bool CentipedeGame::update()
 							draw();
 							std::dynamic_pointer_cast<Mushroom> (map[y][x][frame]
 								.at(i))->resetHeath();
-						}*/
-
-		for(int i = 0; i < objects.size(); i++)
-			if(std::dynamic_pointer_cast<Mushroom> (objects.at(i)))
-				while (objects.at(i)->getHealth() < 4)
-				{
-					draw();
-					std::dynamic_pointer_cast<Mushroom> (objects.at(i))->resetHeath();
-				}
+						}
 
 		//killCentipedes();
 	}
@@ -225,12 +208,10 @@ void CentipedeGame::draw()
 	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
 
 	//draw all objects in map
-	/*for (int y = 0; y < 30; ++y)
+	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				map[y][x][frame].at(i)->render(playerArea);*/
-	for (int j = 0; j < objects.size(); j++)
-		objects.at(j)->render(playerArea);
+				map[y][x][frame].at(i)->render(playerArea);
 
 	window->draw(playerAreaSprite);
 	window->draw(scoreAreaSprite);
@@ -239,14 +220,13 @@ void CentipedeGame::draw()
 
 
 //Check to see if there is a mushroom in a certain x and y location.
-bool CentipedeGame::isMushroomCell(double x, double y)
+bool CentipedeGame::isMushroomCell(unsigned int x, unsigned int y)
 {
 	if (x < 30 && y < 30)
-		for (int i = 0; i < objects.size(); i++)
-			if (objects.at(i)->currentPosition.x == x
-				&& objects.at(i)->currentPosition.y == y)
+		for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
+			.size(); i++)
+			if (std::dynamic_pointer_cast<Mushroom>(CentipedeGame::map[y][x][CentipedeGame::frame].at(i)))
 				return true;
-
 	return false;
 }
 
@@ -261,26 +241,26 @@ void CentipedeGame::reset()
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
-	/*for (int y = 0; y < 30; ++y)
+	for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			if (map[y][x][frame].size() > 1)//at coord
 				for (int i = 0; i < map[y][x][frame].size(); ++i)
 					for (int j = 0; j < map[y][x][frame].size(); ++j)
 						if (i != j)
 							map[y][x][frame].at(i)->collideWith(map[y][x][frame]
-								.at(j).get());*/
+								.at(j).get());
 }
 
 
 //Put an object on the new frame.
-/*void CentipedeGame::placeObject(unsigned int x, unsigned int y, 
+void CentipedeGame::placeObject(unsigned int x, unsigned int y, 
 	std::shared_ptr<GameObject> object)
 {
 	if (x < 30 && y < 30)//keep object in bounds of array
 		map[y][x][frame].push_back(object);
 	else
 		kill(object);
-}*/
+}
 
 
 //Kill an object that needs to and output useful information.
@@ -315,14 +295,14 @@ void CentipedeGame::generateGrid() {
 
 //Count how many things you have. You must specify which thing you want to count.
 unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) {
-	unsigned int count = objects.size();
-	/*for (int y = startY; y < endY; ++y)//check mushrooms in player position
+	unsigned int count = 0;
+	for (int y = startY; y < endY; ++y)//check mushrooms in player position
 		for (int x = startX; x < endX; ++x)
 			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
 				.size(); i++)
 				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame]
 					.at(i)->getType(), type))
-					++count;*/
+					++count;
 	return count;
 }
 
