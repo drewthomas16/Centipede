@@ -8,6 +8,8 @@ sf::Vector2u GameObject::oWD = sf::Vector2u(0, 0);
 sf::Vector2i GameObject::interval = sf::Vector2i(1, 1);
 
 
+
+
 //Constructor to set x and y positions and play sound.
 GameObject::GameObject(int x, int y)
 {

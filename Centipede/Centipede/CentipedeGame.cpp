@@ -17,6 +17,7 @@ bool CentipedeGame::frame = false;
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
 int CentipedeGame::playerLives = -1;
 static int lastPlayerLives;
+std::vector<std::shared_ptr<GameObject>> CentipedeGame::objects = {};
 
 
 //Create centipede game loop.
@@ -292,6 +293,7 @@ void CentipedeGame::generateGrid() {
 //Count how many things you have. You must specify which thing you want to count.
 unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) {
 	unsigned int count = 0;
+	/*
 	for (int y = startY; y < endY; ++y)//check mushrooms in player position
 		for (int x = startX; x < endX; ++x)
 			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
@@ -299,6 +301,7 @@ unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsi
 				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame]
 					.at(i)->getType(), type))
 					++count;
+					*/
 	return count;
 }
 
