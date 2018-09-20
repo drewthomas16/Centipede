@@ -260,7 +260,8 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 
 
 //Kill an object that needs to and output useful information.
-void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
+void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 
+{
 	bool readyToDie;
 	std::cout << "i exist " << thing.use_count() << " times\n";
 
@@ -274,7 +275,8 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
 
 
 //Make a grid that the rest of the game can use.
-void CentipedeGame::generateGrid() {
+void CentipedeGame::generateGrid() 
+{
 	int scalar = originalWindowDimensions.x / 30;
 	sf::Color col(20, 20, 20);
 
@@ -291,7 +293,8 @@ void CentipedeGame::generateGrid() {
 
 
 //Count how many things you have. You must specify which thing you want to count.
-unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) 
+unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, 
+	unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) 
 {
 	unsigned int count = 0;
 	/*
@@ -309,7 +312,8 @@ unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsi
 
 // If the getCounOf("CentipedeSegment", 0, 0, 30, 30) returns a number less than
 //0 then you know that there is no longer a centipede on the board.
-void CentipedeGame::manageCentipedePopulation() {
+void CentipedeGame::manageCentipedePopulation() 
+{
 	if (activeCentipede) {
 		//check if centipede has died
 		activeCentipede = getCountOf("CentipedeSegment", 0, 0, 30, 30) > 0;
@@ -330,7 +334,8 @@ void CentipedeGame::drawLives()
 
 
 //Get the position of the mouse.
-sf::Vector2i CentipedeGame::getRelMousePos() {
+sf::Vector2i CentipedeGame::getRelMousePos() 
+{
 	sf::Vector2f mousePos(sf::Mouse::getPosition(*window));
 	float scalar = static_cast<float>(GameObject::oWD.x) / window->getSize().x;
 	mousePos *= scalar;
