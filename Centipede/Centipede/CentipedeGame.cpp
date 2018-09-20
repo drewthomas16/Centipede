@@ -20,7 +20,7 @@ static int lastPlayerLives;
 
 
 //Create centipede game loop.
-CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow, 
+CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	const sf::Vector2u oWD) : originalWindowDimensions(oWD)
 {
 	GameObject::oWD = oWD;
@@ -89,8 +89,8 @@ bool CentipedeGame::update()
 	/*for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][!frame].size(); ++i)
-				placeObject(map[y][x][!frame].at(i)->getPosition().x, 
-					map[y][x][!frame].at(i)->getPosition().y, 
+				placeObject(map[y][x][!frame].at(i)->getPosition().x,
+					map[y][x][!frame].at(i)->getPosition().y,
 					map[y][x][!frame].at(i));
 
 	//clear the old map from other frame
@@ -101,22 +101,22 @@ bool CentipedeGame::update()
 	resolveCollisions();
 
 	//remove items with 0 health
-	#pragma region mapCleanup
-	/*for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				if (map[y][x][frame].at(i)->getHealth() == 0)
-				{
-             					kill(map[y][x][frame].at(i));
-					map[y][x][frame].erase(map[y][x][frame].begin() + i);
-				}*/
-	for(int j = 0; j < objects.size(); j++)
+#pragma region mapCleanup
+/*for (int y = 0; y < 30; ++y)
+	for (int x = 0; x < 30; ++x)
+		for (int i = 0; i < map[y][x][frame].size(); ++i)
+			if (map[y][x][frame].at(i)->getHealth() == 0)
+			{
+							kill(map[y][x][frame].at(i));
+				map[y][x][frame].erase(map[y][x][frame].begin() + i);
+			}*/
+	for (int j = 0; j < objects.size(); j++)
 		if (objects.at(j)->getHealth() == 0)
 		{
 			kill(objects.at(j));
 			objects.erase(objects.begin() + 1);
 		}
-	#pragma endregion
+#pragma endregion
 
 	//update player health display
 	/*lastPlayerLives = playerLives;
@@ -146,7 +146,7 @@ bool CentipedeGame::update()
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
 	//check if live spider
-	if (!findFirstInstanceOf<Spider>() &&  (rand() % 2000) < 5)//no spider check if able to respawn
+	if (!findFirstInstanceOf<Spider>() && (rand() % 2000) < 5)//no spider check if able to respawn
 	{
 		//std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
 		//	% 30 < 15 ? 0 : 29, rand() % 5 + 18);
@@ -170,8 +170,8 @@ bool CentipedeGame::update()
 								.at(i))->resetHeath();
 						}*/
 
-		for(int i = 0; i < objects.size(); i++)
-			if(std::dynamic_pointer_cast<Mushroom> (objects.at(i)))
+		for (int i = 0; i < objects.size(); i++)
+			if (std::dynamic_pointer_cast<Mushroom> (objects.at(i)))
 				while (objects.at(i)->getHealth() < 4)
 				{
 					draw();
@@ -254,7 +254,7 @@ bool CentipedeGame::isMushroomCell(double x, double y)
 //start a level
 void CentipedeGame::reset()
 {
-	
+
 }
 
 
@@ -273,7 +273,7 @@ void CentipedeGame::resolveCollisions()
 
 
 //Put an object on the new frame.
-/*void CentipedeGame::placeObject(unsigned int x, unsigned int y, 
+/*void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 	std::shared_ptr<GameObject> object)
 {
 	if (x < 30 && y < 30)//keep object in bounds of array
@@ -292,7 +292,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) {
 	if (readyToDie)
 		//thing.reset();
 
-	std::cout << "score is now " << score << std::endl;
+		std::cout << "score is now " << score << std::endl;
 }
 
 
