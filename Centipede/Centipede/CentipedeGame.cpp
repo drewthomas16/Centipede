@@ -291,25 +291,18 @@ void CentipedeGame::generateGrid() {
 
 
 //Count how many things you have. You must specify which thing you want to count.
-unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) {
+unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) 
+{
 	unsigned int count = 0;
-<<<<<<< HEAD
 	/*
 	for (int y = startY; y < endY; ++y)//check mushrooms in player position
-=======
-	/*for (int y = startY; y < endY; ++y)//check mushrooms in player position
->>>>>>> bb981de995d5a627538641aaf6b872da88112a02
 		for (int x = startX; x < endX; ++x)
 			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
 				.size(); i++)
 				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame]
 					.at(i)->getType(), type))
-<<<<<<< HEAD
-					++count;
-					*/
-=======
+
 					++count;*/
->>>>>>> bb981de995d5a627538641aaf6b872da88112a02
 	return count;
 }
 
