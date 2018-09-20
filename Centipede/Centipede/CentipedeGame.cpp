@@ -74,42 +74,16 @@ static bool liveFlea = false;
 //Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
-	//update objects
-	/*for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				map[y][x][frame].at(i)->update(this);*/
-
 	for (int j = 0; j < objects.size(); j++)
 		objects.at(j)->update(this);
 
 	frame = !frame;
 
-	//migrates map from frame a to frame b
-	/*for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			for (int i = 0; i < map[y][x][!frame].size(); ++i)
-				placeObject(map[y][x][!frame].at(i)->getPosition().x,
-					map[y][x][!frame].at(i)->getPosition().y,
-					map[y][x][!frame].at(i));
-
-	//clear the old map from other frame
-	for (int y = 0; y < 30; y++)
-		for (int x = 0; x < 30; x++)
-			map[y][x][!frame].clear();*/
-
 	resolveCollisions();
 
 	//remove items with 0 health
 #pragma region mapCleanup
-/*for (int y = 0; y < 30; ++y)
-	for (int x = 0; x < 30; ++x)
-		for (int i = 0; i < map[y][x][frame].size(); ++i)
-			if (map[y][x][frame].at(i)->getHealth() == 0)
-			{
-							kill(map[y][x][frame].at(i));
-				map[y][x][frame].erase(map[y][x][frame].begin() + i);
-			}*/
+
 	for (int j = 0; j < objects.size(); j++)
 		if (objects.at(j)->getHealth() == 0)
 		{
@@ -148,28 +122,15 @@ bool CentipedeGame::update()
 	//check if live spider
 	if (!findFirstInstanceOf<Spider>() && (rand() % 2000) < 5)//no spider check if able to respawn
 	{
-		//std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
-		//	% 30 < 15 ? 0 : 29, rand() % 5 + 18);
-		//spider->setTarget(findFirstInstanceOf<Player>());
+		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
+			% 30 < 15 ? 0 : 29, rand() % 5 + 18);
+		spider->setTarget(findFirstInstanceOf<Player>());
 	}
 
 	//this should be happening when player dies
 #pragma region rebuildMushroom
 	if (lastPlayerLives > playerLives)//player dies
 	{
-		//rebuild mushroom
-		/*for (int x = 0; x < 30; ++x)
-			for (int y = 0; y < 30; ++y)
-				for (int i = 0; i < map[y][x][frame].size(); ++i)
-					if (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame].at(i)))
-						while (std::dynamic_pointer_cast<Mushroom> (map[y][x][frame]
-							.at(i))->getHealth() < 4)
-						{
-							draw();
-							std::dynamic_pointer_cast<Mushroom> (map[y][x][frame]
-								.at(i))->resetHeath();
-						}*/
-
 		for (int i = 0; i < objects.size(); i++)
 			if (std::dynamic_pointer_cast<Mushroom> (objects.at(i)))
 				while (objects.at(i)->getHealth() < 4)
@@ -224,11 +185,6 @@ void CentipedeGame::draw()
 
 	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
 
-	//draw all objects in map
-	/*for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				map[y][x][frame].at(i)->render(playerArea);*/
 	for (int j = 0; j < objects.size(); j++)
 		objects.at(j)->render(playerArea);
 
@@ -273,14 +229,16 @@ void CentipedeGame::resolveCollisions()
 
 
 //Put an object on the new frame.
-/*void CentipedeGame::placeObject(unsigned int x, unsigned int y,
+void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 	std::shared_ptr<GameObject> object)
 {
 	if (x < 30 && y < 30)//keep object in bounds of array
-		map[y][x][frame].push_back(object);
+	{
+		objects.push_back(object);
+	}
 	else
 		kill(object);
-}*/
+}
 
 
 //Kill an object that needs to and output useful information.
