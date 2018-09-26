@@ -13,11 +13,12 @@
 
 bool CentipedeGame::frame = false;
 //Vector of all of the entities shown on the map.
-//std::vector<std::shared_ptr<GameObject>> CentipedeGame::map[30][30][2] = {};
+std::vector<std::shared_ptr<GameObject>> CentipedeGame::objects[numObjects];
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
 int CentipedeGame::playerLives = -1;
 static int lastPlayerLives;
-std::vector<std::shared_ptr<GameObject>> CentipedeGame::objects = {};
+
+int numObjects;
 
 
 //Create centipede game loop.
@@ -65,7 +66,8 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 //Clear the game so there is no memory problems.
 CentipedeGame::~CentipedeGame()
 {
-	objects.clear();
+	for(int i = 0; i < numObjects; i++)
+		objects[i].clear();
 
 	delete centMan;
 }
@@ -75,8 +77,9 @@ static bool liveFlea = false;
 //Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
-	for (int j = 0; j < objects.size(); j++)
-		objects.at(j)->update(this);
+	for(int i = 0; i < numObjects; i++)
+		for (int j = 0; j < objects[i].size(); j++)
+			objects[i].at(j)->update(this);
 
 	frame = !frame;
 
@@ -84,13 +87,13 @@ bool CentipedeGame::update()
 
 	//remove items with 0 health
 #pragma region mapCleanup
-
-	for (int j = 0; j < objects.size(); j++)
-		if (objects.at(j)->getHealth() == 0)
-		{
-			kill(objects.at(j));
-			objects.erase(objects.begin() + 1);
-		}
+	for(int i = 0; i < numObjects; i++)
+		for (int j = 0; j < objects[i].size(); j++)
+			if (objects[i].at(j)->getHealth() == 0)
+			{
+				kill(objects[i].at(j));
+				objects[i].erase(objects[i].begin());
+			}
 #pragma endregion
 
 	//update player health display
@@ -132,13 +135,12 @@ bool CentipedeGame::update()
 #pragma region rebuildMushroom
 	if (lastPlayerLives > playerLives)//player dies
 	{
-		for (int i = 0; i < objects.size(); i++)
-			if (std::dynamic_pointer_cast<Mushroom> (objects.at(i)))
-				while (objects.at(i)->getHealth() < 4)
-				{
-					draw();
-					std::dynamic_pointer_cast<Mushroom> (objects.at(i))->resetHeath();
-				}
+		for (int i = 0; i < objects[mushroom].size(); i++)
+			while (objects[mushroom].at(i)->getHealth() < 4)
+			{
+				draw();
+				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
+			}
 
 		//killCentipedes();
 	}
@@ -186,8 +188,9 @@ void CentipedeGame::draw()
 
 	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
 
-	for (int j = 0; j < objects.size(); j++)
-		objects.at(j)->render(playerArea);
+	for(int i = 0; i < numObjects; i++)
+		for (int j = 0; j < objects[i].size(); j++)
+			objects[i].at(j)->render(playerArea);
 
 	window->draw(playerAreaSprite);
 	window->draw(scoreAreaSprite);
@@ -199,9 +202,9 @@ void CentipedeGame::draw()
 bool CentipedeGame::isMushroomCell(double x, double y)
 {
 	if (x < 30 && y < 30)
-		for (int i = 0; i < objects.size(); i++)
-			if (objects.at(i)->currentPosition.x == x
-				&& objects.at(i)->currentPosition.y == y)
+		for (int i = 0; i < objects[mushroom].size(); i++)
+			if (objects[mushroom].at(i)->currentPosition.x == x
+				&& objects[mushroom].at(i)->currentPosition.y == y)
 				return true;
 	return false;
 }
@@ -243,6 +246,56 @@ void CentipedeGame::resolveCollisions()
 				entitylist.at(i)->collideWith(entitylist.at(j).get());
 
 	*/
+	//Player
+	for (int i = 0; i < objects[player].size(); i++)
+	{
+		//to Mushroom
+		for (int j = 0; j < objects[mushroom].size(); j++)
+			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[mushroom].at(j)->getGlobalBounds()))
+				objects[player].at(i)->collideWith(objects[mushroom].at(j).get());
+		//to CentipedeSegment
+		for (int j = 0; j < objects[centipedeSegment].size(); j++)
+			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[centipedeSegment].at(j)->getGlobalBounds()))
+				objects[player].at(i)->collideWith(objects[centipedeSegment].at(j).get());//to Spider
+		//to Spider
+		for (int j = 0; j < objects[spider].size(); j++)
+			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[spider].at(j)->getGlobalBounds()))
+				objects[player].at(i)->collideWith(objects[spider].at(j).get());
+		//to Scorpion
+		for (int j = 0; j < objects[scorpion].size(); j++)
+			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[scorpion].at(j)->getGlobalBounds()))
+				objects[player].at(i)->collideWith(objects[scorpion].at(j).get());
+		//to Flea
+		for (int j = 0; j < objects[flea].size(); j++)
+			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[flea].at(j)->getGlobalBounds()))
+				objects[player].at(i)->collideWith(objects[flea].at(j).get());
+
+	}
+
+	//Bullet
+	for (int i = 0; i < objects[bullet].size(); i++)
+	{
+		//to Mushroom
+		for (int j = 0; j < objects[mushroom].size(); j++)
+			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[mushroom].at(j)->getGlobalBounds()))
+				objects[bullet].at(i)->collideWith(objects[mushroom].at(j).get());
+		//to CentipedeSegment
+		for (int j = 0; j < objects[centipedeSegment].size(); j++)
+			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[centipedeSegment].at(j)->getGlobalBounds()))
+				objects[bullet].at(i)->collideWith(objects[centipedeSegment].at(j).get());
+		//to Spider
+		for (int j = 0; j < objects[spider].size(); j++)
+			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[spider].at(j)->getGlobalBounds()))
+				objects[bullet].at(i)->collideWith(objects[spider].at(j).get());
+		//to Scorpion
+		for (int j = 0; j < objects[scorpion].size(); j++)
+			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[scorpion].at(j)->getGlobalBounds()))
+				objects[bullet].at(i)->collideWith(objects[scorpion].at(j).get());
+		//to Flea
+		for (int j = 0; j < objects[flea].size(); j++)
+			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[flea].at(j)->getGlobalBounds()))
+				objects[bullet].at(i)->collideWith(objects[flea].at(j).get());
+	}
 }
 
 
@@ -250,9 +303,10 @@ void CentipedeGame::resolveCollisions()
 void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 	std::shared_ptr<GameObject> object)
 {
-	if (x < 30 && y < 30)//keep object in bounds of array
+	//keep object in bounds of array
+	if (x < 30 && y < 30)
 	{
-		objects.push_back(object);
+		//objects.push_back(object);
 	}
 	else
 		kill(object);
