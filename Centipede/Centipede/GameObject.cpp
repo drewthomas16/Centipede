@@ -70,8 +70,10 @@ void GameObject::setPixels()
 
 sf::FloatRect* GameObject::getGlobalBounds()
 {
-	sf::FloatRect* boundsPtr = &object.getGlobalBounds();
-	return boundsPtr;
+	sf::FloatRect boundsPtr = object.getGlobalBounds();
+	boundsPtr.left = currentPosition.x;
+	boundsPtr.top = currentPosition.y;
+	return &boundsPtr;
 }
 
 //Method to kill the object.
