@@ -25,11 +25,14 @@ Bullet::~Bullet()
 }
 
 
-void Bullet::update(CentipedeGame*)
+void Bullet::update(CentipedeGame* gameHandle)
 {
 	//update bullet pos every tick based on velocity.
 	if (CentipedeGame::clock % delay == 0)
-		currentPosition.y += velocity.y;
+		if(gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
+			currentPosition.y += velocity.y;
+		else
+			health = 0;
 }
 
 
@@ -37,6 +40,8 @@ void Bullet::update(CentipedeGame*)
 void Bullet::collideWith(GameObject * other)
 {
 	health = 0;
+	std::cout << "help" << std::endl;
+	other->collideWith(this);
 }
 
 

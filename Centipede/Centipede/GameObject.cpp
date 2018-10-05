@@ -15,6 +15,7 @@ GameObject::GameObject(int x, int y)
 {
 	currentPosition = sf::Vector2f(x, y);
 	object.setOrigin(currentPosition);
+	object.setPosition(currentPosition);
 	soundPlayer.setBuffer(soundClip);
 }
 
@@ -30,12 +31,13 @@ void GameObject::render(sf::RenderTexture & playerArea)
 //Method to check if GameObjects collide.
 void GameObject::collideWith(GameObject *)
 {
+	std::cout << "h" << std::endl;
 	return;
 }
 
 //Make sure that a centipede can move somewhere by checking to make sure there
 //is no mushroom there and it is not off the screen.
-bool GameObject::canMoveTo(int x, int y)
+bool GameObject::canMoveTo(double x, double y)
 {
 	return !CentipedeGame::isMushroomCell(x, y) && x >= 0 && x <= 29 && y >= 0
 		&& y <= 29;
@@ -68,17 +70,20 @@ void GameObject::setPixels()
 }
 
 
-sf::FloatRect* GameObject::getGlobalBounds()
+sf::Sprite* GameObject::getSprite()
 {
-	object.setPosition(currentPosition);
-	object.setOrigin(object.getPosition());
+	sf::Vector2f realPos(currentPosition.x
+		* interval.x, currentPosition.y
+		* interval.y);
+	object.setPosition(realPos);
 	
-	sf::FloatRect* boundsPtr = &object.getGlobalBounds();
-	return boundsPtr;
-	sf::FloatRect boundsPtr = object.getGlobalBounds();
+	/*
+	std::cout << boundsPtr.left << std::endl;
 	boundsPtr.left = currentPosition.x;
+	std::cout << boundsPtr.left << std::endl;
 	boundsPtr.top = currentPosition.y;
-	return &boundsPtr;
+	*/
+	return &object;
 }
 
 //Method to kill the object.

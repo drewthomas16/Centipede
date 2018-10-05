@@ -229,10 +229,9 @@ void CentipedeGame::resolveCollisions()
 					for (int j = 0; j < map[y][x][frame].size(); ++j)
 						entitylist.push_back(map[y][x][frame].at(i));
 	*/
-	std::vector<std::shared_ptr<GameObject>> entitylist = objects;
-	
 	//Objects bounds' position always same figure out why.
 
+	/*
 	for (int i = 0; i < entitylist.size(); ++i)
 	{
 		for (int j = 0; j < entitylist.size(); ++j)
@@ -246,57 +245,80 @@ void CentipedeGame::resolveCollisions()
 			}
 		}
 	}
-		
-
+	*/	
+	/*
+	Hypothesis:
+	One entity is never killed
+	Hitboxes need to be fixed
 	*/
+	if(objects[player].size() > 0)
+		for(int i = 0; i < 7; ++i)
+			for (int j = 0; j < objects[i].size(); ++j)
+			{
+				std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().top << ')';
+				std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
+			}
+				
+
+	
 	//Player
 	for (int i = 0; i < objects[player].size(); i++)
 	{
 		//to Mushroom
 		for (int j = 0; j < objects[mushroom].size(); j++)
-			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[mushroom].at(j)->getGlobalBounds()))
+			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
+			{ 
 				objects[player].at(i)->collideWith(objects[mushroom].at(j).get());
+				std::cout << '(' << objects[player].at(i)->getSprite()->getGlobalBounds().left << ',' << objects[player].at(i)->getSprite()->getGlobalBounds().top << ')';
+				std::cout << '(' << objects[player].at(i)->getSprite()->getGlobalBounds().width << ',' << objects[player].at(i)->getSprite()->getGlobalBounds().height << ')' << std::endl;
+				std::cout << std::endl;
+				std::cout << '(' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().top << ')';
+				std::cout << '(' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
+			}
 		//to CentipedeSegment
 		for (int j = 0; j < objects[centipedeSegment].size(); j++)
-			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[centipedeSegment].at(j)->getGlobalBounds()))
+			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[centipedeSegment].at(j)->getSprite()->getGlobalBounds()))
 				objects[player].at(i)->collideWith(objects[centipedeSegment].at(j).get());//to Spider
 		//to Spider
 		for (int j = 0; j < objects[spider].size(); j++)
-			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[spider].at(j)->getGlobalBounds()))
+			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[spider].at(j)->getSprite()->getGlobalBounds()))
 				objects[player].at(i)->collideWith(objects[spider].at(j).get());
 		//to Scorpion
 		for (int j = 0; j < objects[scorpion].size(); j++)
-			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[scorpion].at(j)->getGlobalBounds()))
+			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[scorpion].at(j)->getSprite()->getGlobalBounds()))
 				objects[player].at(i)->collideWith(objects[scorpion].at(j).get());
 		//to Flea
 		for (int j = 0; j < objects[flea].size(); j++)
-			if (objects[player].at(i)->getGlobalBounds()->intersects(*objects[flea].at(j)->getGlobalBounds()))
+			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[flea].at(j)->getSprite()->getGlobalBounds()))
 				objects[player].at(i)->collideWith(objects[flea].at(j).get());
 
 	}
-
+	std::cout << objects[bullet].size() << std::endl;
 	//Bullet
 	for (int i = 0; i < objects[bullet].size(); i++)
 	{
 		//to Mushroom
 		for (int j = 0; j < objects[mushroom].size(); j++)
-			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[mushroom].at(j)->getGlobalBounds()))
+			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
+			{
 				objects[bullet].at(i)->collideWith(objects[mushroom].at(j).get());
+				std::cout << "foobar" << std::endl;
+			}
 		//to CentipedeSegment
 		for (int j = 0; j < objects[centipedeSegment].size(); j++)
-			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[centipedeSegment].at(j)->getGlobalBounds()))
+			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[centipedeSegment].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[centipedeSegment].at(j).get());
 		//to Spider
 		for (int j = 0; j < objects[spider].size(); j++)
-			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[spider].at(j)->getGlobalBounds()))
+			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[spider].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[spider].at(j).get());
 		//to Scorpion
 		for (int j = 0; j < objects[scorpion].size(); j++)
-			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[scorpion].at(j)->getGlobalBounds()))
+			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[scorpion].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[scorpion].at(j).get());
 		//to Flea
 		for (int j = 0; j < objects[flea].size(); j++)
-			if (objects[bullet].at(i)->getGlobalBounds()->intersects(*objects[flea].at(j)->getGlobalBounds()))
+			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[flea].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[flea].at(j).get());
 	}
 }
@@ -330,7 +352,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 	std::cout << "score is now " << score << std::endl;
 }
 
-
+/*
 //Make a grid that the rest of the game can use.
 void CentipedeGame::generateGrid() 
 {
@@ -347,7 +369,7 @@ void CentipedeGame::generateGrid()
 			linePoints[index + offset].color = col;
 	}
 }
-
+*/
 
 //Count how many things you have. You must specify which thing you want to count.
 unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, 

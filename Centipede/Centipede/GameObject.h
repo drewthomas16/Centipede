@@ -19,14 +19,14 @@ public:
 	virtual void update(CentipedeGame*) = 0;
 	void render(sf::RenderTexture &);
 	virtual void collideWith(GameObject *);
-	bool canMoveTo(int x, int y);
+	bool canMoveTo(double x, double y);
 	//virtual void collideWith(std::vector<GameObject *> *);
 	sf::Vector2f getNearestCellPos(sf::Vector2f);
 
 	static sf::Vector2u oWD;
 	static sf::Vector2i interval;
 
-	virtual sf::FloatRect* getGlobalBounds();
+	virtual sf::Sprite* getSprite();
 	virtual unsigned int die(bool&, CentipedeGame*);
 
 	char* getType();

@@ -77,7 +77,9 @@ void Player::update(CentipedeGame *gameHandle)
 void Player::collideWith(GameObject * other)
 {
 	if (dynamic_cast<CentipedeSegment *>(other) != nullptr)
+	{
 		health--;
+	}
 	else if (dynamic_cast<Flea *>(other) != nullptr)
 		health--;
 	else if (dynamic_cast<Scorpion *>(other) != nullptr)
