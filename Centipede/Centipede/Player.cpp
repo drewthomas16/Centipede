@@ -90,32 +90,3 @@ void Player::collideWith(GameObject * other)
 
 	//play a death anim here
 }
-
-
-/*Old player method.
-
-setVelocity(
-		sf::Vector2i(getNearestCellPos(gameHandle->getRelMousePos()).x - currentPosition.x,
-		getNearestCellPos(gameHandle->getRelMousePos()).y-currentPosition.y));
-
-	currentPosition = getNearestCellPos(gameHandle->getRelMousePos());
-	//currentPosition /= static_cast<int>(interval.x);
-	//if (!mushroom in way)
-	//goto mouse
-	//else
-
-	// go untill hit mushroom
-	/*
-	if ((30 - currentPosition.y) > 12)
-	currentPosition.y = 30-12;
-	if (currentPosition.y > 29)
-	currentPosition.y = 29;
-	if (currentPosition.x < 0)
-	currentPosition.x = 0;
-	if (currentPosition.x > 29)
-	currentPosition.x = 29;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !Bullet::liveBullet)
-	{
-		//gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
-	}*/
-	//object.setPosition(gameHandle->getRelMousePos().x, gameHandle->getRelMousePos().y);

@@ -98,11 +98,6 @@ bool CentipedeGame::update()
 
 	//update player health display
 	lastPlayerLives = playerLives;
-	/*for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			for (int i = 0; i < map[y][x][frame].size(); ++i)
-				if (std::dynamic_pointer_cast<Player> (map[y][x][frame].at(i)))
-					playerLives = map[y][x][frame].at(i)->getHealth();*/
 	playerLives = objects[player].at(0)->getHealth();
 
 	//check if flea needs to be spawned
@@ -222,47 +217,6 @@ void CentipedeGame::reset()
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
-	/*
-	//add everything to vector.
-	for (int y = 0; y < 30; ++y)
-		for (int x = 0; x < 30; ++x)
-			if (map[y][x][frame].size() > 1)//at coord
-				for (int i = 0; i < map[y][x][frame].size(); ++i)
-					for (int j = 0; j < map[y][x][frame].size(); ++j)
-						entitylist.push_back(map[y][x][frame].at(i));
-	*/
-	//Objects bounds' position always same figure out why.
-
-	/*
-	for (int i = 0; i < entitylist.size(); ++i)
-	{
-		for (int j = 0; j < entitylist.size(); ++j)
-		{
-			if (i != j &&
-				entitylist.at(j)->getGlobalBounds()->intersects(*entitylist.at(i)->getGlobalBounds()))
-			{
-				std::cout << '(' << entitylist.at(i)->getGlobalBounds()->left << ',' << entitylist.at(i)->getGlobalBounds()->top << ')' << std::endl;
-				entitylist.at(i)->collideWith(entitylist.at(j).get());
-				entitylist.at(j)->collideWith(entitylist.at(i).get());
-			}
-		}
-	}
-	*/	
-	/*
-	Hypothesis:
-	One entity is never killed
-	Hitboxes need to be fixed
-	*/
-	if(objects[player].size() > 0)
-		//for(int i = 0; i < 7; ++i)
-			//for (int j = 0; j < objects[i].size(); ++j)
-			//{
-				//std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().top << ')';
-				//std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
-			//}
-				
-
-	
 	//Player
 	for (int i = 0; i < objects[player].size(); i++)
 	{
