@@ -82,6 +82,7 @@ private:
 	const sf::Vector2u originalWindowDimensions;
 	static unsigned int score;
 	static int playerLives;
+	unsigned int lastPlayerLives;
 
 	sf::Font arcadeFont;
 	sf::Text scoreDisplay;

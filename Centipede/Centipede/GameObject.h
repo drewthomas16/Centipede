@@ -30,7 +30,7 @@ public:
 	virtual unsigned int die(bool&, CentipedeGame*);
 
 	char* getType();
-sf::Vector2f currentPosition;
+	sf::Vector2f currentPosition;
 protected:
 	void setPointValue(unsigned int);
 	void setVelocity(sf::Vector2f);

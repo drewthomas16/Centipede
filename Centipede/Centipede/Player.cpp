@@ -60,7 +60,7 @@ void Player::update(CentipedeGame *gameHandle)
 	else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		shotBullet = false;
 	
-	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
+	if (canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
 	{
 		velocity.x = 0;
 		velocity.y = 0;

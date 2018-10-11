@@ -57,7 +57,7 @@ bool Mushroom::resetHeath()
 
 	if (health < 4)
 	{
-		switch (++health)//changes texture based on health
+ 		switch (health++)//changes texture based on health
 		{
 		case 1:
 			setTexture("../Sprites/Mushroom/mushroom1.png");
@@ -75,13 +75,16 @@ bool Mushroom::resetHeath()
 
 		mushroomRebuildSound.play();
 
-		while (mushroomRebuildSound.getStatus() != sf::Sound::Stopped)
+		
+		/*while (mushroomRebuildSound.getStatus() != sf::Sound::Stopped)
 		{
 			//printf("Health - %i\n", health);
-		}
+		}*/
 		poisoned = false;
 		return true;
 	}
+	
+
 	return false;
 }
 
@@ -96,8 +99,8 @@ void Mushroom::collideWith(GameObject* other)
 	}
 	if (dynamic_cast<Scorpion*>(other) != nullptr)
 		poisoned = true;
-	if (dynamic_cast<Bullet*>(other) != nullptr)
-		--health;
+ 	if (dynamic_cast<Bullet*>(other) != nullptr)
+		health--;
 
 }
 

@@ -92,17 +92,18 @@ bool CentipedeGame::update()
 			if (objects[i].at(j)->getHealth() == 0)
 			{
 				kill(objects[i].at(j));
-				objects[i].erase(objects[i].begin());
+				objects[i].erase(objects[i].begin() + j);
 			}
 #pragma endregion
 
 	//update player health display
-	/*lastPlayerLives = playerLives;
-	for (int y = 0; y < 30; ++y)
+	lastPlayerLives = playerLives;
+	/*for (int y = 0; y < 30; ++y)
 		for (int x = 0; x < 30; ++x)
 			for (int i = 0; i < map[y][x][frame].size(); ++i)
 				if (std::dynamic_pointer_cast<Player> (map[y][x][frame].at(i)))
-					playerLives = map[y][x][frame].at(i)->getHealth();
+					playerLives = map[y][x][frame].at(i)->getHealth();*/
+	playerLives = objects[player].at(0)->getHealth();
 
 	//check if flea needs to be spawned
 	#pragma region fleaCheck
@@ -140,6 +141,7 @@ bool CentipedeGame::update()
 			{
 				draw();
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
+				std::cout << "help" << objects[mushroom].at(i)->getHealth();
 			}
 
 		//killCentipedes();
@@ -252,12 +254,12 @@ void CentipedeGame::resolveCollisions()
 	Hitboxes need to be fixed
 	*/
 	if(objects[player].size() > 0)
-		for(int i = 0; i < 7; ++i)
-			for (int j = 0; j < objects[i].size(); ++j)
-			{
-				std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().top << ')';
-				std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
-			}
+		//for(int i = 0; i < 7; ++i)
+			//for (int j = 0; j < objects[i].size(); ++j)
+			//{
+				//std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().top << ')';
+				//std::cout << '(' << objects[i].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[i].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
+			//}
 				
 
 	
@@ -267,14 +269,7 @@ void CentipedeGame::resolveCollisions()
 		//to Mushroom
 		for (int j = 0; j < objects[mushroom].size(); j++)
 			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
-			{ 
 				objects[player].at(i)->collideWith(objects[mushroom].at(j).get());
-				std::cout << '(' << objects[player].at(i)->getSprite()->getGlobalBounds().left << ',' << objects[player].at(i)->getSprite()->getGlobalBounds().top << ')';
-				std::cout << '(' << objects[player].at(i)->getSprite()->getGlobalBounds().width << ',' << objects[player].at(i)->getSprite()->getGlobalBounds().height << ')' << std::endl;
-				std::cout << std::endl;
-				std::cout << '(' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().left << ',' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().top << ')';
-				std::cout << '(' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().width << ',' << objects[mushroom].at(j)->getSprite()->getGlobalBounds().height << ')' << std::endl;
-			}
 		//to CentipedeSegment
 		for (int j = 0; j < objects[centipedeSegment].size(); j++)
 			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[centipedeSegment].at(j)->getSprite()->getGlobalBounds()))
@@ -293,17 +288,14 @@ void CentipedeGame::resolveCollisions()
 				objects[player].at(i)->collideWith(objects[flea].at(j).get());
 
 	}
-	std::cout << objects[bullet].size() << std::endl;
+
 	//Bullet
 	for (int i = 0; i < objects[bullet].size(); i++)
 	{
 		//to Mushroom
 		for (int j = 0; j < objects[mushroom].size(); j++)
 			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
-			{
-				objects[bullet].at(i)->collideWith(objects[mushroom].at(j).get());
-				std::cout << "foobar" << std::endl;
-			}
+   				objects[bullet].at(i)->collideWith(objects[mushroom].at(j).get());
 		//to CentipedeSegment
 		for (int j = 0; j < objects[centipedeSegment].size(); j++)
 			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[centipedeSegment].at(j)->getSprite()->getGlobalBounds()))

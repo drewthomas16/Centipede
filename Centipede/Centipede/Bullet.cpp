@@ -40,7 +40,6 @@ void Bullet::update(CentipedeGame* gameHandle)
 void Bullet::collideWith(GameObject * other)
 {
 	health = 0;
-	std::cout << "help" << std::endl;
 	other->collideWith(this);
 }
 
