@@ -9,6 +9,7 @@
 Player::Player(int x, int y) : GameObject(x, y)
 {
 	setTexture("../Sprites/player.png");
+	getSprite()->setOrigin(1, 1);
 	health = 3;
 	shotBullet = false;
 }

@@ -64,7 +64,6 @@ public:
 private:
 	static const int numObjects = 7;
 	void resolveCollisions();
-	void generateGrid();
 
 	void manageCentipedePopulation();
 

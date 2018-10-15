@@ -33,6 +33,7 @@ void Bullet::update(CentipedeGame* gameHandle)
 			currentPosition.y += velocity.y;
 		else
 			health = 0;
+	currentPosition.x = xStart;
 }
 
 
