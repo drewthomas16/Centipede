@@ -12,6 +12,8 @@ Player::Player(int x, int y) : GameObject(x, y)
 	getSprite()->setOrigin(1, 1);
 	health = 3;
 	shotBullet = false;
+	xStart = x;
+	yStart = y;
 }
 
 
@@ -79,15 +81,16 @@ void Player::update(CentipedeGame *gameHandle)
 void Player::collideWith(GameObject * other)
 {
 	if (dynamic_cast<CentipedeSegment *>(other) != nullptr)
-	{
 		health--;
-	}
 	else if (dynamic_cast<Flea *>(other) != nullptr)
 		health--;
 	else if (dynamic_cast<Scorpion *>(other) != nullptr)
 		health--;
 	else if (dynamic_cast<Spider *>(other) != nullptr)
 		health--;
+
+	currentPosition.x = xStart;
+	currentPosition.y = yStart;
 
 	//play a death anim here
 }

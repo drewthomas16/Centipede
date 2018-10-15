@@ -66,9 +66,6 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 //Clear the game so there is no memory problems.
 CentipedeGame::~CentipedeGame()
 {
-	for(int i = 0; i < numObjects; i++)
-		objects[i].clear();
-
 	delete centMan;
 }
 
@@ -77,7 +74,7 @@ static bool liveFlea = false;
 //Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
-	for(int i = 0; i < numObjects; i++)
+	for (int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			objects[i].at(j)->update(this);
 
@@ -87,21 +84,25 @@ bool CentipedeGame::update()
 
 	//remove items with 0 health
 #pragma region mapCleanup
-	for(int i = 0; i < numObjects; i++)
+	for (int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			if (objects[i].at(j)->getHealth() == 0)
 			{
 				kill(objects[i].at(j));
 				objects[i].erase(objects[i].begin() + j);
+				if (i == 0)
+					return false;
 			}
 #pragma endregion
-
 	//update player health display
-	lastPlayerLives = playerLives;
-	playerLives = objects[player].at(0)->getHealth();
+	if (objects[player].at(0) != NULL)
+	{
+		lastPlayerLives = playerLives;
+		playerLives = objects[player].at(0)->getHealth();
+	}
 
 	//check if flea needs to be spawned
-	#pragma region fleaCheck
+#pragma region fleaCheck
 	int mushroomCount = 0;
 	for (int y = 28; y > 17; y--)//check mushrooms in player position
 		for (int x = 0; x < 29; x++)
@@ -114,7 +115,7 @@ bool CentipedeGame::update()
 		spawnObject<Flea>(xpos, 0);
 		liveFlea = true;
 	}
-	#pragma endregion*/
+#pragma endregion
 
 	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
@@ -122,7 +123,7 @@ bool CentipedeGame::update()
 	//check if live spider
 	if (!findFirstInstanceOf<Spider>() && (rand() % 2000) < 5)//no spider check if able to respawn
 	{
-		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand() 
+		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand()
 			% 30 < 15 ? 0 : 29, rand() % 5 + 18);
 		spider->setTarget(findFirstInstanceOf<Player>());
 	}
@@ -207,23 +208,12 @@ bool CentipedeGame::isMushroomCell(double x, double y)
 }
 
 
-//start a level
-void CentipedeGame::reset()
-{
-
-}
-
-
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
 	//Player
 	for (int i = 0; i < objects[player].size(); i++)
 	{
-		//to Mushroom
-		for (int j = 0; j < objects[mushroom].size(); j++)
-			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
-				objects[player].at(i)->collideWith(objects[mushroom].at(j).get());
 		//to CentipedeSegment
 		for (int j = 0; j < objects[centipedeSegment].size(); j++)
 			if (objects[player].at(i)->getSprite()->getGlobalBounds().intersects(objects[centipedeSegment].at(j)->getSprite()->getGlobalBounds()))
@@ -365,4 +355,39 @@ sf::Vector2i CentipedeGame::getRelMousePos()
 	float scalar = static_cast<float>(GameObject::oWD.x) / window->getSize().x;
 	mousePos *= scalar;
 	return sf::Vector2i(mousePos);
+}
+
+
+//Reset game
+void CentipedeGame::reset()
+{
+	for (int i = 0; i < 7; i++)
+		for (int j = 0; j < objects[i].size(); j++)
+			objects[i].clear();
+
+	//create player
+	std::shared_ptr<Player> player = spawnObject<Player>(15.0, 29.0);
+
+	//randomly place mushrooms on map on startup
+	for (int y = 0; y < 29; ++y)
+		for (int x = 0; x < 30; ++x)
+			if (rand() % (rand() % 35 + 1) == 1)
+				spawnObject<Mushroom>(x, y);
+
+	//load score fonts and stuff
+	arcadeFont.loadFromFile("../ARCADECLASSIC.TTF");
+	scoreDisplay.setFont(arcadeFont);
+	scoreDisplay.setCharacterSize(18);
+
+	//life display
+	lifeTexture.loadFromFile("../Sprites/player.png");
+	for (int i = 0; i < 6; i++)
+	{
+		lives[i].setTexture(lifeTexture);
+		lives[i].setPosition(10 + 20 * i, 0);
+	}
+
+	centMan = new CentipedeManager();
+	centMan->bindToGame(this);
+	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
 }

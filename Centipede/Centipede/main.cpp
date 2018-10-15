@@ -24,10 +24,13 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(winDim.x, winDim.y), "Centipede");
 
 	CentipedeGame game(&window, winDim);
+	bool plusLives = true;
+	int gameOverCount = 100000000;
 
 	//Display a startup screen before gameplay.
-	sf::Texture startingScreen;
+	sf::Texture startingScreen, gameOver;
 	startingScreen.loadFromFile("../Sprites/startscreen.png");
+	gameOver.loadFromFile("../Sprites/GameOver.png");
 	sf::Sprite sprite;
 	sprite.setTexture(startingScreen);
 	sprite.setScale(1.95f, 2.05f);
@@ -50,21 +53,38 @@ int main()
 			sf::Mouse::getPosition(window).x < 305 &&
 			sf::Mouse::getPosition(window).y > 335 &&
 			sf::Mouse::getPosition(window).y < 385 &&
-			sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			sf::Mouse::isButtonPressed(sf::Mouse::Left) && plusLives)
 		{
 			gameStart = true;
 			window.setMouseCursorVisible(false);
+			game.reset();
 		}
 		//If framebyframeMode is on lets cycle through frames using enter.
-		if (frameByFrameMode && gameStart) {
+		if (frameByFrameMode && gameStart && plusLives) {
 			if (enterPressed) {
-				game.update();
+				plusLives = game.update();
 				enterPressed = false;
 			}
 		}
 		//Else start the game regularly.
-		else if (gameStart)
-			game.update();
+		else if (gameStart && plusLives)
+			plusLives = game.update();
+		else if (gameOverCount <= 0)
+		{
+			plusLives = true;
+			gameStart = false;
+			sprite.setTexture(startingScreen);
+			window.draw(sprite);
+			window.display();
+		}
+		else if (!plusLives)
+		{
+			sprite.setTexture(gameOver);
+			window.draw(sprite);
+			window.display();
+
+			gameOverCount--;
+		}
 
 
 		while (window.pollEvent(event)) {

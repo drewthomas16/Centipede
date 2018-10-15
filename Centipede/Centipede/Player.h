@@ -14,4 +14,5 @@ protected:
 	double movementSpeed = 0.25;
 private:
 	bool shotBullet;
+	int xStart, yStart;
 };
