@@ -196,13 +196,20 @@ void CentipedeGame::draw()
 
 
 //Check to see if there is a mushroom in a certain x and y location.
+//Takes non-real cell position, I dont think this can be used for player collision. 
+//Problems with centipede collision?
 bool CentipedeGame::isMushroomCell(double x, double y)
 {
+	
 	if (x < 30 && y < 30)
 		for (int i = 0; i < objects[mushroom].size(); i++)
 			if (objects[mushroom].at(i)->currentPosition.x == x
 				&& objects[mushroom].at(i)->currentPosition.y == y)
+			{
 				return true;
+				std::cout << "Hello \n" << std::endl;
+			}
+				
 	return false;
 }
 
@@ -217,6 +224,11 @@ void CentipedeGame::reset()
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
+	//Initialize objects for all players
+	for (int i = 0; i < objects[player].size(); ++i)
+	{
+		dynamic_cast<Player *>(objects[player].at(i).get())->setObjectsPtr(objects);
+	}
 	//Player
 	for (int i = 0; i < objects[player].size(); i++)
 	{

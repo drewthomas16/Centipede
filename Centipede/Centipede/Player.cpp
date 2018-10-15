@@ -12,6 +12,7 @@ Player::Player(int x, int y) : GameObject(x, y)
 	getSprite()->setOrigin(1, 1);
 	health = 3;
 	shotBullet = false;
+	objectsPtr = nullptr;
 }
 
 
@@ -61,8 +62,14 @@ void Player::update(CentipedeGame *gameHandle)
 	else if(!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		shotBullet = false;
 	
-	//wierd things going on with isMushroomCell.
-	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
+	//Get player hitbox adjusted for velocity and check collision with new box.
+	sf::Vector2f realPos(currentPosition.x
+		* interval.x, currentPosition.y
+		* interval.y);
+	realPos.x += velocity.x;
+	realPos.y += velocity.y;
+
+	if ()
 	{
 		velocity.x = 0;
 		velocity.y = 0;
@@ -90,4 +97,9 @@ void Player::collideWith(GameObject * other)
 		health--;
 
 	//play a death anim here
+}
+
+void Player::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
+{
+	objectsPtr = entitylist;
 }
