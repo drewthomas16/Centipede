@@ -60,6 +60,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
 	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+
 }
 
 
@@ -224,11 +225,13 @@ void CentipedeGame::reset()
 //if any index in map has more than 1 object in vector then deal with it.
 void CentipedeGame::resolveCollisions()
 {
+
 	//Initialize objects for all players
 	for (int i = 0; i < objects[player].size(); ++i)
 	{
 		dynamic_cast<Player *>(objects[player].at(i).get())->setObjectsPtr(objects);
 	}
+
 	//Player
 	for (int i = 0; i < objects[player].size(); i++)
 	{

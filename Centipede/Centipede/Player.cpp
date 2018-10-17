@@ -63,16 +63,31 @@ void Player::update(CentipedeGame *gameHandle)
 		shotBullet = false;
 	
 	//Get player hitbox adjusted for velocity and check collision with new box.
-	sf::Vector2f realPos(currentPosition.x
-		* interval.x, currentPosition.y
-		* interval.y);
-	realPos.x += velocity.x;
-	realPos.y += velocity.y;
-
-	if ()
+	if (objectsPtr != nullptr)
 	{
-		velocity.x = 0;
-		velocity.y = 0;
+		double boxLeft = object.getGlobalBounds().left;
+		double boxTop = object.getGlobalBounds().top;
+		double boxWidth = object.getGlobalBounds().width;
+		double boxHeight = object.getGlobalBounds().height;
+
+		sf::FloatRect futurePosRect(boxLeft + ceil(velocity.x),boxTop + ceil(velocity.y),
+			boxWidth,boxHeight);
+			
+		std::cout << '(' << velocity.x << ',' << velocity.y << std::endl;
+
+
+		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+		{
+			if ((objectsPtr + 3)->at(i)->getSprite()->getGlobalBounds().intersects(futurePosRect))
+			{
+				velocity.x = 0;
+				velocity.y = 0;
+				break;
+			}
+		}
+
+
+
 	}
 
 	//Move the player based off the velocity.

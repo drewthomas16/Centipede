@@ -15,6 +15,7 @@ class CentipedeManager;
 class CentipedeGame
 {
 public:
+
 	enum objectTypes
 	{
 		player = 0,
