@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
 #include "Player.h"
@@ -59,14 +60,22 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	}
 
 	//Set highscore
+	std::string filename = "Scores.txt";
 	std::ifstream highScoreFile;
-	highScoreFile.open("Scores.txt");
+	highScoreFile.open(filename);
+
 	if (highScoreFile.is_open())
 	{
-		highScoreFile >> highScore;
-		std::cout << highScore;
+		char word[50];
+		highScoreFile >> word;
+		while (highScoreFile.good())
+		{
+			std::cout << word;
+			highScoreFile >> word;
+		}
+
+		highScoreFile.close();
 	}
-	highScoreFile.close();
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);

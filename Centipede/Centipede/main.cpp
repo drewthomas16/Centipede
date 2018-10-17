@@ -75,7 +75,7 @@ int main()
 			window.draw(sprite);
 			window.display();
 
-			Sleep(50);
+			Sleep(1000);
 
 			plusLives = true;
 			gameStart = false;
