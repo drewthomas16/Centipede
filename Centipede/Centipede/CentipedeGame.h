@@ -2,6 +2,7 @@
 #include <SFML\Graphics.hpp>
 #include <SFML\System.hpp>
 #include <vector>
+#include <fstream>
 #include "GameObject.h"
 #include "Player.h"
 #include "Flea.h"
@@ -60,6 +61,7 @@ public:
 	static unsigned int clock;
 
 	unsigned int getCountOf(char*, unsigned int, unsigned int, unsigned int, unsigned int);
+	void setHighScore();
 
 private:
 	static const int numObjects = 7;
@@ -82,6 +84,7 @@ private:
 	static unsigned int score;
 	static int playerLives;
 	unsigned int lastPlayerLives;
+	unsigned int highScore;
 
 	sf::Font arcadeFont;
 	sf::Text scoreDisplay;

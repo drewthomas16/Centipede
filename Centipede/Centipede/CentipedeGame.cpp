@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <iostream>
+#include <fstream>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
 #include "Player.h"
@@ -57,6 +58,16 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 		lives[i].setPosition(10 + 20 * i, 0);
 	}
 
+	//Set highscore
+	std::ifstream highScoreFile;
+	highScoreFile.open("Scores.txt");
+	if (highScoreFile.is_open())
+	{
+		highScoreFile >> highScore;
+		std::cout << highScore;
+	}
+	highScoreFile.close();
+
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
 	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
@@ -91,7 +102,10 @@ bool CentipedeGame::update()
 				kill(objects[i].at(j));
 				objects[i].erase(objects[i].begin() + j);
 				if (i == 0)
+				{
 					return false;
+					setHighScore();
+				}
 			}
 #pragma endregion
 	//update player health display
@@ -137,7 +151,6 @@ bool CentipedeGame::update()
 			{
 				draw();
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
-				std::cout << "help" << objects[mushroom].at(i)->getHealth();
 			}
 
 		//killCentipedes();
@@ -151,7 +164,8 @@ bool CentipedeGame::update()
 
 	++clock;
 
-	return playerLives > 0;//return true while player alive
+	//return true while player alive
+	return playerLives > 0;
 }
 
 
@@ -288,24 +302,6 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 	std::cout << "score is now " << score << std::endl;
 }
 
-/*
-//Make a grid that the rest of the game can use.
-void CentipedeGame::generateGrid() 
-{
-	int scalar = originalWindowDimensions.x / 30;
-	sf::Color col(20, 20, 20);
-
-	for (int i = 0, index = 0; i < 30; ++i, index += 4) {
-		linePoints[index + 0] = sf::Vector2f(0, i*scalar);
-		linePoints[index + 1] = sf::Vector2f(originalWindowDimensions.x, i*scalar);
-		linePoints[index + 2] = sf::Vector2f(i*scalar, 0);
-		linePoints[index + 3] = sf::Vector2f(i*scalar, originalWindowDimensions.y);
-
-		for (int offset = 0; offset < 4; ++offset)
-			linePoints[index + offset].color = col;
-	}
-}
-*/
 
 //Count how many things you have. You must specify which thing you want to count.
 unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, 
@@ -390,4 +386,11 @@ void CentipedeGame::reset()
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
 	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+}
+
+
+//Check to see high schore
+void CentipedeGame::setHighScore()
+{
+
 }

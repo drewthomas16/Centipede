@@ -9,6 +9,7 @@
 #include <ctime>
 #include <cmath>
 #include "CentipedeGame.h"
+#include <Windows.h>
 using namespace std;
 
 
@@ -25,7 +26,7 @@ int main()
 
 	CentipedeGame game(&window, winDim);
 	bool plusLives = true;
-	int gameOverCount = 100000000;
+	int gameOverCount = 1000;
 
 	//Display a startup screen before gameplay.
 	sf::Texture startingScreen, gameOver;
@@ -39,7 +40,6 @@ int main()
 	window.display();
 
 	window.setFramerateLimit(60);
-	//window.setKeyRepeatEnabled(false);
 
 	bool frameByFrameMode(false), enterPressed(false);
 	bool gameStart = false;
@@ -69,21 +69,21 @@ int main()
 		//Else start the game regularly.
 		else if (gameStart && plusLives)
 			plusLives = game.update();
-		else if (gameOverCount <= 0)
-		{
-			plusLives = true;
-			gameStart = false;
-			sprite.setTexture(startingScreen);
-			window.draw(sprite);
-			window.display();
-		}
 		else if (!plusLives)
 		{
 			sprite.setTexture(gameOver);
 			window.draw(sprite);
 			window.display();
 
-			gameOverCount--;
+			Sleep(50);
+
+			plusLives = true;
+			gameStart = false;
+
+			window.setMouseCursorVisible(true);
+			sprite.setTexture(startingScreen);
+			window.draw(sprite);
+			window.display();
 		}
 
 
