@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
 #include "Player.h"
@@ -60,22 +61,18 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	}
 
 	//Set highscore
-	std::string filename = "Scores.txt";
-	std::ifstream highScoreFile;
-	highScoreFile.open(filename);
+	std::string line;
+	std::ifstream highScoreFile("Scores.txt");
 
 	if (highScoreFile.is_open())
 	{
-		char word[50];
-		highScoreFile >> word;
-		while (highScoreFile.good())
-		{
-			std::cout << word;
-			highScoreFile >> word;
-		}
-
+		getline(highScoreFile, line);
 		highScoreFile.close();
 	}
+	
+	std::stringstream i(line);
+	i >> highScore;
+
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
@@ -87,6 +84,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 CentipedeGame::~CentipedeGame()
 {
 	delete centMan;
+	setHighScore();
 }
 
 
@@ -165,7 +163,6 @@ bool CentipedeGame::update()
 		//killCentipedes();
 	}
 #pragma endregion
-
 	manageCentipedePopulation();
 	centMan->update();
 
@@ -192,12 +189,19 @@ void CentipedeGame::draw()
 
 	//update score and draw to render texture
 	scoreDisplay.setFillColor(sf::Color::Red);
-	scoreDisplay.setString("Score " + std::to_string(score));
+	scoreDisplay.setString(std::to_string(score));
 	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, scoreDisplay
 		.getLocalBounds().height / 2);
+	scoreDisplay.setString(std::to_string(score) + "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " + std::to_string(highScore));
 	scoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x / 2, 0);
+	/*highScoreDisplay.setFillColor(sf::Color::Red);
+	highScoreDisplay.setString("HI SCORE" + std::to_string(highScore));
+	highScoreDisplay.setOrigin(highScoreDisplay.getLocalBounds().width / 2, highScoreDisplay
+		.getLocalBounds().height / 2);
+	highScoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x - 100, 0);*/
 
 	scoreArea.draw(scoreDisplay);
+	scoreArea.draw(highScoreDisplay);
 	//draw lives
 	drawLives();
 
@@ -401,5 +405,14 @@ void CentipedeGame::reset()
 //Check to see high schore
 void CentipedeGame::setHighScore()
 {
+	std::ofstream highScoreFile("Scores.txt", std::ofstream::out | std::ofstream::trunc);
+	if (highScoreFile.is_open())
+	{
+		if (score > highScore)
+			highScoreFile << score;
+		else
+			highScoreFile << highScore;
 
+		highScoreFile.close();
+	}
 }

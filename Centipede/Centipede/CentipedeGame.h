@@ -88,6 +88,7 @@ private:
 
 	sf::Font arcadeFont;
 	sf::Text scoreDisplay;
+	sf::Text highScoreDisplay;
 
 	sf::Texture lifeTexture;
 	sf::Sprite lives[6];
