@@ -43,7 +43,7 @@ void Flea::update(CentipedeGame *gameHandle)
 		//		new Flea(window, rand() % 30,rand() % 30));
 
 
-		//places flea at random x cordinate at y==0
+		//Flea places mushrooms at various verticle locations
 		if (rand() % 100 < 30 && currentPosition.y != 30 && !CentipedeGame::isMushroomCell(currentPosition.x, currentPosition.y))
 			gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
 
