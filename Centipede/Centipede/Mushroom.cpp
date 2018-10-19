@@ -38,8 +38,8 @@ void Mushroom::update(CentipedeGame *gameHandle)
 	if (poisoned)
 		object.setColor(sf::Color::Magenta);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-		health = 0;
+	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	//	health = 0;
 }
 
 
