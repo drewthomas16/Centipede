@@ -5,6 +5,7 @@
 #include "Scorpion.h"
 #include "Spider.h"
 #include <math.h>
+#include <Windows.h>
 
 Player::Player(int x, int y) : GameObject(x, y)
 {
@@ -12,9 +13,12 @@ Player::Player(int x, int y) : GameObject(x, y)
 	getSprite()->setOrigin(1, 1);
 	health = 3;
 	shotBullet = false;
+
 	xStart = x;
 	yStart = y;
+
 	objectsPtr = nullptr;
+
 }
 
 
@@ -143,7 +147,7 @@ void Player::collideWith(GameObject * other)
 	currentPosition.y = yStart;
 
 	//play a death anim here
-}}
+}
 
 void Player::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {

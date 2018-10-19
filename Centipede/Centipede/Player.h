@@ -15,6 +15,8 @@ protected:
 	double movementSpeed = 0.25;
 private:
 	bool shotBullet;
+
 	int xStart, yStart;
+
 	std::vector<std::shared_ptr<GameObject>> * objectsPtr;
 };
