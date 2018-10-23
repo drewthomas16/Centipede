@@ -19,6 +19,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	isPoisoned = false;
 
 	setTexture("../Sprites/CentipedeSegment/default.png");
+	object.setOrigin(1, 1);
 
 	velocity = sf::Vector2f(1, 0);
 
