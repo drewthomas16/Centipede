@@ -23,6 +23,8 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	velocity = sf::Vector2f(1, 0);
 
 	movingDown = movingRight = true;
+
+	objectsPtr = nullptr;
 }
 
 
@@ -124,4 +126,26 @@ void CentipedeSegment::calculateVelocity()
 
 		velocity.x = 0; //velocity.x and velocity.y are mutually exclusive
 	}
+}
+
+//Make sure that a centipede can move somewhere by checking to make sure there
+//is no mushroom there and it is not off the screen.
+bool CentipedeSegment::canMoveTo(double x, double y)
+{
+	std::cout << x << ',' << y << std::endl;
+
+	if (!(x < 30 && x >= 0 && y < 30 && y >= 0))
+		return false;
+	if (objectsPtr != nullptr) {
+		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+			if ((objectsPtr + 3)->at(i)->getSprite()->
+				getGlobalBounds().contains(x * interval.x, y * interval.y))
+				return false;
+	}
+	return true;
+}
+
+void CentipedeSegment::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
+{
+	objectsPtr = entitylist;
 }

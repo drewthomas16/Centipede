@@ -19,6 +19,10 @@ public:
 
 	void calculateVelocity();
 
+	bool canMoveTo(double x, double y);
+
+	void setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist);
+
 	char* getType() { return "CentipedeSegment"; }
 
 	unsigned int die(bool&, CentipedeGame*);
@@ -28,4 +32,5 @@ private:
 	bool movingDown, movingRight;
 	bool deathCollisionDanger;
 	CentipedeSegment * previous = nullptr;
+	std::vector<std::shared_ptr<GameObject>> * objectsPtr;
 };
