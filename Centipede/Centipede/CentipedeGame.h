@@ -41,7 +41,7 @@ public:
 	void reset();
 	void placeObject(unsigned int, unsigned int, std::shared_ptr<GameObject>);
 	sf::Vector2i getRelMousePos();
-	static bool isInBounds(double x, double y) { return x < 30 && x >= 0 && y < 30 && y >= 0; }
+	static bool isInBounds(double x, double y) { return x < 29 && x >= 1 && y < 30 && y >= 0; }
 
 	template <typename type> std::shared_ptr<type> spawnObject(double x, double y) 
 	{

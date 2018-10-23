@@ -10,6 +10,8 @@ public:
 	char* getType() { return "Player"; }
 	void collideWith(GameObject *);
 	void setObjectsPtr(std::vector<std::shared_ptr<GameObject>>*);
+	void checkMushroomCollision();
+
 protected:
 	std::shared_ptr<Bullet> bullet;
 	double movementSpeed = 0.25;
