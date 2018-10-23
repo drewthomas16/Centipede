@@ -166,6 +166,8 @@ bool CentipedeGame::update()
 #pragma endregion
 	manageCentipedePopulation();
 	centMan->update();
+	if (objects[centipedeSegment].size() == 0)
+		centMan->beginSpawn(CentipedeGame::clock, 8, 8);
 
 	draw();
 
@@ -391,6 +393,8 @@ sf::Vector2i CentipedeGame::getRelMousePos()
 //Reset game
 void CentipedeGame::reset()
 {
+	delete centMan;
+
 	for (int i = 0; i < 7; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			objects[i].clear();

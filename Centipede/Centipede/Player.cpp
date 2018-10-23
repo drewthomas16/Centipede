@@ -71,64 +71,14 @@ void Player::update(CentipedeGame *gameHandle)
 	//Get player hitbox adjusted for velocity and check collision with new box.
 	if (objectsPtr != nullptr)
 	{
-		//Get a bound box for the future position of the ship.
-		//We ignore magnitude of actual velocity and assume its 3 to avoid collision bugs.
-
-		//Initial values based off of ship initial position.
-		double boxLeft = object.getGlobalBounds().left;
-		double boxTop = object.getGlobalBounds().top;
-		double boxWidth = object.getGlobalBounds().width;
-		double boxHeight = object.getGlobalBounds().height;
-
-		//Values to adjust So that the future bounds have room.
-		//They also need to be rounded because sprite has bounds of ints.
-		double adjustVeloX = velocity.x;
-		double adjustVeloY = velocity.y;
-		
-		//Make all magnitudes 2 and adjust for direction, account for if the velocity
-		//is zero.
-		if (adjustVeloX < 0)
-			adjustVeloX = -2;
-		else if (adjustVeloX > 0)
-			adjustVeloX = 2;
-		else
-			adjustVeloX = 0;
-
-		if (adjustVeloY < 0)
-			adjustVeloY = -2;
-		else if (adjustVeloY > 0)
-			adjustVeloY = 2;
-		else
-			adjustVeloY = 0;
-
-		//Make future bounds depending upon velocity.
-		sf::FloatRect futurePosRect(boxLeft + adjustVeloX, boxTop + adjustVeloY,
-			boxWidth + adjustVeloX , boxHeight + adjustVeloY);
-		
-		
-		//std::cout << '(' << adjustVeloX << ',' << adjustVeloY << std::endl;
-
-		//Cycle through all mushrooms, the 3rd index of the objects vector.
-		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
-		{
-			//If the future position collides with a mushroom.
-			if ((objectsPtr + 3)->at(i)->getSprite()->getGlobalBounds().intersects(futurePosRect))
-			{
-				//Stop all motion.
-				velocity.x = 0;
-				velocity.y = 0;
-			}
-		}
-
-
-
+		checkMushroomCollision();
 	}
 
 	//Move the player based off the velocity.
 	//Only allow the play to move every eight frames to a stuttered look.
-	if (gameHandle->isInBounds(currentPosition.x + velocity.x, currentPosition.y))
+	if (currentPosition.x + velocity.x >= 0 && currentPosition.x + velocity.x <= 29)
 			currentPosition.x += velocity.x;
-	if (gameHandle->isInBounds(currentPosition.x, currentPosition.y + velocity.y))
+	if (currentPosition.y + velocity.y >= 0 && currentPosition.y + velocity.y <= 29)
 			currentPosition.y += velocity.y;
 }
 
@@ -152,4 +102,75 @@ void Player::collideWith(GameObject * other)
 void Player::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;
+}
+
+
+void Player::checkMushroomCollision()
+{
+	//Get a bound box for the future position of the ship.
+		//We ignore magnitude of actual velocity and assume its 3 to avoid collision bugs.
+
+		//Initial values based off of ship initial position.
+	double boxLeft = object.getGlobalBounds().left;
+	double boxTop = object.getGlobalBounds().top;
+	double boxWidth = object.getGlobalBounds().width;
+	double boxHeight = object.getGlobalBounds().height;
+
+	//Values to adjust So that the future bounds have room.
+	//They also need to be rounded because sprite has bounds of ints.
+	double adjustVeloX = velocity.x;
+	double adjustVeloY = velocity.y;
+
+	//Make all magnitudes 2 and adjust for direction, account for if the velocity
+	//is zero.
+	if (adjustVeloX < 0)
+		adjustVeloX = -3;
+	else if (adjustVeloX > 0)
+		adjustVeloX = 3;
+	else
+		adjustVeloX = 0;
+
+	//Make future bounds depending upon velocity.
+	sf::FloatRect futurePosRect1(boxLeft + adjustVeloX, boxTop,
+		boxWidth + adjustVeloX, boxHeight);
+
+
+	//std::cout << '(' << adjustVeloX << ',' << adjustVeloY << std::endl;
+
+	//Cycle through all mushrooms, the 3rd index of the objects vector.
+	for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+	{
+		//If the future position collides with a mushroom.
+		if ((objectsPtr + 3)->at(i)->getSprite()->getGlobalBounds().intersects(futurePosRect1))
+		{
+			//Stop all motion.
+			velocity.x = 0;
+		}
+	}
+	//Make all magnitudes 2 and adjust for direction, account for if the velocity
+	//is zero.
+	if (adjustVeloY < 0)
+		adjustVeloY = -3;
+	else if (adjustVeloY > 0)
+		adjustVeloY = 3;
+	else
+		adjustVeloY = 0;
+
+	//Make future bounds depending upon velocity.
+	sf::FloatRect futurePosRect2(boxLeft, boxTop + adjustVeloY,
+		boxWidth, boxHeight + adjustVeloY);
+
+
+	//std::cout << '(' << adjustVeloX << ',' << adjustVeloY << std::endl;
+
+	//Cycle through all mushrooms, the 3rd index of the objects vector.
+	for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+	{
+		//If the future position collides with a mushroom.
+		if ((objectsPtr + 3)->at(i)->getSprite()->getGlobalBounds().intersects(futurePosRect2))
+		{
+			//Stop all motion.
+			velocity.y = 0;
+		}
+	}
 }
