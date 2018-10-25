@@ -46,7 +46,7 @@ void CentipedeSegment::attach(CentipedeSegment *segment)
 void CentipedeSegment::update(CentipedeGame *gameHandle)
 {
 
-	if (CentipedeGame::clock % 8 == 0) 
+	if (CentipedeGame::clock % 3 == 0) 
 	{
 
 		calculateVelocity();
@@ -133,8 +133,6 @@ void CentipedeSegment::calculateVelocity()
 //is no mushroom there and it is not off the screen.
 bool CentipedeSegment::canMoveTo(double x, double y)
 {
-	std::cout << x << ',' << y << std::endl;
-
 	if (!(x < 30 && x >= 0 && y < 30 && y >= 0))
 		return false;
 	if (objectsPtr != nullptr) {
