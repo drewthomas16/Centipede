@@ -12,17 +12,19 @@ public:
 
 	void bindToGame(CentipedeGame*);
 
-	void calculateEntryX();
+	int calculateEntryX();
 
 	bool beginSpawn(unsigned int, unsigned int, unsigned int);
 
 	void update();
+	void clear();
 
 private:
 	CentipedeGame *gameHandle;
 	void placeSegment();
 
-	unsigned int entryTime, haveSpawned, entryX, speed, length;
+	std::vector<int> entryTime, haveSpawned, entryX, speed, length;
+	int end;
 	bool done = true;
 	std::vector<std::shared_ptr<CentipedeSegment>> segments;
 };

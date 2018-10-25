@@ -73,6 +73,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	std::stringstream i(line);
 	i >> highScore;
 
+	level = 1;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
@@ -167,7 +168,16 @@ bool CentipedeGame::update()
 	manageCentipedePopulation();
 	centMan->update();
 	if (objects[centipedeSegment].size() == 0)
-		centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+	{
+		centMan->clear();
+		level++;
+		//centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+		for (int i = 0; i < level; i++)
+		{
+			centMan->beginSpawn(CentipedeGame::clock, 8, level - 1);
+		}
+	}
+		
 
 	draw();
 
@@ -197,11 +207,6 @@ void CentipedeGame::draw()
 		.getLocalBounds().height / 2);
 	scoreDisplay.setString(std::to_string(score) + "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " + std::to_string(highScore));
 	scoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x / 2, 0);
-	/*highScoreDisplay.setFillColor(sf::Color::Red);
-	highScoreDisplay.setString("HI SCORE" + std::to_string(highScore));
-	highScoreDisplay.setOrigin(highScoreDisplay.getLocalBounds().width / 2, highScoreDisplay
-		.getLocalBounds().height / 2);
-	highScoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x - 100, 0);*/
 
 	scoreArea.draw(scoreDisplay);
 	scoreArea.draw(highScoreDisplay);
@@ -420,6 +425,8 @@ void CentipedeGame::reset()
 		lives[i].setTexture(lifeTexture);
 		lives[i].setPosition(10 + 20 * i, 0);
 	}
+
+	level = 1;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
