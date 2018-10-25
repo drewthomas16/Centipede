@@ -76,7 +76,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
-	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+	centMan->beginSpawn(CentipedeGame::clock, 3, 8);
 
 }
 
@@ -131,7 +131,7 @@ bool CentipedeGame::update()
 			if (isMushroomCell(x, y))
 				++mushroomCount;
 
-	if (mushroomCount < 5 && !liveFlea)
+//	if (mushroomCount < 5 && !liveFlea)
 	{
 		int xpos = rand() % 29;
 		spawnObject<Flea>(xpos, 0);
@@ -167,7 +167,7 @@ bool CentipedeGame::update()
 	manageCentipedePopulation();
 	centMan->update();
 	if (objects[centipedeSegment].size() == 0)
-		centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+		centMan->beginSpawn(CentipedeGame::clock, 3, 8);
 
 	draw();
 
@@ -423,7 +423,7 @@ void CentipedeGame::reset()
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
-	centMan->beginSpawn(CentipedeGame::clock, 8, 8);
+	centMan->beginSpawn(CentipedeGame::clock, 3, 8);
 }
 
 

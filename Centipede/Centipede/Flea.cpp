@@ -17,6 +17,8 @@ Flea::Flea(int x, int y) : GameObject(x, y)
 	object.setPosition(sf::Vector2f(0, 0));
 	velocity = sf::Vector2f(0, 1);
 	pointValue = 200;
+	health = 2;
+	std::cout << health << std::endl;
 }
 
 
@@ -31,6 +33,8 @@ void Flea::update(CentipedeGame *gameHandle)
 	setPixels();
 	if (frame++ == delay)//if time to update
 	{
+		if (health == 1)
+
 		//apply velocity
 		currentPosition.y += velocity.y;
 
@@ -59,8 +63,8 @@ void Flea::update(CentipedeGame *gameHandle)
 			health = 0;
 		}
 	}
-}
 
+}
 
 void Flea::collideWith(GameObject * other)
 {
