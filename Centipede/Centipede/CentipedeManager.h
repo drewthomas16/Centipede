@@ -18,10 +18,11 @@ public:
 
 	void update();
 	void clear();
+	int getEnd();
 
 private:
 	CentipedeGame *gameHandle;
-	void placeSegment();
+
 
 	std::vector<int> entryTime, haveSpawned, entryX, speed, length;
 	int end;
