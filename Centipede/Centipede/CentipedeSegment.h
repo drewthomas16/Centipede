@@ -27,7 +27,11 @@ public:
 
 	unsigned int die(bool&, CentipedeGame*);
 
+	double getSpeed();
+	void setSpeed(double i);
+
 private:
+	double speed;
 	bool isPoisoned;
 	bool movingDown, movingRight;
 	bool deathCollisionDanger;

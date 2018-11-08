@@ -72,7 +72,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	std::stringstream i(line);
 	i >> highScore;
 
-	level = 1;
+	level = 0;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
@@ -167,9 +167,11 @@ bool CentipedeGame::update()
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
 		centMan->clear();
+
+		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
    		for (int i = 0; i < level; i++)
 		{
-			centMan->beginSpawn(CentipedeGame::clock, 8, level);
+			centMan->beginSpawn(CentipedeGame::clock, 1.2, 5);
 		}
 		level++;
 	}
@@ -308,6 +310,7 @@ void CentipedeGame::resolveCollisions()
 			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[flea].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[flea].at(j).get());
 	}
+
 }
 
 
@@ -443,4 +446,22 @@ void CentipedeGame::setHighScore()
 
 		highScoreFile.close();
 	}
+}
+
+
+bool CentipedeGame::collision(GameObject * ogj1, GameObject  * obj2)
+{
+	//Check Top
+
+
+	//Check Bottom
+
+
+	//Check Left
+
+
+	//Check Right
+
+
+	return false;
 }

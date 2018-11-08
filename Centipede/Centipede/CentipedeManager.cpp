@@ -8,6 +8,7 @@ CentipedeManager::CentipedeManager()
 {
 
 	gameHandle = nullptr;
+	numSpawned = 0;
 	end = -1;
 }
 
@@ -29,7 +30,7 @@ int CentipedeManager::calculateEntryX()
 }
 
 //sets spawn settings at beginning of game.
-bool CentipedeManager::beginSpawn(unsigned int frame, unsigned int _speed, unsigned int _length) 
+bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned int _length) 
 {
 
  	end++;
@@ -44,9 +45,11 @@ bool CentipedeManager::beginSpawn(unsigned int frame, unsigned int _speed, unsig
 
 void CentipedeManager::update() 
 {
-	if (end > -1 && CentipedeGame::clock % speed.at(end) == 0) 
+	if (end > -1 && CentipedeGame::clock % 2 == 0) 
 	{
 		segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
+		segments.at(numSpawned)->setSpeed(speed.at(end));
+		numSpawned++;
 		if (haveSpawned.at(end) + 1 >= length.at(end))
 			end--;
 		else
