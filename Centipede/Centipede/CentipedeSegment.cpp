@@ -46,7 +46,7 @@ void CentipedeSegment::attach(CentipedeSegment *segment)
 void CentipedeSegment::update(CentipedeGame *gameHandle)
 {
 
-	if (CentipedeGame::clock % 8 == 0) 
+	if (CentipedeGame::clock % 2 == 0) 
 	{
 
 		calculateVelocity();

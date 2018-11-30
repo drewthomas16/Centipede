@@ -72,7 +72,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	std::stringstream i(line);
 	i >> highScore;
 
-	level = 1;
+	level = 0;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
@@ -167,9 +167,11 @@ bool CentipedeGame::update()
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
 		centMan->clear();
+
+		centMan->beginSpawn(CentipedeGame::clock, 6, 9 - level);
    		for (int i = 0; i < level; i++)
 		{
-			centMan->beginSpawn(CentipedeGame::clock, 8, level);
+			centMan->beginSpawn(CentipedeGame::clock, 12, 1);
 		}
 		level++;
 	}

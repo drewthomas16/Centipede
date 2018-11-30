@@ -1,7 +1,7 @@
 #include "CentipedeManager.h"
 #include "CentipedeSegment.h"
-#include <iostream>
 #include "CentipedeGame.h"
+#include <iostream>
 
 //Used to prevent memory errors.
 CentipedeManager::CentipedeManager() 
@@ -44,13 +44,22 @@ bool CentipedeManager::beginSpawn(unsigned int frame, unsigned int _speed, unsig
 
 void CentipedeManager::update() 
 {
-	if (end > -1 && CentipedeGame::clock % speed.at(end) == 0) 
+	if (end > -1 && speed.size() > 0) 
 	{
-		segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
-		if (haveSpawned.at(end) + 1 >= length.at(end))
-			end--;
-		else
-			haveSpawned.at(end)++;
+		/*
+		This decides how often to spawn centipede segments.
+		This is calculated based on how long it takes for a given segment
+		to travel 8 pixels or the width of a segment. Represented by 8/(the speed of a segment
+		given by pixels traveled per cycle).
+		*/
+		if (CentipedeGame::clock % (8 / ((speed.at(end) / 2))) == 0)
+		{
+			segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
+			if (haveSpawned.at(end) + 1 >= length.at(end))
+				end--;
+			else
+				haveSpawned.at(end)++;
+		}
 	}
 }
 
