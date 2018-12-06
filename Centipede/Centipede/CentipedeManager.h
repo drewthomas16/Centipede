@@ -26,9 +26,7 @@ private:
 	CentipedeGame *gameHandle;
 
 
-	std::vector<int> entryTime, haveSpawned, entryX, length;
-	std::vector<double> speed;
-	int numSpawned;
+	std::vector<int> entryTime, haveSpawned, entryX, speed, length;
 	int end;
 	bool done = true;
 	std::vector<std::shared_ptr<CentipedeSegment>> segments;

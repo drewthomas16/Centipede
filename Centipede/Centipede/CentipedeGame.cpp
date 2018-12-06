@@ -40,7 +40,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 			if (rand() % (rand() % 35 + 1) == 1)
 				spawnObject<Mushroom>(x, y);
 
-	//create sprites for drawing
+	//create sprites for drawing 
 	scoreArea.create(renderWindow->getSize().x, renderWindow->getSize().x * .05);
 	playerArea.create(renderWindow->getSize().x, renderWindow->getSize().y);
 	playerAreaSprite.setTexture(playerArea.getTexture());
@@ -172,11 +172,10 @@ bool CentipedeGame::update()
    		for (int i = 0; i < level; i++)
 		{
 			centMan->beginSpawn(CentipedeGame::clock, 12, 1);
-
 		}
 		level++;
 	}
-
+		
 
 	draw();
 
@@ -231,20 +230,20 @@ void CentipedeGame::draw()
 
 
 //Check to see if there is a mushroom in a certain x and y location.
-//Takes non-real cell position, I dont think this can be used for player collision.
+//Takes non-real cell position, I dont think this can be used for player collision. 
 //Problems with centipede collision?
 bool CentipedeGame::isMushroomCell(double x, double y)
 {
-
+	
 	if (x < 30 && y < 30)
 		for (int i = 0; i < objects[mushroom].size(); i++)
 			if (objects[mushroom].at(i)->currentPosition.x == x
 				&& objects[mushroom].at(i)->currentPosition.y == y)
 			{
 				return true;
-
+				
 			}
-
+				
 	return false;
 }
 
@@ -311,7 +310,6 @@ void CentipedeGame::resolveCollisions()
 			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[flea].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[flea].at(j).get());
 	}
-
 }
 
 
@@ -330,7 +328,7 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 
 
 //Kill an object that needs to and output useful information.
-void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
+void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 
 {
 	bool readyToDie;
 	std::cout << "i exist " << thing.use_count() << " times\n";
@@ -345,8 +343,8 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 
 
 //Count how many things you have. You must specify which thing you want to count.
-unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0,
-	unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30)
+unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, 
+	unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) 
 {
 	unsigned int count = 0;
 	/*
@@ -364,7 +362,7 @@ unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0,
 
 // If the getCounOf("CentipedeSegment", 0, 0, 30, 30) returns a number less than
 //0 then you know that there is no longer a centipede on the board.
-void CentipedeGame::manageCentipedePopulation()
+void CentipedeGame::manageCentipedePopulation() 
 {
 	if (activeCentipede) {
 		//check if centipede has died
@@ -386,7 +384,7 @@ void CentipedeGame::drawLives()
 
 
 //Get the position of the mouse.
-sf::Vector2i CentipedeGame::getRelMousePos()
+sf::Vector2i CentipedeGame::getRelMousePos() 
 {
 	sf::Vector2f mousePos(sf::Mouse::getPosition(*window));
 	float scalar = static_cast<float>(GameObject::oWD.x) / window->getSize().x;
@@ -447,22 +445,4 @@ void CentipedeGame::setHighScore()
 
 		highScoreFile.close();
 	}
-}
-
-
-bool CentipedeGame::collision(GameObject * ogj1, GameObject  * obj2)
-{
-	//Check Top
-
-
-	//Check Bottom
-
-
-	//Check Left
-
-
-	//Check Right
-
-
-	return false;
 }

@@ -21,8 +21,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	setTexture("../Sprites/CentipedeSegment/default.png");
 	object.setOrigin(1, 1);
 
-	velocity.y = 0;
-	speed = 1;
+	velocity = sf::Vector2f(1, 0);
 
 	movingDown = movingRight = true;
 
@@ -110,28 +109,20 @@ void CentipedeSegment::calculateVelocity()
 
 		velocity.y = 0; //velocity.x and velocity.y are mutually exclusive
 
-		//velocity.x = pow(-1, movingRight);
-		if (movingRight)
-			velocity.x = -1 * speed;
-		else
-			velocity.x = speed;
+		velocity.x = pow(-1, movingRight);
 		movingRight = !movingRight; //flip x directions
 	}
 
 	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
 	{
 		if (currentPosition.y == 0) { //top
-			velocity.y = speed; // will cause movingDown to be true next cycle
+			velocity.y = 1; // will cause movingDown to be true next cycle
 		}
 		else if (currentPosition.y == 29) { //bottom
-			velocity.y = -1 * speed; //will cause movingDown to be false next cycle
+			velocity.y = -1; //will cause movingDown to be false next cycle
 		}
 		else { //side or mushroom
-			//velocity.y = pow(-1, !movingDown);
-			if (movingDown)
-				velocity.y = speed;
-			else
-				velocity.y = -1 * speed;
+			velocity.y = pow(-1, !movingDown);
 		}
 
 		velocity.x = 0; //velocity.x and velocity.y are mutually exclusive
@@ -156,16 +147,4 @@ bool CentipedeSegment::canMoveTo(double x, double y)
 void CentipedeSegment::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;
-}
-
-
-double CentipedeSegment::getSpeed()
-{
-	return speed;
-}
-
-void CentipedeSegment::setSpeed(double i)
-{
-	speed = i;
-	velocity.x = speed;
 }

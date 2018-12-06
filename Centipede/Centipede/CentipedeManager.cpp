@@ -4,23 +4,22 @@
 #include <iostream>
 
 //Used to prevent memory errors.
-CentipedeManager::CentipedeManager()
+CentipedeManager::CentipedeManager() 
 {
 
 	gameHandle = nullptr;
-	numSpawned = 0;
 	end = -1;
 }
 
 //Bind game manager to only affect current game.
-void CentipedeManager::bindToGame(CentipedeGame *handle)
+void CentipedeManager::bindToGame(CentipedeGame *handle) 
 {
 	gameHandle = handle;
 }
 
 //Used in CentipedeGame to determine if a mushroom should spawn in
 //a given spot.
-int CentipedeManager::calculateEntryX()
+int CentipedeManager::calculateEntryX() 
 {
 	int x;
 	do {
@@ -30,7 +29,7 @@ int CentipedeManager::calculateEntryX()
 }
 
 //sets spawn settings at beginning of game.
-bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned int _length)
+bool CentipedeManager::beginSpawn(unsigned int frame, unsigned int _speed, unsigned int _length) 
 {
 
  	end++;
@@ -43,9 +42,9 @@ bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned in
 	return true;
 }
 
-void CentipedeManager::update()
+void CentipedeManager::update() 
 {
-	if (end > -1 && speed.size() > 0)
+	if (end > -1 && speed.size() > 0) 
 	{
 		/*
 		This decides how often to spawn centipede segments.
@@ -61,7 +60,6 @@ void CentipedeManager::update()
 			else
 				haveSpawned.at(end)++;
 		}
-
 	}
 }
 

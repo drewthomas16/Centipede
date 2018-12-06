@@ -63,7 +63,6 @@ public:
 
 	unsigned int getCountOf(char*, unsigned int, unsigned int, unsigned int, unsigned int);
 	void setHighScore();
-	bool collision(GameObject * ogj1, GameObject  * obj2);
 
 private:
 	static const int numObjects = 7;
