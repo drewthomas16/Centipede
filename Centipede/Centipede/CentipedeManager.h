@@ -14,7 +14,9 @@ public:
 
 	int calculateEntryX();
 
-	bool beginSpawn(unsigned int, double, unsigned int);
+	int nonEntropicEntryX();
+
+	bool beginSpawn(unsigned int, unsigned int, unsigned int);
 
 	void update();
 	void clear();

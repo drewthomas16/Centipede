@@ -1,10 +1,10 @@
 #include "CentipedeManager.h"
 #include "CentipedeSegment.h"
-#include <iostream>
 #include "CentipedeGame.h"
+#include <iostream>
 
 //Used to prevent memory errors.
-CentipedeManager::CentipedeManager() 
+CentipedeManager::CentipedeManager()
 {
 
 	gameHandle = nullptr;
@@ -13,14 +13,14 @@ CentipedeManager::CentipedeManager()
 }
 
 //Bind game manager to only affect current game.
-void CentipedeManager::bindToGame(CentipedeGame *handle) 
+void CentipedeManager::bindToGame(CentipedeGame *handle)
 {
 	gameHandle = handle;
 }
 
 //Used in CentipedeGame to determine if a mushroom should spawn in
 //a given spot.
-int CentipedeManager::calculateEntryX() 
+int CentipedeManager::calculateEntryX()
 {
 	int x;
 	do {
@@ -30,7 +30,7 @@ int CentipedeManager::calculateEntryX()
 }
 
 //sets spawn settings at beginning of game.
-bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned int _length) 
+bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned int _length)
 {
 
  	end++;
@@ -43,17 +43,25 @@ bool CentipedeManager::beginSpawn(unsigned int frame, double _speed, unsigned in
 	return true;
 }
 
-void CentipedeManager::update() 
+void CentipedeManager::update()
 {
-	if (end > -1 && CentipedeGame::clock % 2 == 0) 
+	if (end > -1 && speed.size() > 0)
 	{
-		segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
-		segments.at(numSpawned)->setSpeed(speed.at(end));
-		numSpawned++;
-		if (haveSpawned.at(end) + 1 >= length.at(end))
-			end--;
-		else
-			haveSpawned.at(end)++;
+		/*
+		This decides how often to spawn centipede segments.
+		This is calculated based on how long it takes for a given segment
+		to travel 8 pixels or the width of a segment. Represented by 8/(the speed of a segment
+		given by pixels traveled per cycle).
+		*/
+		if (CentipedeGame::clock % (8 / ((speed.at(end) / 2))) == 0)
+		{
+			segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
+			if (haveSpawned.at(end) + 1 >= length.at(end))
+				end--;
+			else
+				haveSpawned.at(end)++;
+		}
+
 	}
 }
 
