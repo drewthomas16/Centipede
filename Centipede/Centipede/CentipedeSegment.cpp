@@ -21,7 +21,8 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	setTexture("../Sprites/CentipedeSegment/default.png");
 	object.setOrigin(1, 1);
 
-	velocity = sf::Vector2f(1, 0);
+	velocity.y = 0;
+	speed = 1;
 
 	movingDown = movingRight = true;
 
@@ -46,7 +47,7 @@ void CentipedeSegment::attach(CentipedeSegment *segment)
 void CentipedeSegment::update(CentipedeGame *gameHandle)
 {
 
-	if (CentipedeGame::clock % 2 == 0) 
+	if (CentipedeGame::clock % 2 == 0)
 	{
 
 		calculateVelocity();
@@ -69,17 +70,17 @@ void CentipedeSegment::collideWith(GameObject * other)
 	{
 		--health;
 		deathCollisionDanger = true;
-	}	
+	}
 	else if (dynamic_cast<Bullet *>(other) != nullptr)
 		--health;
 }
 
 
 //Kill the centipede segment and spawn a mushroom in its place.
-unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle) 
+unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle)
 {
-	
-	if(!deathCollisionDanger)
+
+	if (!deathCollisionDanger)
 		gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
 
 	readyToDie = true;
@@ -97,7 +98,7 @@ void CentipedeSegment::setAsHead() {
 }
 
 //Calculate the velocity of the sentipede to use in update.
-void CentipedeSegment::calculateVelocity() 
+void CentipedeSegment::calculateVelocity()
 {
 	if (velocity.y != 0)
 	{ //i changed rows
@@ -109,20 +110,28 @@ void CentipedeSegment::calculateVelocity()
 
 		velocity.y = 0; //velocity.x and velocity.y are mutually exclusive
 
-		velocity.x = pow(-1, movingRight);
+		//velocity.x = pow(-1, movingRight);
+		if (movingRight)
+			velocity.x = -1 * speed;
+		else
+			velocity.x = speed;
 		movingRight = !movingRight; //flip x directions
 	}
 
 	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
 	{
 		if (currentPosition.y == 0) { //top
-			velocity.y = 1; // will cause movingDown to be true next cycle
+			velocity.y = speed; // will cause movingDown to be true next cycle
 		}
 		else if (currentPosition.y == 29) { //bottom
-			velocity.y = -1; //will cause movingDown to be false next cycle
+			velocity.y = -1 * speed; //will cause movingDown to be false next cycle
 		}
 		else { //side or mushroom
-			velocity.y = pow(-1, !movingDown);
+			//velocity.y = pow(-1, !movingDown);
+			if (movingDown)
+				velocity.y = speed;
+			else
+				velocity.y = -1 * speed;
 		}
 
 		velocity.x = 0; //velocity.x and velocity.y are mutually exclusive
@@ -133,12 +142,34 @@ void CentipedeSegment::calculateVelocity()
 //is no mushroom there and it is not off the screen.
 bool CentipedeSegment::canMoveTo(double x, double y)
 {
-	if (!(x < 30 && x >= 0 && y < 30 && y >= 0))
+	if (!(x + velocity.x < 30 && x + velocity.x >= 0 && y + velocity.y < 30 && y + velocity.y >= 0))
 		return false;
+
+	//Inital FloatRect values based off of position.
+	double boxLeft = object.getGlobalBounds().left;
+	double boxTop = object.getGlobalBounds().top;
+	double boxWidth = object.getGlobalBounds().width;
+	double boxHeight = object.getGlobalBounds().height;
+
+	double adjustVeloX = velocity.x, adjustVeloY = velocity.y;
+
+	//Pad the velocity values.
+	if (adjustVeloX < 0)
+		adjustVeloX = -3;
+	else if (adjustVeloX > 0)
+		adjustVeloX = 3;
+	else
+		adjustVeloX = 0;
+
+	//Create FloatRect.
+	sf::FloatRect futurePosRect(boxLeft + adjustVeloX, boxTop,
+		boxWidth + adjustVeloX, boxHeight);
+
+	//Check for collisions.
 	if (objectsPtr != nullptr) {
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
-			if ((objectsPtr + 3)->at(i)->getSprite()->
-				getGlobalBounds().contains(x * interval.x, y * interval.y))
+			if ((objectsPtr + 3)/*objects[Mushroom]*/->at(i)->getSprite()->
+				getGlobalBounds().intersects(futurePosRect))
 				return false;
 	}
 	return true;
@@ -147,4 +178,16 @@ bool CentipedeSegment::canMoveTo(double x, double y)
 void CentipedeSegment::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;
+}
+
+
+double CentipedeSegment::getSpeed()
+{
+	return speed;
+}
+
+void CentipedeSegment::setSpeed(double i)
+{
+	speed = i;
+	velocity.x = speed;
 }
