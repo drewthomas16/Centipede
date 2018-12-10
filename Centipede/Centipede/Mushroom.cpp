@@ -10,7 +10,7 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 	pointValue = 5;
 	poisoned = false;
 	health = 4;
-	object.setOrigin(2, 2);
+	//object.setOrigin(2, 2);
 	object.setScale(1.25, 1.25);
 }
 

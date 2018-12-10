@@ -23,6 +23,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 
 	velocity.y = 0;
 	speed = 1;
+	velocity.x = speed;
 
 	movingDown = movingRight = true;
 
@@ -142,7 +143,7 @@ void CentipedeSegment::calculateVelocity()
 //is no mushroom there and it is not off the screen.
 bool CentipedeSegment::canMoveTo(double x, double y)
 {
-	if (!(x + velocity.x < 30 && x + velocity.x >= 0 && y + velocity.y < 30 && y + velocity.y >= 0))
+	if (x + velocity.x > 30 || x + velocity.x <= 0 || y + velocity.y > 30 || y + velocity.y <= 0)
 		return false;
 
 	//Inital FloatRect values based off of position.

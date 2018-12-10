@@ -14,7 +14,7 @@ sf::Vector2i GameObject::interval = sf::Vector2i(1, 1);
 GameObject::GameObject(int x, int y)
 {
 	currentPosition = sf::Vector2f(x, y);
-	object.setOrigin(currentPosition);
+	//object.setOrigin(currentPosition);
 	object.setPosition(currentPosition);
 	soundPlayer.setBuffer(soundClip);
 }

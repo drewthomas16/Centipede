@@ -16,7 +16,7 @@ Spider::Spider(int x, int y) : GameObject(x, y)
 {
 	currentPosition.x = x;
 	currentPosition.y = y;
-	object.setOrigin(0, -4);//sprite offset
+	//object.setOrigin(0, -4);//sprite offset
 	setTexture("../Sprites/Spider/spider0.png");
 
 	//decides which direction to move first
