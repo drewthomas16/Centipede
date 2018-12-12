@@ -19,7 +19,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	isPoisoned = false;
 
 	setTexture("../Sprites/CentipedeSegment/default.png");
-	object.setOrigin(1, 1);
+	//object.setOrigin(1, 1);
 
 	velocity.y = 0;
 	speed = 1;
@@ -48,11 +48,10 @@ void CentipedeSegment::attach(CentipedeSegment *segment)
 void CentipedeSegment::update(CentipedeGame *gameHandle)
 {
 
-	if (CentipedeGame::clock % 2 == 0)
+	if (CentipedeGame::clock % 3 == 0)
 	{
 
 		calculateVelocity();
-
 		//update position
 		currentPosition.x += velocity.x;
 		currentPosition.y += velocity.y;

@@ -29,7 +29,7 @@ int CentipedeManager::calculateEntryX()
 }
 
 //sets spawn settings at beginning of game.
-bool CentipedeManager::beginSpawn(unsigned int frame, unsigned int _speed, unsigned int _length) 
+bool CentipedeManager::beginSpawn(unsigned int frame, unsigned double _speed, unsigned int _length) 
 {
 
  	end++;
@@ -52,9 +52,10 @@ void CentipedeManager::update()
 		to travel 8 pixels or the width of a segment. Represented by 8/(the speed of a segment
 		given by pixels traveled per cycle).
 		*/
-		if (CentipedeGame::clock % (8 / ((speed.at(end) / 2))) == 0)
+		std::cout << (8.* 3.)/ 1 << std::endl;
+		if (CentipedeGame::clock % (int)(((8. * 3.) / 7.) / speed.at(end)) == 0)
 		{
-			segments.push_back(gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0));
+			gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0)->setSpeed(speed.at(end));
 			if (haveSpawned.at(end) + 1 >= length.at(end))
 				end--;
 			else
