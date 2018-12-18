@@ -118,16 +118,18 @@ void CentipedeSegment::calculateVelocity()
 		movingRight = !movingRight; //flip x directions
 	}
 
-	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + velocity.y))
+	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + speed, currentPosition.y + (-1 * speed)))
 	{
-		if (currentPosition.y == 0) { //top
+		if (currentPosition.y + velocity.y < 0) 
+		{ //top
 			velocity.y = speed; // will cause movingDown to be true next cycle
 		}
-		else if (currentPosition.y == 29) { //bottom
+		else if (currentPosition.y + velocity.y > 28) 
+		{ //bottom
 			velocity.y = -1 * speed; //will cause movingDown to be false next cycle
 		}
-		else { //side or mushroom
-			//velocity.y = pow(-1, !movingDown);
+		else 
+		{ //side of mushroom
 			if (movingDown)
 				velocity.y = speed;
 			else
@@ -140,10 +142,14 @@ void CentipedeSegment::calculateVelocity()
 
 //Make sure that a centipede can move somewhere by checking to make sure there
 //is no mushroom there and it is not off the screen.
-bool CentipedeSegment::canMoveTo(double x, double y)
+bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 {
-	if (x + velocity.x > 30 || x + velocity.x <= 0 || y + velocity.y > 30 || y + velocity.y <= 0)
+	if (x > 29 || x < 0 || y1 >= 30 || y2 <= 0)
+	{
+		std::cout << "( " << x << ", " << y1 << " )" << std::endl;
 		return false;
+	}
+
 
 	//Inital FloatRect values based off of position.
 	double boxLeft = object.getGlobalBounds().left;
@@ -164,11 +170,11 @@ bool CentipedeSegment::canMoveTo(double x, double y)
 	//Create FloatRect.
 	sf::FloatRect futurePosRect(boxLeft + adjustVeloX, boxTop,
 		boxWidth + adjustVeloX, boxHeight);
-
+	int centIntersect = 0;
 	//Check for collisions.
 	if (objectsPtr != nullptr) {
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
-			if ((objectsPtr + 3)/*objects[Mushroom]*/->at(i)->getSprite()->
+			if ((objectsPtr + 3)/*mushroom*/->at(i)->getSprite()->
 				getGlobalBounds().intersects(futurePosRect))
 				return false;
 	}

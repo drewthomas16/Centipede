@@ -19,7 +19,7 @@ public:
 
 	void calculateVelocity();
 
-	bool canMoveTo(double x, double y);
+	bool canMoveTo(double x, double y1, double y2);
 
 	void setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist);
 
