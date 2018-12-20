@@ -18,7 +18,6 @@ Flea::Flea(int x, int y) : GameObject(x, y)
 	velocity = sf::Vector2f(0, 1);
 	pointValue = 200;
 	health = 2;
-	std::cout << health << std::endl;
 }
 
 

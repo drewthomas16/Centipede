@@ -52,7 +52,6 @@ void CentipedeManager::update()
 		to travel 8 pixels or the width of a segment. Represented by 8/(the speed of a segment
 		given by pixels traveled per cycle).
 		*/
-		std::cout << (8.* 3.)/ 1 << std::endl;
 		if (CentipedeGame::clock % (int)(((8. * 2.) / 7.) / speed.at(end)) == 0)
 		{
 			gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0)->setSpeed(speed.at(end));

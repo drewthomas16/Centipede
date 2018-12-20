@@ -135,8 +135,6 @@ void Player::checkMushroomCollision()
 		boxWidth + adjustVeloX, boxHeight);
 
 
-	//std::cout << '(' << adjustVeloX << ',' << adjustVeloY << std::endl;
-
 	//Cycle through all mushrooms, the 3rd index of the objects vector.
 	for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
 	{
@@ -159,9 +157,6 @@ void Player::checkMushroomCollision()
 	//Make future bounds depending upon velocity.
 	sf::FloatRect futurePosRect2(boxLeft, boxTop + adjustVeloY,
 		boxWidth, boxHeight + adjustVeloY);
-
-
-	//std::cout << '(' << adjustVeloX << ',' << adjustVeloY << std::endl;
 
 	//Cycle through all mushrooms, the 3rd index of the objects vector.
 	for (int i = 0; i < (objectsPtr + 3)->size(); ++i)

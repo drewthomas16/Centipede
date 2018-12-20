@@ -331,14 +331,8 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 
 {
 	bool readyToDie;
-	std::cout << "i exist " << thing.use_count() << " times\n";
 
-  	score += thing->die(readyToDie, this);
-
-	if (readyToDie)
-		//thing.reset();
-
-	std::cout << "score is now " << score << std::endl;
+	score += thing->die(readyToDie, this);
 }
 
 

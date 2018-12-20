@@ -145,10 +145,7 @@ void CentipedeSegment::calculateVelocity()
 bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 {
 	if (x > 29 || x < 0 || y1 >= 30 || y2 <= 0)
-	{
-		std::cout << "( " << x << ", " << y1 << " )" << std::endl;
 		return false;
-	}
 
 
 	//Inital FloatRect values based off of position.

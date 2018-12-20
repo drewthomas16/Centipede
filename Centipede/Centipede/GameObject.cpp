@@ -31,7 +31,6 @@ void GameObject::render(sf::RenderTexture & playerArea)
 //Method to check if GameObjects collide.
 void GameObject::collideWith(GameObject *)
 {
-	std::cout << "h" << std::endl;
 	return;
 }
 
@@ -71,12 +70,6 @@ sf::Sprite* GameObject::getSprite()
 		* interval.y);
 	object.setPosition(realPos);
 	
-	/*
-	std::cout << boundsPtr.left << std::endl;
-	boundsPtr.left = currentPosition.x;
-	std::cout << boundsPtr.left << std::endl;
-	boundsPtr.top = currentPosition.y;
-	*/
 	return &object;
 }
 
@@ -84,7 +77,6 @@ sf::Sprite* GameObject::getSprite()
 unsigned int GameObject::die(bool &readyToDie, CentipedeGame *gameHandle) 
 {
 	readyToDie = true;
-	//std::cout << getType() << " died\n";
 	
 	return getPointValue();
 }
