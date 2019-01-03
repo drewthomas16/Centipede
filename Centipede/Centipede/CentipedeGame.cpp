@@ -206,8 +206,8 @@ void CentipedeGame::draw()
 	//update score and draw to render texture
 	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, 
 		scoreDisplay.getLocalBounds().height / 2);
-	scoreDisplay.setString(std::to_string(score) + "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " 
-		+ std::to_string(highScore));
+	scoreDisplay.setString("\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + std::to_string(score) 
+		+ "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " + std::to_string(highScore));
 	scoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x / 2, 0);
 
 	scoreArea.draw(scoreDisplay);
