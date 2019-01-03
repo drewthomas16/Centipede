@@ -49,8 +49,14 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 
 	//load score fonts and stuff
 	arcadeFont.loadFromFile("../ARCADECLASSIC.TTF");
+
 	scoreDisplay.setFont(arcadeFont);
 	scoreDisplay.setCharacterSize(18);
+	scoreDisplay.setFillColor(sf::Color::Red);
+
+	enemyScore.setFont(arcadeFont);
+	enemyScore.setCharacterSize(10);
+	enemyScore.setFillColor(sf::Color::White);
 
 	//life display
 	lifeTexture.loadFromFile("../Sprites/player.png");
@@ -108,9 +114,9 @@ bool CentipedeGame::update()
 				kill(objects[i].at(j));
 				objects[i].erase(objects[i].begin() + j);
 				if (i == 0)
-				{
-					return false;
+				{	
 					setHighScore();
+					return false;
 				}
 			}
 #pragma endregion
@@ -162,7 +168,6 @@ bool CentipedeGame::update()
 		//killCentipedes();
 	}
 #pragma endregion
-	manageCentipedePopulation();
 	centMan->update();
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
@@ -199,15 +204,32 @@ void CentipedeGame::draw()
 	playerArea.clear();
 
 	//update score and draw to render texture
-	scoreDisplay.setFillColor(sf::Color::Red);
-	scoreDisplay.setString(std::to_string(score));
-	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, scoreDisplay
-		.getLocalBounds().height / 2);
-	scoreDisplay.setString(std::to_string(score) + "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " + std::to_string(highScore));
+	scoreDisplay.setOrigin(scoreDisplay.getLocalBounds().width / 2, 
+		scoreDisplay.getLocalBounds().height / 2);
+	scoreDisplay.setString(std::to_string(score) + "\t\t\t\t\t\t\t\t\t\t\t\t" + "HI SCORE   " 
+		+ std::to_string(highScore));
 	scoreDisplay.setPosition(scoreAreaSprite.getTexture()->getSize().x / 2, 0);
 
 	scoreArea.draw(scoreDisplay);
 	scoreArea.draw(highScoreDisplay);
+
+   /*	if (scoreText.size() > 0)
+	{
+		enemyScore.setString("cool");
+		enemyScore.setPosition(scoreText.at(1) * GameObject::interval.x, 
+			scoreText.at(2) * GameObject::interval.y);	
+		window->draw(enemyScore);
+	}*/
+
+	enemyScore.setFont(arcadeFont);
+	enemyScore.setString("Hello World!");
+	enemyScore.setCharacterSize(18);
+	enemyScore.setFillColor(sf::Color::White);
+	enemyScore.setPosition(100, 100);
+	window->draw(enemyScore);
+
+
+
 	//draw lives
 	drawLives();
 
@@ -331,40 +353,14 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 
 {
 	bool readyToDie;
-
-	score += thing->die(readyToDie, this);
-}
-
-
-//Count how many things you have. You must specify which thing you want to count.
-unsigned int CentipedeGame::getCountOf(char* type, unsigned int startX = 0, 
-	unsigned int startY = 0, unsigned int endX = 30, unsigned int endY = 30) 
-{
-	unsigned int count = 0;
-	/*
-	for (int y = startY; y < endY; ++y)//check mushrooms in player position
-		for (int x = startX; x < endX; ++x)
-			for (int i = 0; i < CentipedeGame::map[y][x][CentipedeGame::frame]
-				.size(); i++)
-				if (!std::strcmp(CentipedeGame::map[y][x][CentipedeGame::frame]
-					.at(i)->getType(), type))
-
-					++count;*/
-	return count;
-}
-
-
-// If the getCounOf("CentipedeSegment", 0, 0, 30, 30) returns a number less than
-//0 then you know that there is no longer a centipede on the board.
-void CentipedeGame::manageCentipedePopulation() 
-{
-	if (activeCentipede) {
-		//check if centipede has died
-		activeCentipede = getCountOf("CentipedeSegment", 0, 0, 30, 30) > 0;
-	}
-	else {
-
-		//centMan.beginSpawn()
+	int scoreAdd = thing->die(readyToDie, this);
+	score += scoreAdd;
+ 	if (thing->getHealth() == 0)
+	{
+		scoreText.push_back(scoreAdd);
+		scoreText.push_back(thing->currentPosition.x);
+		scoreText.push_back(thing->currentPosition.y);
+		scoreText.push_back(20);
 	}
 }
 
@@ -390,6 +386,8 @@ sf::Vector2i CentipedeGame::getRelMousePos()
 //Reset game
 void CentipedeGame::reset()
 {
+	score = 0;
+
 	delete centMan;
 
 	for (int i = 0; i < 7; i++)
@@ -407,8 +405,14 @@ void CentipedeGame::reset()
 
 	//load score fonts and stuff
 	arcadeFont.loadFromFile("../ARCADECLASSIC.TTF");
+	
 	scoreDisplay.setFont(arcadeFont);
 	scoreDisplay.setCharacterSize(18);
+	scoreDisplay.setFillColor(sf::Color::Red);
+
+	enemyScore.setFont(arcadeFont);
+	enemyScore.setCharacterSize(10);
+	enemyScore.setFillColor(sf::Color::White);
 
 	//life display
 	lifeTexture.loadFromFile("../Sprites/player.png");
@@ -422,7 +426,6 @@ void CentipedeGame::reset()
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
-	//centMan->beginSpawn(CentipedeGame::clock, 8, 8);
 }
 
 

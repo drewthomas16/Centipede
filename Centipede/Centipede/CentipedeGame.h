@@ -61,14 +61,11 @@ public:
 
 	static unsigned int clock;
 
-	unsigned int getCountOf(char*, unsigned int, unsigned int, unsigned int, unsigned int);
 	void setHighScore();
 
 private:
 	static const int numObjects = 7;
 	void resolveCollisions();
-
-	void manageCentipedePopulation();
 
 
 	void kill(std::shared_ptr<GameObject>&);
@@ -87,10 +84,13 @@ private:
 	static int playerLives;
 	unsigned int lastPlayerLives;
 	unsigned int highScore;
+	std::vector<double
+	> scoreText;
 
 	sf::Font arcadeFont;
 	sf::Text scoreDisplay;
 	sf::Text highScoreDisplay;
+	sf::Text enemyScore;
 
 	sf::Texture lifeTexture;
 	sf::Sprite lives[6];
