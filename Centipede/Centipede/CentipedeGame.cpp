@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <SFML\Window\Keyboard.hpp>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
 #include "Player.h"
@@ -129,6 +130,8 @@ bool CentipedeGame::update()
 			if (isMushroomCell(x, y))
 				++mushroomCount;
 
+	
+	//DEBUG: if(sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
 	if (mushroomCount < 5 && !liveFlea)
 	{
 		int xpos = rand() % 29;
@@ -136,18 +139,19 @@ bool CentipedeGame::update()
 		liveFlea = true;
 	}
 #pragma endregion
-
-	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
+	//if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
 	//check if live spider
+	//DEBUG if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
 	if (!findFirstInstanceOf<Spider>() && (rand() % 2000) < 5)//no spider check if able to respawn
 	{
 		std::shared_ptr<Spider> spider = spawnObject<Spider>(rand()
 			% 30 < 15 ? 0 : 29, rand() % 5 + 18);
 		spider->setTarget(findFirstInstanceOf<Player>());
 	}
-
+	
 	//this should be happening when player dies
 #pragma region rebuildMushroom
 	if (lastPlayerLives > playerLives)//player dies

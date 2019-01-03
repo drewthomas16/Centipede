@@ -18,7 +18,7 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 //Method to update the mushroom to make sure it is
 //representing how many times it has been shot.
 void Mushroom::update(CentipedeGame *gameHandle)
-{
+{	
 	switch (health)//changes texture based on health
 	{
 	case 1:
@@ -35,7 +35,7 @@ void Mushroom::update(CentipedeGame *gameHandle)
 		break;
 	}
 
-	if (poisoned)
+	//if (poisoned)
 		object.setColor(sf::Color::Magenta);
 
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
@@ -57,6 +57,7 @@ bool Mushroom::resetHeath()
 
 	if (health < 4)
 	{
+		
  		switch (health++)//changes texture based on health
 		{
 		case 1:
