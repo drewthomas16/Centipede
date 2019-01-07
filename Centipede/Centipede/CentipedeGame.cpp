@@ -139,8 +139,8 @@ bool CentipedeGame::update()
 		liveFlea = true;
 	}
 #pragma endregion
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
-	//if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
+	// DEBUG: if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
+	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
 	//check if live spider
@@ -313,6 +313,15 @@ void CentipedeGame::resolveCollisions()
 		for (int j = 0; j < objects[flea].size(); j++)
 			if (objects[bullet].at(i)->getSprite()->getGlobalBounds().intersects(objects[flea].at(j)->getSprite()->getGlobalBounds()))
 				objects[bullet].at(i)->collideWith(objects[flea].at(j).get());
+	}
+
+	//Scorpion
+	for (int i = 0; i < objects[scorpion].size(); ++i)
+	{
+		//Only Really Need to Check in relation to mushes.
+		for (int j = 0; j < objects[mushroom].size(); ++j)
+			if (objects[scorpion].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
+				objects[mushroom].at(j)->collideWith(objects[scorpion].at(i).get());
 	}
 }
 
