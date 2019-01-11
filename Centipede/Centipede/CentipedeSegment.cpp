@@ -167,7 +167,7 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 	//Create FloatRect.
 	sf::FloatRect futurePosRect(boxLeft + adjustVeloX, boxTop,
 		boxWidth + adjustVeloX, boxHeight);
-	int centIntersect = 0;
+
 	//Check for collisions.
 	if (objectsPtr != nullptr) {
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
