@@ -185,6 +185,7 @@ bool CentipedeGame::update()
 	draw();
 
 	++clock;
+	setHighScore();
 
 	//return true while player alive
 	return playerLives > 0;
@@ -435,8 +436,12 @@ void CentipedeGame::setHighScore()
 	std::ofstream highScoreFile("Scores.txt", std::ofstream::out | std::ofstream::trunc);
 	if (highScoreFile.is_open())
 	{
+		std::cout << score << std::endl;
 		if (score > highScore)
+		{
 			highScoreFile << score;
+			highScore = score;
+		}
 		else
 			highScoreFile << highScore;
 
