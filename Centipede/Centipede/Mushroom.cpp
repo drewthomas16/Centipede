@@ -37,6 +37,8 @@ void Mushroom::update(CentipedeGame *gameHandle)
 
 	if (poisoned)
 	{
+		//check if pushed  by centipede
+			//if true go down unless at player area.
 		object.setColor(sf::Color::Magenta);
 	}
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))

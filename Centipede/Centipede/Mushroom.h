@@ -14,5 +14,5 @@ public:
 	bool getPoisoned();
 	char* getType() { return "Mushroom"; }
 private:
-	bool poisoned;
+	bool poisoned, pushed;
 };
