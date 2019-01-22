@@ -32,19 +32,15 @@ void Flea::update(CentipedeGame *gameHandle)
 	setPixels();
 	if (frame++ == delay)//if time to update
 	{
+		//Gets faster if hit by a bullet.
 		if (health == 1)
+			velocity.y = 2;
 
 		//apply velocity
 		currentPosition.y += velocity.y;
 
 		//reset frame counter
 		frame = 0;
-
-		//this just fills the entire screen with fleas
-		//if (rand() % 40)
-		//	CentipedeGame::placeObject(rand() % 30, rand() % 30,
-		//		new Flea(window, rand() % 30,rand() % 30));
-
 
 		//Flea places mushrooms at various verticle locations
 		if (rand() % 100 < 30 && currentPosition.y != 30 && !CentipedeGame::isMushroomCell(currentPosition.x, currentPosition.y))
@@ -68,5 +64,5 @@ void Flea::update(CentipedeGame *gameHandle)
 void Flea::collideWith(GameObject * other)
 {
 	if (dynamic_cast<Bullet *>(other) != nullptr)
-		health = 0;
+		health--;
 }

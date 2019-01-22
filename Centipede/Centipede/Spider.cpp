@@ -60,7 +60,10 @@ void Spider::update(CentipedeGame *gameHandle)
 		else
 			setTexture("../Sprites/Spider/Spider3.png");
 
-		move();//determine vel and move player		
+		move();//determine vel and move player
+
+		if (currentPosition.x <= 0 || currentPosition.x >= 30)
+			health = 0;
 	}
 }
 
@@ -91,7 +94,7 @@ void Spider::setPointValue()
 void Spider::collideWith(GameObject* other)
 {
 	if (dynamic_cast<Bullet*>(other) != nullptr)
-		health = 0;
+ 		health = 0;
 	else if (dynamic_cast<Player*>(other) != nullptr)
 		health = 0;
 }
@@ -168,6 +171,8 @@ void Spider::move()
 	currentPosition.x += velocity.x;
 	currentPosition.y += velocity.y;
 
+	//std::cout << currentPosition.x << ',' << currentPosition.y << std::endl;
+
 	//used for additional delay to give ooportunity for random change
 	count++;
 }
@@ -180,7 +185,9 @@ unsigned int Spider::die(bool &readyToDie, CentipedeGame *gameHandle) {
 	setPointValue();
 
 	//if offscreen return no points
-	if (currentPosition.x == -1 || currentPosition.x == 30)
+	if (currentPosition.x <= 0 || currentPosition.x >= 30)
+	{
 		return 0;
+	}
 	return getPointValue();
 }

@@ -16,5 +16,5 @@ private:
 	int scuttle; // for walking animation
 
 	//40 frames of animation.
-	unsigned int frameMax = 40;
+	unsigned int frameMax = 5;
 };

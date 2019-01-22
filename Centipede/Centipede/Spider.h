@@ -17,6 +17,6 @@ public:
 	char* getName() { return "Spider";  }
 private:
 	std::shared_ptr<Player> player;
-	unsigned int delay = 15;
+	unsigned int delay = 4;
 	bool dir;
 };

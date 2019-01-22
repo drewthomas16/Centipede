@@ -171,9 +171,23 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 	//Check for collisions.
 	if (objectsPtr != nullptr) {
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+		{
+			//Dynamic cast raw pointer to a mushroom so the compiler stays quiet.
+			Mushroom * touchedMushroom = dynamic_cast<Mushroom*>((objectsPtr + 3)->at(i).get());
 			if ((objectsPtr + 3)/*mushroom*/->at(i)->getSprite()->
-				getGlobalBounds().intersects(futurePosRect))
-				return false;
+				getGlobalBounds().intersects(futurePosRect)
+				&& touchedMushroom != nullptr
+				//We don't want to collide with pushed mushrooms.
+				&& !touchedMushroom->isPushed())
+			{
+				//std::cout << "TEST " << std::endl;
+
+				//Centipede has to 'touch' poisoned mushrooms so that they know to fall.
+				touchedMushroom->push();
+				if(!touchedMushroom->getPoisoned())
+					return false;
+			}
+		}
 	}
 	return true;
 }
