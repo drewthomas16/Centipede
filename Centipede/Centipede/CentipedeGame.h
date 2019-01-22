@@ -84,8 +84,7 @@ private:
 	static int playerLives;
 	unsigned int lastPlayerLives;
 	unsigned int highScore;
-	std::vector<double
-	> scoreText;
+	std::vector<double> scoreText;
 
 	sf::Font arcadeFont;
 	sf::Text scoreDisplay;

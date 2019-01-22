@@ -112,7 +112,7 @@ bool CentipedeGame::update()
 			if (objects[i].at(j)->getHealth() == 0)
 			{
 				kill(objects[i].at(j));
-				objects[i].erase(objects[i].begin() + j);
+ 				objects[i].erase(objects[i].begin() + j);
 				if (i == 0)
 				{	
 					setHighScore();
@@ -161,7 +161,7 @@ bool CentipedeGame::update()
 		for (int i = 0; i < objects[mushroom].size(); i++)
 			while (objects[mushroom].at(i)->getHealth() < 4)
 			{
-				draw();
+				//draw();
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
 			}
 
@@ -213,21 +213,17 @@ void CentipedeGame::draw()
 	scoreArea.draw(scoreDisplay);
 	scoreArea.draw(highScoreDisplay);
 
-   /*	if (scoreText.size() > 0)
-	{
-		enemyScore.setString("cool");
-		enemyScore.setPosition(scoreText.at(1) * GameObject::interval.x, 
-			scoreText.at(2) * GameObject::interval.y);	
-		window->draw(enemyScore);
-	}*/
+	for(int i = 3; i < scoreText.size(); i += 4)
+		if (scoreText.at(i) > 0)
+		{
+			enemyScore.setString(std::to_string(scoreText.at(0)));
+			enemyScore.setPosition(scoreText.at(i - 2) * GameObject::interval.x,
+				scoreText.at(i - 1) * GameObject::interval.y);
+			window->draw(enemyScore);
 
-	enemyScore.setFont(arcadeFont);
-	enemyScore.setString("Hello World!");
-	enemyScore.setCharacterSize(18);
-	enemyScore.setFillColor(sf::Color::White);
-	enemyScore.setPosition(100, 100);
-	window->draw(enemyScore);
-
+			scoreText.at(i) -= 1;
+		}
+	window->display();
 
 
 	//draw lives
@@ -353,11 +349,11 @@ void CentipedeGame::placeObject(unsigned int x, unsigned int y,
 void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 
 {
 	bool readyToDie;
-	int scoreAdd = thing->die(readyToDie, this);
-	score += scoreAdd;
- 	if (thing->getHealth() == 0)
+ 	int scoreAdd = thing->die(readyToDie, this);
+ 	score += scoreAdd;
+ 	if (scoreAdd > 0)
 	{
-		scoreText.push_back(scoreAdd);
+   		scoreText.push_back(scoreAdd);
 		scoreText.push_back(thing->currentPosition.x);
 		scoreText.push_back(thing->currentPosition.y);
 		scoreText.push_back(20);
