@@ -118,7 +118,9 @@ void CentipedeSegment::calculateVelocity()
 		movingRight = !movingRight; //flip x directions
 	}
 
-	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + speed, currentPosition.y + (-1 * speed)))
+	if (!canMoveTo(currentPosition.x + velocity.x,
+		currentPosition.y + speed,
+		currentPosition.y + (-1 * speed)))
 	{
 		if (currentPosition.y + velocity.y < 0) 
 		{ //top
@@ -144,6 +146,7 @@ void CentipedeSegment::calculateVelocity()
 //is no mushroom there and it is not off the screen.
 bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 {
+	//keep within the boundries of the screen.
 	if (x > 29 || x < 0 || y1 >= 30 || y2 <= 0)
 		return false;
 
@@ -171,13 +174,28 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 	//Check for collisions.
 	if (objectsPtr != nullptr) {
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
+		{
+			//Dynamic cast raw pointer to a mushroom so the compiler stays quiet.
+			Mushroom * touchedMushroom = dynamic_cast<Mushroom*>((objectsPtr + 3)->at(i).get());
 			if ((objectsPtr + 3)/*mushroom*/->at(i)->getSprite()->
-				getGlobalBounds().intersects(futurePosRect))
-				return false;
+				getGlobalBounds().intersects(futurePosRect)
+				&& touchedMushroom != nullptr
+				//We don't want to collide with pushed mushrooms.
+				&& !touchedMushroom->isPushed())
+			{
+				//std::cout << "TEST " << std::endl;
+
+				//Centipede has to 'touch' poisoned mushrooms so that they know to fall.
+				touchedMushroom->push();
+				if(!touchedMushroom->getPoisoned())
+					return false;
+			}
+		}
 	}
 	return true;
 }
 
+//Needs to be fed the pointer that holds entities for collision.
 void CentipedeSegment::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;
