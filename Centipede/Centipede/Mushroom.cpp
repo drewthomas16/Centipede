@@ -9,9 +9,11 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 {
 	pointValue = 5;
 	poisoned = false;
+	pushed = false;
 	health = 4;
 	//object.setOrigin(2, 2);
 	object.setScale(1.25, 1.25);
+	velocity.y = 0.5;
 }
 
 
@@ -40,6 +42,8 @@ void Mushroom::update(CentipedeGame *gameHandle)
 		//check if pushed  by centipede
 			//if true go down unless at player area.
 		object.setColor(sf::Color::Magenta);
+		if(pushed && currentPosition.y < 29)
+			currentPosition.y += velocity.y;
 	}
 	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	//	health = 0;
@@ -113,6 +117,17 @@ void Mushroom::collideWith(GameObject* other)
 bool Mushroom::getPoisoned()
 {
 	return poisoned;
+}
+
+void Mushroom::push()
+{
+	if(poisoned)
+		pushed = true;
+}
+
+bool Mushroom::isPushed()
+{
+	return pushed;
 }
 
 

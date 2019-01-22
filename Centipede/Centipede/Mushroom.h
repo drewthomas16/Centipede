@@ -12,6 +12,8 @@ public:
 	bool resetHeath();
 	void collideWith(GameObject*);
 	bool getPoisoned();
+	void push();
+	bool isPushed();
 	char* getType() { return "Mushroom"; }
 private:
 	bool poisoned, pushed;

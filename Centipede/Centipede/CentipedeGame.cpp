@@ -139,7 +139,7 @@ bool CentipedeGame::update()
 		liveFlea = true;
 	}
 #pragma endregion
-	// DEBUG: if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
+	// DEBUG: */if (sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
 	if (!findFirstInstanceOf<Scorpion>() && rand() % 10000 < 5)
 		spawnObject<Scorpion>(rand() % 30 < 15 ? 0 : 29, rand() % 17);
 
