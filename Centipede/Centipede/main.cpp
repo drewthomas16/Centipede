@@ -1,6 +1,7 @@
 /*
 	Project Title : Centipede
-	Date : 1/24/2018
+	Creation Date : 1/24/2018
+	Last Modified: 1/22/2019
 	Description : Recreate classic arcade game centipede for use with a 
 	trackball controller for later use in arcade cabinet
 */
@@ -39,8 +40,10 @@ int main()
 	window.draw(sprite);
 	window.display();
 
+	//Slow down so the program is playable.
 	window.setFramerateLimit(60);
 
+	//Debug switches that control frame by frame mode.
 	bool frameByFrameMode(false), enterPressed(false);
 	bool gameStart = false;
 
@@ -71,6 +74,7 @@ int main()
 			plusLives = game.update();
 		else if (!plusLives)
 		{
+			//If no lives are left, display game over screen.
 			sprite.setTexture(gameOver);
 			window.draw(sprite);
 			window.display();

@@ -118,7 +118,9 @@ void CentipedeSegment::calculateVelocity()
 		movingRight = !movingRight; //flip x directions
 	}
 
-	if (!canMoveTo(currentPosition.x + velocity.x, currentPosition.y + speed, currentPosition.y + (-1 * speed)))
+	if (!canMoveTo(currentPosition.x + velocity.x,
+		currentPosition.y + speed,
+		currentPosition.y + (-1 * speed)))
 	{
 		if (currentPosition.y + velocity.y < 0) 
 		{ //top
@@ -144,6 +146,7 @@ void CentipedeSegment::calculateVelocity()
 //is no mushroom there and it is not off the screen.
 bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 {
+	//keep within the boundries of the screen.
 	if (x > 29 || x < 0 || y1 >= 30 || y2 <= 0)
 		return false;
 
@@ -192,6 +195,7 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 	return true;
 }
 
+//Needs to be fed the pointer that holds entities for collision.
 void CentipedeSegment::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;

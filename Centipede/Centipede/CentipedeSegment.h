@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-//TODO: Make centipede work without mushroom spawning on death.
 
 class CentipedeSegment : public GameObject
 {
