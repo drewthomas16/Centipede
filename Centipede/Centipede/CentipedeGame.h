@@ -102,6 +102,7 @@ private:
 	void drawLives();
 
 	bool activeCentipede = false;
+	bool firstLoop;
 
 	std::ifstream score_in_file;
 	std::ofstream score_out_file;

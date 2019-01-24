@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <SFML\Window\Keyboard.hpp>
+#include <Windows.h>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
 #include "Player.h"
@@ -80,6 +81,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	i >> highScore;
 
 	level = 0;
+	firstLoop = true;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);
@@ -160,17 +162,26 @@ bool CentipedeGame::update()
 	
 	//this should be happening when player dies
 #pragma region rebuildMushroom
-	if (lastPlayerLives > playerLives)//player dies
+	if (lastPlayerLives > playerLives && !firstLoop)//player dies
 	{
 		for (int i = 0; i < objects[mushroom].size(); i++)
+		{
+			Sleep(10);
+			std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
+			score += 5;
+			draw();
 			while (objects[mushroom].at(i)->getHealth() < 4)
 			{
-				//draw();
+				Sleep(10);
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
+				draw();
 			}
+		}
 
 		//killCentipedes();
 	}
+	else
+		firstLoop = false;
 #pragma endregion
 	centMan->update();
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
@@ -432,6 +443,7 @@ void CentipedeGame::reset()
 	}
 
 	level = 1;
+	firstLoop = true;
 
 	centMan = new CentipedeManager();
 	centMan->bindToGame(this);

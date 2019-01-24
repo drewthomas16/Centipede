@@ -67,26 +67,25 @@ bool Mushroom::resetHeath()
 
 	if (health < 4)
 	{
-		
- 		switch (health++)//changes texture based on health
+
+		switch (health++)//changes texture based on health
 		{
 		case 1:
-			setTexture("../Sprites/Mushroom/mushroom1.png");
+			setTexture("../Sprites/Mushroom/Poisoned1.png");
 			break;
 		case 2:
-			setTexture("../Sprites/Mushroom/mushroom2.png");
+			setTexture("../Sprites/Mushroom/Poisoned2.png");
 			break;
 		case 3:
-			setTexture("../Sprites/Mushroom/mushroom3.png");
+			setTexture("../Sprites/Mushroom/Poisoned3.png");
 			break;
 		case 4:
-			setTexture("../Sprites/Mushroom/mushroom4.png");
+			setTexture("../Sprites/Mushroom/Poisoned4.png");
 			break;
 		}
 
 		mushroomRebuildSound.play();
 
-		
 		/*while (mushroomRebuildSound.getStatus() != sf::Sound::Stopped)
 		{
 			//printf("Health - %i\n", health);
@@ -94,7 +93,10 @@ bool Mushroom::resetHeath()
 		poisoned = false;
 		return true;
 	}
-	
+	else
+		setTexture("../Sprites/Mushroom/Poisoned4.png");
+
+	//object.setColor(sf::Color::Magenta);
 
 	return false;
 }
