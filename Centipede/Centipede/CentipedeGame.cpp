@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <chrono>
 #include <SFML\Window\Keyboard.hpp>
 #include "CentipedeGame.h"
 #include "Mushroom.h"
@@ -23,7 +24,6 @@ int CentipedeGame::playerLives = -1;
 static int lastPlayerLives;
 
 int numObjects;
-
 
 //Create centipede game loop.
 CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
@@ -56,7 +56,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	scoreDisplay.setFillColor(sf::Color::Red);
 
 	enemyScore.setFont(arcadeFont);
-	enemyScore.setCharacterSize(10);
+	enemyScore.setCharacterSize(20);
 	enemyScore.setFillColor(sf::Color::White);
 
 	//life display
@@ -217,17 +217,37 @@ void CentipedeGame::draw()
 	scoreArea.draw(scoreDisplay);
 	scoreArea.draw(highScoreDisplay);
 
-	for(int i = 3; i < scoreText.size(); i += 4)
-		if (scoreText.at(i) > 0)
-		{
-			enemyScore.setString(std::to_string(scoreText.at(0)));
-			enemyScore.setPosition(scoreText.at(i - 2) * GameObject::interval.x,
-				scoreText.at(i - 1) * GameObject::interval.y);
-			window->draw(enemyScore);
+	//TODO: delete scoreText
+	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
+	playerArea.display();
+	scoreArea.display();
 
-			scoreText.at(i) -= 1;
+
+	//Iterate through vector that holds all of data about entity deaths.
+	for (unsigned int i = 0; i < toDisplay.size(); ++i)
+	{
+		//Determine how long its been since thing has died
+		std::chrono::duration<double> elapsed = std::chrono::high_resolution_clock::now()
+			- toDisplay.at(i).timeOfDeath;
+		//Don't draw if the death was more than one second ago.
+		if (elapsed.count() <= 1)
+		{
+			//Give text variable all neccessary data and draw text.
+			enemyScore.setPosition(toDisplay.at(i).deathPosition.x * GameObject::interval.x,
+				toDisplay.at(i).deathPosition.y * GameObject::interval.y);
+			enemyScore.setString(std::to_string(toDisplay.at(i).scoreValue));
+			playerArea.draw(enemyScore);
+			
 		}
-	window->display();
+		//If death was too long ago kill data.
+		else
+		{
+			toDisplay.erase(toDisplay.begin() + i);
+			i--;
+		}
+		
+	}
+	//window->display();
 
 
 	//draw lives
@@ -235,11 +255,7 @@ void CentipedeGame::draw()
 
 	if (grid)
 		playerArea.draw(linePoints);
-
-	playerArea.display();
-	scoreArea.display();
-
-	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
+	
 
 	for(int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
@@ -366,10 +382,11 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
  	score += scoreAdd;
  	if (scoreAdd > 0)
 	{
-   		scoreText.push_back(scoreAdd);
-		scoreText.push_back(thing->currentPosition.x);
-		scoreText.push_back(thing->currentPosition.y);
-		scoreText.push_back(20);
+ 		DeathData deadThing;
+		deadThing.scoreValue = scoreAdd;
+		deadThing.deathPosition = thing->currentPosition;
+		deadThing.timeOfDeath = std::chrono::high_resolution_clock::now();
+		toDisplay.push_back(deadThing);
 	}
 }
 
@@ -420,8 +437,8 @@ void CentipedeGame::reset()
 	scoreDisplay.setFillColor(sf::Color::Red);
 
 	enemyScore.setFont(arcadeFont);
-	enemyScore.setCharacterSize(10);
-	enemyScore.setFillColor(sf::Color::White);
+	enemyScore.setCharacterSize(15);
+	enemyScore.setFillColor(sf::Color::Blue);
 
 	//life display
 	lifeTexture.loadFromFile("../Sprites/player.png");
