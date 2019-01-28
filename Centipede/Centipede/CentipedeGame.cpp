@@ -380,7 +380,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 	bool readyToDie;
  	int scoreAdd = thing->die(readyToDie, this);
  	score += scoreAdd;
- 	if (scoreAdd > 0)
+ 	if (scoreAdd > 10)
 	{
  		DeathData deadThing;
 		deadThing.scoreValue = scoreAdd;
@@ -438,7 +438,7 @@ void CentipedeGame::reset()
 
 	enemyScore.setFont(arcadeFont);
 	enemyScore.setCharacterSize(15);
-	enemyScore.setFillColor(sf::Color::Blue);
+	enemyScore.setFillColor(sf::Color::White);
 
 	//life display
 	lifeTexture.loadFromFile("../Sprites/player.png");
