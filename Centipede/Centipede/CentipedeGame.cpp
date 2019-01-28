@@ -42,6 +42,20 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 			if (rand() % (rand() % 35 + 1) == 1)
 				spawnObject<Mushroom>(x, y);
 
+	//Store color gradients.
+	for (unsigned int n = 0; n < 7; ++n)
+	{
+		screenModifiers[n] = sf::Color::White;
+	}
+	screenModifiers[0] = sf::Color(232, 160, 60);
+	screenModifiers[1] = sf::Color(64, 198, 232);
+	screenModifiers[2] = sf::Color(209, 64, 232);
+	screenModifiers[3] = sf::Color(125, 94, 255);
+	screenModifiers[4] = sf::Color(211, 232, 63);
+	screenModifiers[5] = sf::Color(204, 26, 10);
+
+	screenColor = rand() % 7;
+
 	//create sprites for drawing 
 	scoreArea.create(renderWindow->getSize().x, renderWindow->getSize().x * .05);
 	playerArea.create(renderWindow->getSize().x, renderWindow->getSize().y);
@@ -171,6 +185,7 @@ bool CentipedeGame::update()
 				
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
 				Sleep(150);
+				screenColor = rand() % 7;
 				draw();
 			}
 		}
@@ -180,6 +195,7 @@ bool CentipedeGame::update()
 	else
 		firstLoop = false;
 #pragma endregion
+
 	centMan->update();
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
@@ -267,8 +283,10 @@ void CentipedeGame::draw()
 
 	for(int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
+		{
+			objects[i].at(j)->getSprite()->setColor(screenModifiers[screenColor]);
 			objects[i].at(j)->render(playerArea);
-
+		}
 	window->draw(playerAreaSprite);
 	window->draw(scoreAreaSprite);
 	window->display();

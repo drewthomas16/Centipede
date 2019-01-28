@@ -78,6 +78,8 @@ private:
 	//refer to the enum GameObjectType to see where each object type is located.
 	static std::vector<std::shared_ptr<GameObject>> objects[numObjects];
 
+	sf::Color screenModifiers[7];
+	unsigned int screenColor;
 
 	sf::RenderWindow * window = nullptr;
 	const sf::Vector2u originalWindowDimensions;
