@@ -26,13 +26,15 @@ public:
 
 	unsigned int die(bool&, CentipedeGame*);
 
+	void newSprite(int & i, int whichWayMoving);
+
 	double getSpeed();
 	void setSpeed(double i);
 
 private:
 	bool isPoisoned;
 	double speed;
-	bool movingDown, movingRight;
+	bool movingDown, movingRight, head;
 	bool deathCollisionDanger;
 	CentipedeSegment * previous = nullptr;
 	std::vector<std::shared_ptr<GameObject>> * objectsPtr;

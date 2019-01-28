@@ -95,6 +95,7 @@ unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle)
 //If the segement infront was the head and it dies become the head.
 void CentipedeSegment::setAsHead() {
 	setTexture("../Sprites/CentipedeSegment/head.png");
+	head = true;
 }
 
 //Calculate the velocity of the sentipede to use in update.
@@ -193,6 +194,87 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 		}
 	}
 	return true;
+}
+
+//variables for whichWayMoving are as follows. 1 - moving right, 2 - moving left,
+//3 - moving down, 4 - moving up
+void CentipedeSegment::newSprite(int & i, int whichWayMoving)
+{
+	switch (whichWayMoving)
+	{
+	case 1:
+		if (!head)
+		{
+			if (i < 7)
+				i++;
+			else
+				i = 0;
+			setTexture("../Sprites/HorizontalBody/" + std::to_string(i) + ".png");
+		}
+		else
+		{
+			if (i < 7)
+				i++;
+			else
+				i = 0;
+			setTexture("../Sprites/HorizontalHead/" + std::to_string(i) + ".png");
+		}
+		break;
+	case 2:
+		if (!head)
+		{
+			if (i > 0)
+				i--;
+			else
+				i = 7;
+			setTexture("../Sprites/HorizontalBody/" + std::to_string(i) + ".png");
+		}
+		else
+		{
+			if (i > 0)
+				i--;
+			else
+				i = 7;
+			setTexture("../Sprites/HorizontalHead/" + std::to_string(i) + ".png");
+		}
+		break;
+	case 3:
+		if (!head)
+		{
+			if (i < 5)
+				i++;
+			else
+				i = 0;
+			setTexture("../Sprites/VerticalBody/" + std::to_string(i) + ".png");
+		}
+		else
+		{
+			if (i < 5)
+				i++;
+			else
+				i = 0;
+			setTexture("../Sprites/VerticalHead/" + std::to_string(i) + ".png");
+		}
+		break;
+	case 4:
+		if (!head)
+		{
+			if (i > 0)
+				i--;
+			else
+				i = 5;
+			setTexture("../Sprites/VerticalBody/" + std::to_string(i) + ".png");
+		}
+		else
+		{
+			if (i > 0)
+				i--;
+			else
+				i = 5;
+			setTexture("../Sprites/VerticalHead/" + std::to_string(i) + ".png");
+		}
+		break;
+	}
 }
 
 //Needs to be fed the pointer that holds entities for collision.
