@@ -166,14 +166,11 @@ bool CentipedeGame::update()
 	{
 		for (int i = 0; i < objects[mushroom].size(); i++)
 		{
-			Sleep(10);
-			std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
-			score += 5;
-			draw();
 			while (objects[mushroom].at(i)->getHealth() < 4)
 			{
-				Sleep(10);
+				
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
+				Sleep(150);
 				draw();
 			}
 		}
