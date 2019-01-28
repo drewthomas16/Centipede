@@ -3,6 +3,7 @@
 #include <SFML\System.hpp>
 #include <vector>
 #include <fstream>
+#include <chrono>
 #include "GameObject.h"
 #include "Player.h"
 #include "Flea.h"
@@ -98,6 +99,16 @@ private:
 	sf::Sprite playerAreaSprite;
 	sf::Sprite scoreAreaSprite;
 	sf::Sprite startingScreen;
+
+
+	struct DeathData
+	{
+		int scoreValue;
+		sf::Vector2f deathPosition;
+		std::chrono::high_resolution_clock::time_point timeOfDeath;
+	};
+
+	std::vector<DeathData> toDisplay;
 
 	void drawLives();
 
