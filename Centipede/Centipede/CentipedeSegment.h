@@ -34,6 +34,9 @@ public:
 private:
 	bool isPoisoned;
 	double speed;
+	//variables for whichWayMoving are as follows. 1 - moving right, 2 - moving left,
+	//3 - moving down, 4 - moving up
+	int whichWayMoving, spriteNum;
 	bool movingDown, movingRight, head;
 	bool deathCollisionDanger;
 	CentipedeSegment * previous = nullptr;

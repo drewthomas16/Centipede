@@ -18,12 +18,15 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	health = 1;
 	isPoisoned = false;
 
-	setTexture("../Sprites/CentipedeSegment/default.png");
+	//setTexture("../Sprites/CentipedeSegment/default.png");
 	//object.setOrigin(1, 1);
 
 	velocity.y = 0;
 	speed = 1;
 	velocity.x = speed;
+	whichWayMoving = 1;
+	spriteNum = 0;
+	newSprite(spriteNum, whichWayMoving);
 
 	movingDown = movingRight = true;
 
@@ -55,6 +58,8 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 		//update position
 		currentPosition.x += velocity.x;
 		currentPosition.y += velocity.y;
+
+		newSprite(spriteNum, whichWayMoving);
 
 		//update velocity for next movement
 	}
@@ -126,20 +131,35 @@ void CentipedeSegment::calculateVelocity()
 		if (currentPosition.y + velocity.y < 0) 
 		{ //top
 			velocity.y = speed; // will cause movingDown to be true next cycle
+			whichWayMoving = 3;
 		}
 		else if (currentPosition.y + velocity.y > 28) 
 		{ //bottom
 			velocity.y = -1 * speed; //will cause movingDown to be false next cycle
+			whichWayMoving = 4;
 		}
 		else 
 		{ //side of mushroom
 			if (movingDown)
+			{
 				velocity.y = speed;
+				whichWayMoving = 3;
+			}
 			else
+			{
 				velocity.y = -1 * speed;
+				whichWayMoving = 4;
+			}
 		}
 
 		velocity.x = 0; //velocity.x and velocity.y are mutually exclusive
+	}
+	else
+	{
+		if (movingRight)
+			whichWayMoving = 0;
+		else
+			whichWayMoving = 1;
 	}
 }
 
@@ -200,6 +220,7 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 //3 - moving down, 4 - moving up
 void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 {
+	std::string filePath;
 	switch (whichWayMoving)
 	{
 	case 1:
@@ -209,7 +230,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			setTexture("../Sprites/HorizontalBody/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		else
 		{
@@ -217,7 +239,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			setTexture("../Sprites/HorizontalHead/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		break;
 	case 2:
@@ -227,7 +250,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 7;
-			setTexture("../Sprites/HorizontalBody/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		else
 		{
@@ -235,7 +259,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 7;
-			setTexture("../Sprites/HorizontalHead/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		break;
 	case 3:
@@ -245,7 +270,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			setTexture("../Sprites/VerticalBody/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		else
 		{
@@ -253,7 +279,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			setTexture("../Sprites/VerticalHead/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		break;
 	case 4:
@@ -263,7 +290,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 5;
-			setTexture("../Sprites/VerticalBody/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		else
 		{
@@ -271,7 +299,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 5;
-			setTexture("../Sprites/VerticalHead/" + std::to_string(i) + ".png");
+			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
+			setTexture(filePath.c_str());
 		}
 		break;
 	}
