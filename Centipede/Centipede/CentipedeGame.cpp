@@ -140,6 +140,9 @@ bool CentipedeGame::update()
 	//update player health display
 	if (objects[player].at(0) != NULL)
 	{
+		//std::cout << lastPlayerLives << ',' << playerLives << (lastPlayerLives > playerLives) << std::endl;
+		if(lastPlayerLives > playerLives)
+			screenColor = rand() % 7;
 		lastPlayerLives = playerLives;
 		playerLives = objects[player].at(0)->getHealth();
 	}
@@ -383,6 +386,8 @@ void CentipedeGame::resolveCollisions()
 			if (objects[scorpion].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
 				objects[mushroom].at(j)->collideWith(objects[scorpion].at(i).get());
 	}
+
+
 }
 
 
@@ -406,6 +411,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 	bool readyToDie;
  	int scoreAdd = thing->die(readyToDie, this);
  	score += scoreAdd;
+
  	if (scoreAdd > 10)
 	{
  		DeathData deadThing;
