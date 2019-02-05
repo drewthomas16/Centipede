@@ -188,7 +188,7 @@ bool CentipedeGame::update()
 				
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
 				Sleep(150);
-				screenColor = rand() % 7;
+				//screenColor = rand() % 7;
 				draw();
 			}
 		}
