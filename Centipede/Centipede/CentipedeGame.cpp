@@ -204,7 +204,7 @@ bool CentipedeGame::update()
 	{
 		centMan->clear();
 
-		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
+ 		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
    		for (int i = 0; i < level; i++)
 		{
 			centMan->beginSpawn(CentipedeGame::clock, 2, 1);

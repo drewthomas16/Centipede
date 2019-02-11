@@ -1,7 +1,7 @@
 /*
 	Project Title : Centipede
 	Creation Date : 1/24/2018
-	Last Modified: 1/22/2019
+	Last Modified: 2/11/2019
 	Description : Recreate classic arcade game centipede for use with a 
 	trackball controller for later use in arcade cabinet
 */
@@ -16,15 +16,16 @@ using namespace std;
 
 int main()
 {
-
+	//Seed number table.
 	std::time_t seed = time(NULL);
 	srand(seed);
 
-
+	//Set Dimensions of window to be constant
 	const sf::Vector2u winDim(480, 504);
 
 	sf::RenderWindow window(sf::VideoMode(winDim.x, winDim.y), "Centipede");
 
+	//Initialize game class
 	CentipedeGame game(&window, winDim);
 	bool plusLives = true;
 	int gameOverCount = 1000;
@@ -41,7 +42,7 @@ int main()
 	window.display();
 
 	//Slow down so the program is playable.
-	window.setFramerateLimit(60);
+	window.setFramerateLimit(24);
 
 	//Debug switches that control frame by frame mode.
 	bool frameByFrameMode(false), enterPressed(false);
