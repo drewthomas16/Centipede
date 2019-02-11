@@ -18,6 +18,7 @@ class CentipedeGame
 {
 public:
 
+	//Tthis is a fcommetn.
 	enum objectTypes
 	{
 		player = 0,
