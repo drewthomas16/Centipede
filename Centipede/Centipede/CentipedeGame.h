@@ -18,7 +18,8 @@ class CentipedeGame
 {
 public:
 
-	//Tthis is a fcommetn.
+	//A simple enum to seperate our entity list into class types.
+	//We do this so that we only calculate collision for entities that can collide with eachother.
 	enum objectTypes
 	{
 		player = 0,
@@ -30,6 +31,7 @@ public:
 		spider
 	};
 
+	//Strings so that object type can be output.
 	const std::string pobjectTypes[7] = { "class Player", "class Bullet",
 		"class CentipedeSegment", "class Mushroom", "class Flea",
 		"class Scorpion", "class Spider" };
@@ -37,14 +39,27 @@ public:
 	CentipedeGame(sf::RenderWindow *, const sf::Vector2u);
 	~CentipedeGame();
 
+	//This is the general game loop for centipede.
 	bool update();
+	//Called within update, draws all required textures/sprites.
 	void draw();
+
+	//Used to check if there are mushrooms in a location. Maily used so that the game
+	//can calculate how many mushrooms are currently on screen.
 	static bool isMushroomCell(double x, double y);
+
+	//Sets/resets the game by initializing key elements.
 	void reset();
+
+	///What is this?
 	void placeObject(unsigned int, unsigned int, std::shared_ptr<GameObject>);
+
+	//Gets the mouse position relative to the game window.
 	sf::Vector2i getRelMousePos();
+	//Checks if a coordinate is within bounds.
 	static bool isInBounds(double x, double y) { return x < 30 && x >= 0 && y < 30 && y >= 0; }
 
+	//Spawns an object and adds it to entity vector.
 	template <typename type> std::shared_ptr<type> spawnObject(double x, double y) 
 	{
 		std::shared_ptr<type> thing(nullptr);
@@ -61,12 +76,17 @@ public:
 		return thing;
 	};
 
+	//Clock value that controls tick rate.
 	static unsigned int clock;
 
+	//Sets high score.
 	void setHighScore();
 
 private:
+	//The number of types of gameobjects that can exist.
 	static const int numObjects = 7;
+	//Check all bounds of relevent entities to see if collisions happen.
+	//Then tell entities to have collision effects if they collide.
 	void resolveCollisions();
 
 
@@ -103,7 +123,8 @@ private:
 	sf::Sprite scoreAreaSprite;
 	sf::Sprite startingScreen;
 
-
+	//Struct that holds all relevent data when an object dies.
+	//Used to show score values on kill. Is only relevent when object's score > 10.
 	struct DeathData
 	{
 		int scoreValue;
@@ -111,6 +132,7 @@ private:
 		std::chrono::high_resolution_clock::time_point timeOfDeath;
 	};
 
+	//Holds all death data and provides information to score popup feature.
 	std::vector<DeathData> toDisplay;
 
 	void drawLives();
