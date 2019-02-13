@@ -18,9 +18,6 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 	health = 1;
 	isPoisoned = false;
 
-	//setTexture("../Sprites/CentipedeSegment/default.png");
-	//object.setOrigin(1, 1);
-
 	velocity.y = 0;
 	speed = 1;
 	velocity.x = speed;
@@ -58,6 +55,15 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 		//update position
 		currentPosition.x += velocity.x;
 		currentPosition.y += velocity.y;
+
+		if (velocity.x > 0)
+			whichWayMoving = 1;
+		else if (velocity.x < 0)
+			whichWayMoving = 2;
+		else if (velocity.y > 0)
+			whichWayMoving = 3;
+		else if (velocity.y < 0)
+			whichWayMoving = 4;
 
 		newSprite(spriteNum, whichWayMoving);
 
@@ -131,24 +137,20 @@ void CentipedeSegment::calculateVelocity()
 		if (currentPosition.y + velocity.y < 0) 
 		{ //top
 			velocity.y = speed; // will cause movingDown to be true next cycle
-			whichWayMoving = 3;
 		}
 		else if (currentPosition.y + velocity.y > 28) 
 		{ //bottom
 			velocity.y = -1 * speed; //will cause movingDown to be false next cycle
-			whichWayMoving = 4;
 		}
 		else 
 		{ //side of mushroom
 			if (movingDown)
 			{
 				velocity.y = speed;
-				whichWayMoving = 3;
 			}
 			else
 			{
 				velocity.y = -1 * speed;
-				whichWayMoving = 4;
 			}
 		}
 
@@ -232,6 +234,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 180)
+				object.setRotation(180);
 		}
 		else
 		{
@@ -241,6 +245,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 180)
+				object.setRotation(180);
 		}
 		break;
 	case 2:
@@ -252,6 +258,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 7;
 			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if(object.getRotation() != 0)
+				object.setRotation(0);
 		}
 		else
 		{
@@ -261,6 +269,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 7;
 			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 0)
+				object.setRotation(0);
 		}
 		break;
 	case 3:
@@ -272,6 +282,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 0)
+				object.setRotation(0);
 		}
 		else
 		{
@@ -281,29 +293,36 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 0)
+				object.setRotation(0);
 		}
 		break;
 	case 4:
 		if (!head)
 		{
-			if (i > 0)
+			if (i > 0 && i <= 5)
 				i--;
 			else
 				i = 5;
 			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 180)
+				object.setRotation(180);
 		}
 		else
 		{
-			if (i > 0)
+			if (i > 0 && i <= 5)
 				i--;
 			else
 				i = 5;
 			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
+			if (object.getRotation() != 180)
+				object.setRotation(180);
 		}
 		break;
 	}
+//setTexture("../Sprites/CentipedeSegment/default.png");
 }
 
 //Needs to be fed the pointer that holds entities for collision.
