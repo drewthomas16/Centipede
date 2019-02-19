@@ -42,11 +42,19 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 			if (rand() % (rand() % 35 + 1) == 1)
 				spawnObject<Mushroom>(x, y);
 
+	/*
+	The arcade game does a thing where it changes the entire color pallete every
+	time the player dies. We didn't want to have to deal with more than 5 seperate color
+	palletes. So what we did was create a bunch of sf::Colors that wee apply to 
+	our existing base color via the * operator.
+	*/
+
 	//Store color gradients.
 	for (unsigned int n = 0; n < 7; ++n)
 	{
 		screenModifiers[n] = sf::Color::White;
 	}
+	//We store the colors to apply to our gameobjects.
 	screenModifiers[0] = sf::Color(232, 160, 60);
 	screenModifiers[1] = sf::Color(64, 198, 232);
 	screenModifiers[2] = sf::Color(209, 64, 232);
@@ -130,10 +138,13 @@ bool CentipedeGame::update()
 		for (int j = 0; j < objects[i].size(); j++)
 			if (objects[i].at(j)->getHealth() == 0)
 			{
+				//Kill objects and remove them from vector.
 				kill(objects[i].at(j));
  				objects[i].erase(objects[i].begin() + j);
 				if (i == 0)
 				{	
+					//If i == 0, then that means that something in the first array,
+					//the player array, is dead. If that is the case kill player and end loop.
 					setHighScore();
 					return false;
 				}
@@ -154,7 +165,7 @@ bool CentipedeGame::update()
 	int mushroomCount = 0;
 	for (int y = 28; y > 17; y--)//check mushrooms in player position
 		for (int x = 0; x < 29; x++)
-			if (isMushroomCell(x, y))
+			if (isMushroomCell(x, y))//Checks to see if a mushroom sprite is at (x,y)
 				++mushroomCount;
 
 	
@@ -202,22 +213,29 @@ bool CentipedeGame::update()
 #pragma endregion
 	centMan->update();
 #pragma region spawnCentipedes
+	//If the centipede has been killed.
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
+		//Reset centipede manager values.
 		centMan->clear();
 
+		//Spawn main centipede based on level.
+		//Level starts at 0 so first loop wont create second centipede.
  		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
 
+		//Create single pip centipedes based on level.
    		for (int i = 0; i < level; i++)
 		{
 			centMan->beginSpawn(CentipedeGame::clock, 2, 1);
 		}
+		//Increment level for next time centipede dies.
 		level++;
 	}
 #pragma endregion		
 
 	draw();
 
+	//Increment tick.
 	++clock;
 
 	//return true while player alive
@@ -417,8 +435,10 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
  	int scoreAdd = thing->die(readyToDie, this);
  	score += scoreAdd;
 
+	//Only valuable enimies get their score displayed.
  	if (scoreAdd > 10)
 	{
+		//Create info packet struct that sends death data to draw function.
  		DeathData deadThing;
 		deadThing.scoreValue = scoreAdd;
 		deadThing.deathPosition = thing->currentPosition;
