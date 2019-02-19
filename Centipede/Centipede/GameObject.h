@@ -28,6 +28,9 @@ public:
 	virtual sf::Sprite* getSprite();
 	virtual unsigned int die(bool&, CentipedeGame*);
 
+	sf::Color getColor();
+	void setColor(sf::Color);
+
 	char* getType();
 	sf::Vector2f currentPosition;
 protected:
@@ -41,6 +44,7 @@ protected:
 	unsigned int pointValue = 0;
 	sf::Vector2f velocity;
 	sf::Texture textureTemp;
+	sf::Color realColor;
 
 	sf::Sound soundPlayer;
 	sf::SoundBuffer soundClip;

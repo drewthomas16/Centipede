@@ -41,7 +41,7 @@ void Mushroom::update(CentipedeGame *gameHandle)
 	{
 		//check if pushed  by centipede
 			//if true go down unless at player area.
-		object.setColor(sf::Color::Magenta);
+		setColor(sf::Color::Magenta);
 		if (pushed && currentPosition.y < 29)
 		{
 			currentPosition.y += velocity.y;

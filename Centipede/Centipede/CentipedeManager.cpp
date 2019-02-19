@@ -29,7 +29,7 @@ int CentipedeManager::calculateEntryX()
 }
 
 //sets spawn settings at beginning of game.
-bool CentipedeManager::beginSpawn(unsigned int frame, unsigned double _speed, unsigned int _length) 
+bool CentipedeManager::beginSpawn(unsigned int frame,double _speed, unsigned int _length) 
 {
 
  	end++;

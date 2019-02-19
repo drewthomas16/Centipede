@@ -42,6 +42,20 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 			if (rand() % (rand() % 35 + 1) == 1)
 				spawnObject<Mushroom>(x, y);
 
+	//Store color gradients.
+	for (unsigned int n = 0; n < 7; ++n)
+	{
+		screenModifiers[n] = sf::Color::White;
+	}
+	screenModifiers[0] = sf::Color(232, 160, 60);
+	screenModifiers[1] = sf::Color(64, 198, 232);
+	screenModifiers[2] = sf::Color(209, 64, 232);
+	screenModifiers[3] = sf::Color(125, 94, 255);
+	screenModifiers[4] = sf::Color(211, 232, 63);
+	screenModifiers[5] = sf::Color(204, 26, 10);
+
+	screenColor = rand() % 7;
+
 	//create sprites for drawing 
 	scoreArea.create(renderWindow->getSize().x, renderWindow->getSize().x * .05);
 	playerArea.create(renderWindow->getSize().x, renderWindow->getSize().y);
@@ -100,6 +114,8 @@ static bool liveFlea = false;
 //Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
+	//Go through the list of arrays that hold all entities.
+	//Then call update on them.
 	for (int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			objects[i].at(j)->update(this);
@@ -126,6 +142,9 @@ bool CentipedeGame::update()
 	//update player health display
 	if (objects[player].at(0) != NULL)
 	{
+		//std::cout << lastPlayerLives << ',' << playerLives << (lastPlayerLives > playerLives) << std::endl;
+		if(lastPlayerLives > playerLives)
+			screenColor = rand() % 7;
 		lastPlayerLives = playerLives;
 		playerLives = objects[player].at(0)->getHealth();
 	}
@@ -171,6 +190,7 @@ bool CentipedeGame::update()
 				
 				std::dynamic_pointer_cast<Mushroom> (objects[mushroom].at(i))->resetHeath();
 				Sleep(150);
+				//screenColor = rand() % 7;
 				draw();
 			}
 		}
@@ -181,18 +201,20 @@ bool CentipedeGame::update()
 		firstLoop = false;
 #pragma endregion
 	centMan->update();
+#pragma region spawnCentipedes
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
 		centMan->clear();
 
-		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
+ 		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
+
    		for (int i = 0; i < level; i++)
 		{
 			centMan->beginSpawn(CentipedeGame::clock, 2, 1);
 		}
 		level++;
 	}
-		
+#pragma endregion		
 
 	draw();
 
@@ -267,8 +289,12 @@ void CentipedeGame::draw()
 
 	for(int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
+		{
+			objects[i].at(j)->getSprite()->
+				setColor(screenModifiers[screenColor]
+					* objects[i].at(j)->getColor());
 			objects[i].at(j)->render(playerArea);
-
+		}
 	window->draw(playerAreaSprite);
 	window->draw(scoreAreaSprite);
 	window->display();
@@ -365,6 +391,8 @@ void CentipedeGame::resolveCollisions()
 			if (objects[scorpion].at(i)->getSprite()->getGlobalBounds().intersects(objects[mushroom].at(j)->getSprite()->getGlobalBounds()))
 				objects[mushroom].at(j)->collideWith(objects[scorpion].at(i).get());
 	}
+
+
 }
 
 
@@ -388,6 +416,7 @@ void CentipedeGame::kill(std::shared_ptr<GameObject>& thing)
 	bool readyToDie;
  	int scoreAdd = thing->die(readyToDie, this);
  	score += scoreAdd;
+
  	if (scoreAdd > 10)
 	{
  		DeathData deadThing;
@@ -456,7 +485,7 @@ void CentipedeGame::reset()
 		lives[i].setPosition(10 + 20 * i, 0);
 	}
 
-	level = 1;
+	level = 0;
 	firstLoop = true;
 
 	centMan = new CentipedeManager();

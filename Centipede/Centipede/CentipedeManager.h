@@ -16,7 +16,7 @@ public:
 
 	int nonEntropicEntryX();
 
-	bool beginSpawn(unsigned int, unsigned double, unsigned int);
+	bool beginSpawn(unsigned int, double, unsigned int);
 
 	void update();
 	void clear();
