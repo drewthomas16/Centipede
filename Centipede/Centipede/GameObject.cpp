@@ -16,6 +16,7 @@ GameObject::GameObject(int x, int y)
 	currentPosition = sf::Vector2f(x, y);
 	//object.setOrigin(currentPosition);
 	object.setPosition(currentPosition);
+	realColor = object.getColor();
 	soundPlayer.setBuffer(soundClip);
 }
 
@@ -79,6 +80,16 @@ unsigned int GameObject::die(bool &readyToDie, CentipedeGame *gameHandle)
 	readyToDie = true;
 	
 	return getPointValue();
+}
+
+sf::Color GameObject::getColor()
+{
+	return realColor;
+}
+
+void GameObject::setColor(sf::Color claim)
+{
+	realColor = claim;
 }
 
 

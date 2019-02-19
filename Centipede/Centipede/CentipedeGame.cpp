@@ -114,6 +114,8 @@ static bool liveFlea = false;
 //Make sure all the rules are being followed and update positons.
 bool CentipedeGame::update()
 {
+	//Go through the list of arrays that hold all entities.
+	//Then call update on them.
 	for (int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			objects[i].at(j)->update(this);
@@ -198,20 +200,21 @@ bool CentipedeGame::update()
 	else
 		firstLoop = false;
 #pragma endregion
-
 	centMan->update();
+#pragma region spawnCentipedes
 	if (objects[centipedeSegment].size() == 0 && centMan->getEnd() <= -1)
 	{
 		centMan->clear();
 
  		centMan->beginSpawn(CentipedeGame::clock, 1, 9 - level);
+
    		for (int i = 0; i < level; i++)
 		{
 			centMan->beginSpawn(CentipedeGame::clock, 2, 1);
 		}
 		level++;
 	}
-		
+#pragma endregion		
 
 	draw();
 
@@ -287,7 +290,9 @@ void CentipedeGame::draw()
 	for(int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 		{
-			objects[i].at(j)->getSprite()->setColor(screenModifiers[screenColor]);
+			objects[i].at(j)->getSprite()->
+				setColor(screenModifiers[screenColor]
+					* objects[i].at(j)->getColor());
 			objects[i].at(j)->render(playerArea);
 		}
 	window->draw(playerAreaSprite);
@@ -480,7 +485,7 @@ void CentipedeGame::reset()
 		lives[i].setPosition(10 + 20 * i, 0);
 	}
 
-	level = 1;
+	level = 0;
 	firstLoop = true;
 
 	centMan = new CentipedeManager();
