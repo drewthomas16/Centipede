@@ -234,8 +234,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 180)
-				object.setRotation(180);
+			if (object.getScale().x != -1)
+				object.setScale(-1, 1);
 		}
 		else
 		{
@@ -245,8 +245,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 180)
-				object.setRotation(180);
+			if (object.getScale().x != -1)
+				object.setScale(-1, 1);
 		}
 		break;
 	case 2:
@@ -258,8 +258,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 7;
 			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if(object.getRotation() != 0)
-				object.setRotation(0);
+			if (object.getScale().x != 1)
+				object.setScale(1, 1);
 		}
 		else
 		{
@@ -269,8 +269,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 7;
 			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 0)
-				object.setRotation(0);
+			if (object.getScale().x != 1)
+				object.setScale(1, 1);
 		}
 		break;
 	case 3:
@@ -282,8 +282,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 0)
-				object.setRotation(0);
+			if (object.getScale().y != 1)
+				object.setScale(1, 1);
 		}
 		else
 		{
@@ -293,8 +293,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 0;
 			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 0)
-				object.setRotation(0);
+			if (object.getScale().y != 1)
+				object.setScale(1, 1);
 		}
 		break;
 	case 4:
@@ -306,8 +306,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 5;
 			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 180)
-				object.setRotation(180);
+			if (object.getScale().y != -1)
+				object.setScale(1, -1);
 		}
 		else
 		{
@@ -317,8 +317,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i = 5;
 			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getRotation() != 180)
-				object.setRotation(180);
+			if (object.getScale().y != -1)
+				object.setScale(1, -1);
 		}
 		break;
 	}
