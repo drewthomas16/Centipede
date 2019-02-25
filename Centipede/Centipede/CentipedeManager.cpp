@@ -54,7 +54,14 @@ void CentipedeManager::update()
 		*/
 		if (CentipedeGame::clock % (int)(((8. * 2.) / 7.) / speed.at(end)) == 0)
 		{
-			gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0)->setSpeed(speed.at(end));
+			
+			std::shared_ptr<CentipedeSegment> manip =
+				gameHandle->spawnObject<CentipedeSegment>(entryX.at(end), 0);
+			manip->setSpeed(speed.at(end));
+			segments.push_back(manip);
+
+			if (haveSpawned.at(end) > 0)
+				manip->attach(segments.at(segments.size() - 1).get());
 			if (haveSpawned.at(end) + 1 >= length.at(end))
 				end--;
 			else

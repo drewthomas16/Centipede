@@ -140,6 +140,7 @@ bool CentipedeGame::update()
 			{
 				//Kill objects and remove them from vector.
 				kill(objects[i].at(j));
+				delete objects[i].at(j).get();
  				objects[i].erase(objects[i].begin() + j);
 				if (i == 0)
 				{	

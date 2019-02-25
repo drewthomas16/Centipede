@@ -33,6 +33,7 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 
 CentipedeSegment::~CentipedeSegment()
 {
+	std::cout << "dead" << std::endl;
 }
 
 
@@ -40,6 +41,7 @@ CentipedeSegment::~CentipedeSegment()
 void CentipedeSegment::attach(CentipedeSegment *segment)
 {
 	previous = segment;
+	head = false;
 }
 
 
@@ -65,10 +67,15 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 		else if (velocity.y < 0)
 			whichWayMoving = 4;
 
-		newSprite(spriteNum, whichWayMoving);
-
 		//update velocity for next movement
 	}
+	//std::cout << previous << std::endl;
+	if (previous == nullptr)
+		setAsHead();
+	//We update sprite every time so that spites don't just update with movement.
+	newSprite(spriteNum, whichWayMoving);
+
+	
 
 }
 
