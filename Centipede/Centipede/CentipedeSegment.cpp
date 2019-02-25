@@ -232,10 +232,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/HorizontalBody/Right/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().x != -1)
-				object.setScale(-1, 1);
 		}
 		else
 		{
@@ -243,10 +241,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i++;
 			else
 				i = 0;
-			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/HorizontalHead/Right/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().x != -1)
-				object.setScale(-1, 1);
 		}
 		break;
 	case 2:
@@ -256,10 +252,8 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 7;
-			filePath = "../Sprites/HorizontalBody/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/HorizontalBody/Left/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().x != 1)
-				object.setScale(1, 1);
 		}
 		else
 		{
@@ -267,58 +261,48 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 				i--;
 			else
 				i = 7;
-			filePath = "../Sprites/HorizontalHead/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/HorizontalHead/Left/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().x != 1)
-				object.setScale(1, 1);
 		}
 		break;
 	case 3:
 		if (!head)
 		{
-			if (i < 5)
+			if (i < 3)
 				i++;
 			else
 				i = 0;
-			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/VerticalBody/Down/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().y != 1)
-				object.setScale(1, 1);
 		}
 		else
 		{
-			if (i < 5)
+			if (i < 3)
 				i++;
 			else
 				i = 0;
-			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
+			filePath = "../Sprites/VerticalHead/Down/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().y != 1)
-				object.setScale(1, 1);
 		}
 		break;
 	case 4:
 		if (!head)
 		{
-			if (i > 0 && i <= 5)
+			if (i > 0 && i <= 3)
 				i--;
 			else
-				i = 5;
-			filePath = "../Sprites/VerticalBody/" + std::to_string(i) + ".png";
+				i = 3;
+			filePath = "../Sprites/VerticalBody/Up/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().y != -1)
-				object.setScale(1, -1);
 		}
 		else
 		{
-			if (i > 0 && i <= 5)
+			if (i > 0 && i <= 3)
 				i--;
 			else
-				i = 5;
-			filePath = "../Sprites/VerticalHead/" + std::to_string(i) + ".png";
+				i = 3;
+			filePath = "../Sprites/VerticalHead/Up/" + std::to_string(i) + ".png";
 			setTexture(filePath.c_str());
-			if (object.getScale().y != -1)
-				object.setScale(1, -1);
 		}
 		break;
 	}
