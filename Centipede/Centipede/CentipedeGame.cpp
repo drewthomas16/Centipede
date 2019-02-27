@@ -140,8 +140,19 @@ bool CentipedeGame::update()
 			{
 				//Kill objects and remove them from vector.
 				kill(objects[i].at(j));
-				delete objects[i].at(j).get();
- 				objects[i].erase(objects[i].begin() + j);
+				//auto * sorry = objects[i].at(j).get();
+				std::cout << j + 1 << std::endl;
+				if (j + 1 < objects[i].size())
+				{
+  					GameObject * centiCheck = objects[i].at(j + 1).get();
+					if (dynamic_cast<CentipedeSegment *>(centiCheck) != nullptr)
+					{
+						dynamic_cast<CentipedeSegment *>(centiCheck)->setAsHead();
+					}
+				}
+				objects[i].erase(objects[i].begin() + j);
+				
+				//delete sorry;
 				if (i == 0)
 				{	
 					//If i == 0, then that means that something in the first array,

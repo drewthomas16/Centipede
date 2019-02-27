@@ -33,7 +33,6 @@ CentipedeSegment::CentipedeSegment(int x, int y) : GameObject(x, y)
 
 CentipedeSegment::~CentipedeSegment()
 {
-	std::cout << "dead" << std::endl;
 }
 
 
@@ -111,8 +110,8 @@ unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle)
 
 
 //If the segement infront was the head and it dies become the head.
-void CentipedeSegment::setAsHead() {
-	setTexture("../Sprites/CentipedeSegment/head.png");
+void CentipedeSegment::setAsHead() 
+{
 	head = true;
 }
 
