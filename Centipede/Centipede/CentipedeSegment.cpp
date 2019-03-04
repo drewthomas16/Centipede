@@ -115,7 +115,7 @@ void CentipedeSegment::setAsHead()
 	head = true;
 }
 
-//Calculate the velocity of the sentipede to use in update.
+//Calculate the velocity of the centipede to use in update.
 void CentipedeSegment::calculateVelocity()
 {
 	if (velocity.y != 0)
@@ -222,14 +222,16 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 	return true;
 }
 
-//variables for whichWayMoving are as follows. 1 - moving right, 2 - moving left,
-//3 - moving down, 4 - moving up
+/*variables for whichWayMoving are as follows. 1 - moving right, 2 - moving left,
+  3 - moving down, 4 - moving up. This method requires that the sprites folder in the project
+  is formatted correctly. There should be four folders for head and moving vertical or horizontal.
+  In each of those folders there should be two folders that show sprites for up down or left right.*/
 void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 {
 	std::string filePath;
 	switch (whichWayMoving)
 	{
-	case 1:
+	case 1: //Id moving right.
 		if (!head)
 		{
 			if (i < 7)
@@ -249,7 +251,7 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 			setTexture(filePath.c_str());
 		}
 		break;
-	case 2:
+	case 2: //If moving left.
 		if (!head)
 		{
 			if (i > 0)
@@ -269,7 +271,7 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 			setTexture(filePath.c_str());
 		}
 		break;
-	case 3:
+	case 3: //If moving down.
 		if (!head)
 		{
 			if (i < 3)
@@ -289,7 +291,7 @@ void CentipedeSegment::newSprite(int & i, int whichWayMoving)
 			setTexture(filePath.c_str());
 		}
 		break;
-	case 4:
+	case 4: //If moving up.
 		if (!head)
 		{
 			if (i > 0 && i <= 3)

@@ -56,7 +56,8 @@ void Player::update(CentipedeGame *gameHandle)
 		else
 			velocity.x = movementSpeed;
 
-	//If space is pressed make a bullet in the Player's location.
+	//If space is pressed make a bullet in the Player's location. You can press any button except 1 player
+	// or two player to fire a bullet on the arcade keyboard.
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
@@ -90,6 +91,8 @@ void Player::update(CentipedeGame *gameHandle)
 			currentPosition.y += velocity.y;
 }
 
+
+// Method to subtract health if an enemy hits the player.
 void Player::collideWith(GameObject * other)
 {
 	if (dynamic_cast<CentipedeSegment *>(other) != nullptr)
@@ -107,12 +110,14 @@ void Player::collideWith(GameObject * other)
 	//play a death anim here
 }
 
+
 void Player::setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist)
 {
 	objectsPtr = entitylist;
 }
 
 
+// Method to see if you are colliding with a mushroom. This requires the objectsPtr to be set.
 void Player::checkMushroomCollision()
 {
 	//Get a bound box for the future position of the ship.

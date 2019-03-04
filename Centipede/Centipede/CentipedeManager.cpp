@@ -18,7 +18,7 @@ void CentipedeManager::bindToGame(CentipedeGame *handle)
 }
 
 //Used in CentipedeGame to determine if a mushroom should spawn in
-//a given spot.
+//a given spot. This should be random positioning.
 int CentipedeManager::calculateEntryX() 
 {
 	int x;
@@ -71,6 +71,7 @@ void CentipedeManager::update()
 }
 
 
+// Clear the vectors used to spawn centipede segments.
 void CentipedeManager::clear()
 {
 	entryX.clear();
@@ -82,6 +83,8 @@ void CentipedeManager::clear()
 
 }
 
+
+// returns the number of centipedes left that need to be spawned.
 int CentipedeManager::getEnd()
 {
 	return end;
