@@ -53,11 +53,12 @@ int main()
 	while (window.isOpen())
 	{
 		//If the player clicks start, start the game.
-		if (sf::Mouse::getPosition(window).x > 185 &&
+		if ((sf::Mouse::getPosition(window).x > 185 &&
 			sf::Mouse::getPosition(window).x < 305 &&
 			sf::Mouse::getPosition(window).y > 335 &&
 			sf::Mouse::getPosition(window).y < 385 &&
-			sf::Mouse::isButtonPressed(sf::Mouse::Left) && plusLives)
+			sf::Mouse::isButtonPressed(sf::Mouse::Left)) || 
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && plusLives)
 		{
 			gameStart = true;
 			window.setMouseCursorVisible(false);
