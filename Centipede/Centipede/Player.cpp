@@ -58,12 +58,12 @@ void Player::update(CentipedeGame *gameHandle)
 	//If space is pressed make a bullet in the Player's location.
 	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) 
 		|| sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) 
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
-				|| sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) 
-					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Z) 
-						|| sf::Keyboard::isKeyPressed(sf::Keyboard::X) 
-							|| sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
-								|| sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)) && !shotBullet)
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Z) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::X) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)) && !shotBullet)
 	{
 		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 		shotBullet = true;

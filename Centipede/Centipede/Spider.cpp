@@ -171,8 +171,6 @@ void Spider::move()
 	currentPosition.x += velocity.x;
 	currentPosition.y += velocity.y;
 
-	//std::cout << currentPosition.x << ',' << currentPosition.y << std::endl;
-
 	//used for additional delay to give ooportunity for random change
 	count++;
 }

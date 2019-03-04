@@ -68,7 +68,7 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 
 		//update velocity for next movement
 	}
-	//std::cout << previous << std::endl;
+
 	if (previous == nullptr)
 		setAsHead();
 	//We update sprite every time so that spites don't just update with movement.
@@ -212,8 +212,6 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 				//We don't want to collide with pushed mushrooms.
 				&& !touchedMushroom->isPushed())
 			{
-				//std::cout << "TEST " << std::endl;
-
 				//Centipede has to 'touch' poisoned mushrooms so that they know to fall.
 				touchedMushroom->push();
 				if(!touchedMushroom->getPoisoned())

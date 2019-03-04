@@ -140,8 +140,6 @@ bool CentipedeGame::update()
 			{
 				//Kill objects and remove them from vector.
 				kill(objects[i].at(j));
-				//auto * sorry = objects[i].at(j).get();
-				std::cout << j + 1 << std::endl;
 				if (j + 1 < objects[i].size())
 				{
   					GameObject * centiCheck = objects[i].at(j + 1).get();
@@ -165,7 +163,6 @@ bool CentipedeGame::update()
 	//update player health display
 	if (objects[player].at(0) != NULL)
 	{
-		//std::cout << lastPlayerLives << ',' << playerLives << (lastPlayerLives > playerLives) << std::endl;
 		if(lastPlayerLives > playerLives)
 			screenColor = rand() % 7;
 		lastPlayerLives = playerLives;
