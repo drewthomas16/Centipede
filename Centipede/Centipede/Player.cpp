@@ -28,35 +28,42 @@ void Player::update(CentipedeGame *gameHandle)
 	velocity.y = 0;
 
 	//Up and down movement.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			velocity.y = movementSpeed / sqrt(2) * -1;
 		else
 			velocity.y = movementSpeed * -1;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 			velocity.y = movementSpeed / sqrt(2);
 		else
 			velocity.y = movementSpeed;
 
 	//Left and right movement.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			velocity.x = movementSpeed / sqrt(2) * -1;
 		else
 			velocity.x = movementSpeed * -1;
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 			velocity.x = movementSpeed / sqrt(2);
 		else
 			velocity.x = movementSpeed;
 
 	//If space is pressed make a bullet in the Player's location.
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !shotBullet)
+	if ((sf::Keyboard::isKeyPressed(sf::Keyboard::LControl) 
+		|| sf::Keyboard::isKeyPressed(sf::Keyboard::LAlt) 
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::Space) 
+				|| sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) 
+					|| sf::Keyboard::isKeyPressed(sf::Keyboard::Z) 
+						|| sf::Keyboard::isKeyPressed(sf::Keyboard::X) 
+							|| sf::Keyboard::isKeyPressed(sf::Keyboard::C) 
+								|| sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad5)) && !shotBullet)
 	{
 		gameHandle->spawnObject<Bullet>(currentPosition.x, currentPosition.y);
 		shotBullet = true;
