@@ -16,11 +16,11 @@ public:
 
 	void setAsHead();
 
-	void calculateVelocity();
+	void calculateVelocity(); //Calculate the new velocity to tell what the sprite should be.
 
 	bool canMoveTo(double x, double y1, double y2);
 
-	void setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist);
+	void setObjectsPtr(std::vector<std::shared_ptr<GameObject>>* entitylist); //Pointer to game game objects.
 
 	char* getType() { return "CentipedeSegment"; }
 

@@ -11,11 +11,7 @@ public:
 	CentipedeManager();
 
 	void bindToGame(CentipedeGame*);
-
 	int calculateEntryX();
-
-	int nonEntropicEntryX();
-
 	bool beginSpawn(unsigned int, double, unsigned int);
 
 	void update();
