@@ -12,5 +12,6 @@ public:
 	void collideWith(GameObject * other);
 	char* getType() { return "Flea"; }
 private:
+	//Tick variable for flea.
 	unsigned int delay = 2;
 };

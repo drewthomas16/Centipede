@@ -65,6 +65,8 @@ bool Mushroom::resetHeath()
 	rebuildSound.loadFromFile("../Audio/mushroomReset.ogg");
 	mushroomRebuildSound.setBuffer(rebuildSound);
 
+	//Lower volume because sound is grating.
+	mushroomRebuildSound.setVolume(40);
 	if (health < 4)
 	{
 
