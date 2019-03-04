@@ -10,7 +10,6 @@
 Player::Player(int x, int y) : GameObject(x, y)
 {
 	setTexture("../Sprites/player.png");
-	//getSprite()->setOrigin(1, 1);
 	health = 3;
 	shotBullet = false;
 
@@ -26,6 +25,8 @@ void Player::update(CentipedeGame *gameHandle)
 {
 	velocity.x = 0;
 	velocity.y = 0;
+
+	//We use basic trig to calculate diagonal movement. (hence the root 2)
 
 	//Up and down movement.
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))

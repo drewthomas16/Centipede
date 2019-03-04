@@ -60,7 +60,7 @@ CentipedeGame::CentipedeGame(sf::RenderWindow * renderWindow,
 	screenModifiers[2] = sf::Color(209, 64, 232);
 	screenModifiers[3] = sf::Color(125, 94, 255);
 	screenModifiers[4] = sf::Color(211, 232, 63);
-	screenModifiers[5] = sf::Color(204, 26, 10);
+	screenModifiers[5] = sf::Color(255, 93, 79);
 
 	screenColor = rand() % 7;
 
@@ -256,6 +256,8 @@ static bool grid = false;
 //Draw the board.
 void CentipedeGame::draw()
 {
+	screenColor = 0;
+	std::cout << screenColor << std::endl;
 	//this is temp
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		grid = !grid;

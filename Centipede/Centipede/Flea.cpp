@@ -49,11 +49,6 @@ void Flea::update(CentipedeGame *gameHandle)
 			!CentipedeGame::isMushroomCell(currentPosition.x, currentPosition.y))
 			gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
 
-
-
-
-
-
 		//check if bottom of screen
 		if (currentPosition.y >= 29)
 		{

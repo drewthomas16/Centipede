@@ -48,8 +48,6 @@ void Mushroom::update(CentipedeGame *gameHandle)
 		}
 			
 	}
-	//if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-	//	health = 0;
 }
 
 
@@ -88,17 +86,11 @@ bool Mushroom::resetHeath()
 
 		mushroomRebuildSound.play();
 
-		/*while (mushroomRebuildSound.getStatus() != sf::Sound::Stopped)
-		{
-			//printf("Health - %i\n", health);
-		}*/
 		poisoned = false;
 		return true;
 	}
 	else
 		setTexture("../Sprites/Mushroom/Poisoned4.png");
-
-	//object.setColor(sf::Color::Magenta);
 
 	return false;
 }
