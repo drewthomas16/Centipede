@@ -9,6 +9,7 @@ bool Bullet::liveBullet = false;
 Bullet::Bullet(double x, double y) : GameObject(x, y)
 {
 	xStart = x;
+	yStart = y;
 	health = 1;
 	setVelocity(sf::Vector2f(0, -1));
 	setTexture("../Sprites/bullet.png");
@@ -16,6 +17,7 @@ Bullet::Bullet(double x, double y) : GameObject(x, y)
 	liveBullet = true;
 	pointValue = 0;
 	currentPosition.x = xStart;
+	currentPosition.y = yStart;
 }
 
 

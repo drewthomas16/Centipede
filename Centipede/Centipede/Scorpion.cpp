@@ -19,35 +19,18 @@ Scorpion::Scorpion(int x, int y) : GameObject(x, y)
 
 
 static unsigned int frame = 0;
-//Updates a Scorpion entidy's status every tick? (makes the most sense)
+//Updates a Scorpion entitity's status every tick? (makes the most sense)
 void Scorpion::update(CentipedeGame *gameHandle)
 {
-	//Sets the sprite and position.
+	//Converts grid-based position to SFML screen coordinates.
 	setPixels();
-	//Handles each frame of animation for the scorpion.
+
+	//Delays animation based on tickrate
+	//Handles each frame of animation for the scorpion. frameMax is 5 by default.
 	if (frame++ == frameMax)
 	{
-		//Guessing this was for testing?
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::I))//you see nothing
-		{
-			currentPosition.y--;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))//you see nothing
-		{
-			currentPosition.y++;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))//you see nothing
-		{
-			currentPosition.x--;
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::L))//you see nothing
-		{
-			currentPosition.x++;
-		}
-		else
-		{
-			currentPosition.x += velocity.x;
-		}
+	
+		currentPosition.x += velocity.x;
 
 		if (scuttle++ >= 3)//dancing
 			scuttle = 0;

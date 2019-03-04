@@ -16,4 +16,5 @@ public:
 private:
 	int delay = 1;
 	double xStart;
+	double yStart;
 };

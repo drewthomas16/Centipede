@@ -16,7 +16,9 @@ public:
 	unsigned int die(bool&, CentipedeGame*);
 	char* getName() { return "Spider";  }
 private:
+	//Needs player information so has pointer to Player.
 	std::shared_ptr<Player> player;
+	//Animation tick delay.
 	unsigned int delay = 4;
 	bool dir;
 };
