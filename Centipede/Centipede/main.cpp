@@ -1,7 +1,7 @@
 /*
 	Project Title : Centipede
 	Creation Date : 1/24/2018
-	Last Modified: 2/11/2019
+	Last Modified: 3/4/2019
 	Description : Recreate classic arcade game centipede for use with a 
 	trackball controller for later use in arcade cabinet
 */

@@ -256,8 +256,6 @@ static bool grid = false;
 //Draw the board.
 void CentipedeGame::draw()
 {
-	screenColor = 0;
-	std::cout << screenColor << std::endl;
 	//this is temp
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		grid = !grid;
@@ -276,7 +274,6 @@ void CentipedeGame::draw()
 	scoreArea.draw(scoreDisplay);
 	scoreArea.draw(highScoreDisplay);
 
-	//TODO: delete scoreText
 	GameObject::interval = static_cast<sf::Vector2i>(playerArea.getSize()) / 30;
 	playerArea.display();
 	scoreArea.display();
