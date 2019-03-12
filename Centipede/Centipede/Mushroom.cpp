@@ -11,8 +11,9 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 	poisoned = false;
 	pushed = false;
 	health = 4;
-	//object.setOrigin(2, 2);
 	object.setScale(1.25, 1.25);
+	object.setOrigin(6, 6);
+	
 	velocity.y = 0.5;
 }
 
