@@ -17,7 +17,6 @@
 #include "Player.h"
 #include "Mushroom.h"
 
-bool CentipedeGame::frame = false;
 //Vector of all of the entities shown on the map.
 std::vector<std::shared_ptr<GameObject>> CentipedeGame::objects[numObjects];
 unsigned int CentipedeGame::clock = 0, CentipedeGame::score = 0;
@@ -127,8 +126,6 @@ bool CentipedeGame::update()
 	for (int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
 			objects[i].at(j)->update(this);
-
-	frame = !frame;
 
 	resolveCollisions();
 
@@ -309,9 +306,6 @@ void CentipedeGame::draw()
 	//draw lives
 	drawLives();
 
-	if (grid)
-		playerArea.draw(linePoints);
-	
 
 	for(int i = 0; i < numObjects; i++)
 		for (int j = 0; j < objects[i].size(); j++)
@@ -420,21 +414,6 @@ void CentipedeGame::resolveCollisions()
 
 
 }
-
-
-//Put an object on the new frame.
-void CentipedeGame::placeObject(unsigned int x, unsigned int y,
-	std::shared_ptr<GameObject> object)
-{
-	//keep object in bounds of array
-	if (x < 30 && y < 30)
-	{
-		//objects.push_back(object);
-	}
-	else
-		kill(object);
-}
-
 
 //Kill an object that needs to and output useful information.
 void CentipedeGame::kill(std::shared_ptr<GameObject>& thing) 

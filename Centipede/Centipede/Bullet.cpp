@@ -48,7 +48,8 @@ void Bullet::collideWith(GameObject * other)
 
 
 //Overrides GameObject's die and adds instance variables affected.
-unsigned int Bullet::die(bool &readyToDie, CentipedeGame *gameHandle) {
+unsigned int Bullet::die(bool &readyToDie, CentipedeGame *gameHandle) 
+{
 	liveBullet = false;
 	return GameObject::die(readyToDie, gameHandle);
 }
