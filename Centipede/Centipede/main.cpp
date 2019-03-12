@@ -93,7 +93,8 @@ int main()
 		}
 
 
-		while (window.pollEvent(event)) {
+		while (window.pollEvent(event)) 
+		{
 			if (event.type == sf::Event::Closed)
 				window.close();
 			if (event.type == sf::Event::Resized)//resize to keep original aspect ratio

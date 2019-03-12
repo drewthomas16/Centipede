@@ -51,9 +51,6 @@ public:
 	//Sets/resets the game by initializing key elements.
 	void reset();
 
-	///What is this?
-	void placeObject(unsigned int, unsigned int, std::shared_ptr<GameObject>);
-
 	//Gets the mouse position relative to the game window.
 	sf::Vector2i getRelMousePos();
 	//Checks if a coordinate is within bounds.
@@ -91,9 +88,7 @@ private:
 
 
 	void kill(std::shared_ptr<GameObject>&);
-	sf::VertexArray linePoints;
 
-	static bool frame;
 	unsigned int level;
 
 	//refer to the enum GameObjectType to see where each object type is located.
