@@ -69,8 +69,27 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 		//update velocity for next movement
 	}
 
-	if (previous == nullptr)
+	///WIP
+	/*
+	double xDif;
+
+	if (previous != nullptr)
+	{
+		xDif = std::fabs(currentPosition.x - previous->getPosition().x);
+
+		if(currentPosition.x != previous->getPosition().x)
+			std::cout << currentPosition.x << ',' << previous->getPosition().x << std::endl;
+	}*/
+	if (previous != nullptr && previous->getHealth() == 0)
+	{
 		setAsHead();
+		//std::cout << previous << std::endl;
+	}
+	else if (previous == nullptr)
+		setAsHead();
+	
+	
+	//std::cout << previous << std::endl;
 	//We update sprite every time so that spites don't just update with movement.
 	newSprite(spriteNum, whichWayMoving);
 
@@ -202,6 +221,7 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 
 	//Check for collisions.
 	if (objectsPtr != nullptr) {
+		//segment = 2. mushroom = 3
 		for (int i = 0; i < (objectsPtr + 3)->size(); ++i)
 		{
 			//Dynamic cast raw pointer to a mushroom so the compiler stays quiet.
@@ -218,6 +238,32 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 					return false;
 			}
 		}
+		/*
+		
+		*/
+		for (int i = 0; i < (objectsPtr + 2)->size(); ++i)
+		{
+			/*
+			WIP
+				if ((objectsPtr + 2)->at(i).get() != this)
+			{
+				//Dynamic cast raw pointer to a segment so the compiler stays quiet.
+				CentipedeSegment * touchedSeg
+					= dynamic_cast<CentipedeSegment*>((objectsPtr + 2)->at(i).get());
+				touchedSeg->calculateVelocity();
+				//if ((objectsPtr + 2)->at(i)->getSprite()->
+				//	getGlobalBounds().intersects(futurePosRect)
+				//&& touchedSeg != nullptr)
+				//{
+				//return false;
+			//	}
+			//	}
+			//*/
+			
+			
+		}
+		
+
 	}
 	return true;
 }
