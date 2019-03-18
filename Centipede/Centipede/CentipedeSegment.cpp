@@ -69,24 +69,12 @@ void CentipedeSegment::update(CentipedeGame *gameHandle)
 		//update velocity for next movement
 	}
 
-	///WIP
-	/*
-	double xDif;
-
-	if (previous != nullptr)
-	{
-		xDif = std::fabs(currentPosition.x - previous->getPosition().x);
-
-		if(currentPosition.x != previous->getPosition().x)
-			std::cout << currentPosition.x << ',' << previous->getPosition().x << std::endl;
-	}*/
-	if (previous != nullptr && previous->getHealth() == 0)
+	if (previous == nullptr || 
+		(previous != nullptr && previous->getHealth() == 0))
 	{
 		setAsHead();
 		//std::cout << previous << std::endl;
 	}
-	else if (previous == nullptr)
-		setAsHead();
 	
 	
 	//std::cout << previous << std::endl;
@@ -117,7 +105,7 @@ unsigned int CentipedeSegment::die(bool &readyToDie, CentipedeGame *gameHandle)
 {
 
 	if (!deathCollisionDanger)
-		gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
+ 		gameHandle->spawnObject<Mushroom>(currentPosition.x, currentPosition.y);
 
 	readyToDie = true;
 
@@ -239,26 +227,24 @@ bool CentipedeSegment::canMoveTo(double x, double y1, double y2)
 			}
 		}
 		/*
-		
+			Checks for collisions with other centipedes.
 		*/
 		for (int i = 0; i < (objectsPtr + 2)->size(); ++i)
 		{
-			/*
-			WIP
-				if ((objectsPtr + 2)->at(i).get() != this)
+			
+			if ((objectsPtr + 2)->at(i).get() != this)
 			{
 				//Dynamic cast raw pointer to a segment so the compiler stays quiet.
 				CentipedeSegment * touchedSeg
 					= dynamic_cast<CentipedeSegment*>((objectsPtr + 2)->at(i).get());
-				touchedSeg->calculateVelocity();
-				//if ((objectsPtr + 2)->at(i)->getSprite()->
-				//	getGlobalBounds().intersects(futurePosRect)
-				//&& touchedSeg != nullptr)
-				//{
-				//return false;
-			//	}
-			//	}
-			//*/
+				//touchedSeg->calculateVelocity();
+				if ((objectsPtr + 2)->at(i)->getSprite()->
+					getGlobalBounds().intersects(object.getGlobalBounds())
+						&& touchedSeg != nullptr)
+				{
+					return false;
+				}
+			}
 			
 			
 		}
