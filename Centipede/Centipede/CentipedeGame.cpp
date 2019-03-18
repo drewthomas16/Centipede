@@ -173,13 +173,16 @@ bool CentipedeGame::update()
 		for (int x = 0; x < 29; x++)
 			if (isMushroomCell(x, y))//Checks to see if a mushroom sprite is at (x,y)
 				++mushroomCount;
-
 	
+	//Watches to see if flea is dead or not
+	std::shared_ptr<Flea> checker;
+	if (checker != nullptr && checker->getHealth == 0)
+		liveFlea = false;
 	//DEBUG: if(sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
-	if (mushroomCount < 5 && !liveFlea)
+	if (mushroomCount < 20 && !liveFlea)
 	{
 		int xpos = rand() % 29;
-		spawnObject<Flea>(xpos, 0);
+		checker = spawnObject<Flea>(xpos, 0);
 		liveFlea = true;
 	}
 #pragma endregion
@@ -315,6 +318,7 @@ void CentipedeGame::draw()
 					* objects[i].at(j)->getColor());
 			objects[i].at(j)->render(playerArea);
 		}
+	scoreAreaSprite.setColor(screenModifiers[screenColor]);
 	window->draw(playerAreaSprite);
 	window->draw(scoreAreaSprite);
 	window->display();
