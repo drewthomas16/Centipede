@@ -15,6 +15,7 @@ public:
 	unsigned int getHealth() const;
 	sf::Vector2f getVelocity() const;
 	sf::Vector2f getPosition() const;
+
 	void setTexture(const char *);
 	virtual void update(CentipedeGame*) = 0;
 	void render(sf::RenderTexture &);

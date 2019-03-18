@@ -17,7 +17,6 @@ class CentipedeManager;
 class CentipedeGame
 {
 public:
-
 	//A simple enum to seperate our entity list into class types.
 	//We do this so that we only calculate collision for entities that can collide with eachother.
 	enum objectTypes
