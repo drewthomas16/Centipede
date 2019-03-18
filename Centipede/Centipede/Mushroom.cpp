@@ -11,8 +11,8 @@ Mushroom::Mushroom(int x, int y) : GameObject(x, y)
 	poisoned = false;
 	pushed = false;
 	health = 4;
-	object.setScale(1.25, 1.25);
-	object.setOrigin(6, 6);
+
+	object.setOrigin(5, 0);
 	
 	velocity.y = 0.5;
 }
@@ -41,7 +41,7 @@ void Mushroom::update(CentipedeGame *gameHandle)
 	if (poisoned)
 	{
 		//check if pushed  by centipede
-			//if true go down unless at player area.
+		//if true go down unless at player area.
 		setColor(sf::Color::Magenta);
 		if (pushed && currentPosition.y < 29)
 		{
