@@ -176,7 +176,7 @@ bool CentipedeGame::update()
 	
 	//Watches to see if flea is dead or not
 	std::shared_ptr<Flea> checker;
-	if (checker != nullptr && checker->getHealth == 0)
+	if (checker != nullptr && checker->getHealth() == 0)
 		liveFlea = false;
 	//DEBUG: if(sf::Keyboard::isKeyPressed(sf::Keyboard::E) && clock % 2 == 0)
 	if (mushroomCount < 20 && !liveFlea)
